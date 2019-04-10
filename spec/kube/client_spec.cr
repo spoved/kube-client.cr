@@ -47,5 +47,9 @@ load_cassette("Kube::Client") do
       resp = client.pods(label_selector: {"app" => "mysqlha", "component" => "helper"})
       resp["items"].as_a.size.should eq 1
     end
+
+    it "gathers nodes" do
+      client.nodes["items"].as_a.size.should eq 3
+    end
   end
 end

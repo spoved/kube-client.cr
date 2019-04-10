@@ -50,17 +50,28 @@ module Kube
       update_api
     end
 
+    def nodes(label_selector : Hash(String, String)? = nil)
+      params = Hash(String, String).new
+      format_label_selectors(params, label_selector)
+
+      api.get("nodes", params: params)
+    end
+
     def pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil)
       if namespace.nil?
         namespace = context[:namespace] || "default"
       end
 
       params = Hash(String, String).new
+      format_label_selectors(params, label_selector)
+
+      api.get("namespaces/#{namespace}/pods", params: params)
+    end
+
+    private def format_label_selectors(params, label_selector)
       if label_selector
         params["labelSelector"] = label_selector.map { |k, v| "#{k}=#{v}" }.join(",")
       end
-
-      api.get("namespaces/#{namespace}/pods", params: params)
     end
 
     # This is called after initialization and when the context changes. It will
