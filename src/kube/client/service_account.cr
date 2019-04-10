@@ -7,8 +7,8 @@ module Kube
       TOKEN_PATH     = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 
       def service_account
-        namespace = File.read(NAMESPACE_PATH)
-        token = File.read(TOKEN_PATH)
+        namespace = File.read(NAMESPACE_PATH).chomp
+        token = File.read(TOKEN_PATH).chomp
         kube_host = "https://kubernetes.#{namespace}.svc"
 
         conf_file = File.tempfile("config") do |file|
@@ -37,8 +37,10 @@ module Kube
             ],
             "users" => [
               {
-                "user"  => "default",
-                "token" => token,
+                "name" => "default",
+                "user" => {
+                  "token" => token,
+                },
               },
             ],
           }
