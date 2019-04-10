@@ -9,6 +9,7 @@ module Kube
       property port : Int32?
       property api_path : String
       property default_headers : Hash(String, String)
+      getter stream = Channel(String).new
 
       @default_headers = {
         "Content-Type" => "application/json",
@@ -38,14 +39,33 @@ module Kube
         @logger
       end
 
-      # Make a GET request
-      def get(path : String, params : Hash(String, String))
+      private def format_params(params)
         args = HTTP::Params.build do |form|
           params.each do |k, v|
             form.add k, v
           end
         end
-        get(path, args)
+        args
+      end
+
+      # Make a GET request
+      def get(path : String, params : Hash(String, String))
+        get(path, format_params(params))
+      end
+
+      def stream_get(path : String, params : Hash(String, String))
+        resp = halite.get(make_request_uri(path, format_params(params)).to_s,
+          headers: default_headers, tls: @tls_client) do |response|
+          spawn do
+            logger.warn("Spawn #{stream} start")
+            while !stream.closed?
+              response.body_io.each_line do |line|
+                stream.send(line)
+              end
+            end
+            logger.warn("Spawn #{stream} end")
+          end
+        end
       end
 
       # Make a GET request

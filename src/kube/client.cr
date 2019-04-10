@@ -57,6 +57,30 @@ module Kube
       api.get("nodes", params: params)
     end
 
+    def stream
+      api.stream
+    end
+
+    def watch_nodes(label_selector : Hash(String, String)? = nil)
+      params = {
+        "watch" => "true",
+      }
+      format_label_selectors(params, label_selector)
+      api.stream_get("nodes", params: params)
+    end
+
+    def watch_pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil)
+      if namespace.nil?
+        namespace = context[:namespace] || "default"
+      end
+
+      params = {
+        "watch" => "true",
+      }
+      format_label_selectors(params, label_selector)
+      api.stream_get("namespaces/#{namespace}/pods", params: params)
+    end
+
     def pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil)
       if namespace.nil?
         namespace = context[:namespace] || "default"
