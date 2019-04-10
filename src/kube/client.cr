@@ -7,6 +7,7 @@ require "halite"
 module Kube
   class Client
     include ClientMixin
+    extend ServiceAccount
 
     property context = Hash(Symbol, String | YAML::Any | Nil).new
     getter config : Kube::Client::Config
