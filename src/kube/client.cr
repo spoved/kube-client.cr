@@ -81,6 +81,7 @@ module Kube
       api.stream_get("namespaces/#{namespace}/pods", params: params)
     end
 
+    # Gathers all the pods
     def pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil)
       if namespace.nil?
         namespace = context[:namespace] || "default"
@@ -90,6 +91,16 @@ module Kube
       format_label_selectors(params, label_selector)
 
       api.get("namespaces/#{namespace}/pods", params: params)
+    end
+
+    # Will select pods with the provided status
+    def select_pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil, status : String? = nil)
+      data = pods(namespace, label_selector)
+      if status.nil?
+        data
+      else
+        data.select { |pod| pod["status"]["phase"] == status }
+      end
     end
 
     private def format_label_selectors(params, label_selector)
