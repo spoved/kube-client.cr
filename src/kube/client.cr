@@ -94,8 +94,8 @@ module Kube
     end
 
     # Will select pods with the provided status
-    def select_pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil, status : String? = nil)
-      data = pods(namespace, label_selector)
+    def select_pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil, status : String? = nil) : Array(JSON::Any)
+      data = pods(namespace, label_selector)["items"].as_a
       if status.nil?
         data
       else
