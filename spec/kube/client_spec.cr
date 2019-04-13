@@ -58,5 +58,11 @@ load_cassette("Kube::Client") do
     it "gathers nodes" do
       client.nodes["items"].as_a.size.should eq 3
     end
+
+    it "adds labels to pod" do
+      pod = client.add_pod_label("mysqlha-htvtb", "test", "test")
+      name = pod["metadata"]["name"].to_s
+      pod["metadata"]["labels"]["test"].as_s.should eq "test"
+    end
   end
 end

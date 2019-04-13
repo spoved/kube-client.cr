@@ -103,6 +103,37 @@ module Kube
       end
     end
 
+    def add_pod_label(pod_name : String, key : String, value : String, namespace : String? = nil)
+      mod_pod_label("add", pod_name, key, value, namespace)
+    end
+
+    def del_pod_label(pod_name : String, key : String, namespace : String? = nil)
+      mod_pod_label("delete", pod_name, key, "", namespace)
+    end
+
+    def mod_pod_label(mod, pod_name : String, key : String, value : String, namespace : String? = nil)
+      if namespace.nil?
+        namespace = context[:namespace] || "default"
+      end
+
+      data = [
+        {
+          "op"    => mod,
+          "path"  => "/metadata/labels/#{key}",
+          "value" => value,
+        },
+      ]
+
+      api.default_headers = format_headers.merge({
+        "Content-Type" => "application/json-patch+json",
+        "Accept"       => "application/json",
+      })
+
+      resp = api.patch("namespaces/#{namespace}/pods/#{pod_name}", body: data.to_json)
+      api.default_headers = format_headers
+      resp
+    end
+
     private def format_label_selectors(params, label_selector)
       if label_selector
         params["labelSelector"] = label_selector.map { |k, v| "#{k}=#{v}" }.join(",")

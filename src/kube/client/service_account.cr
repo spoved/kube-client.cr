@@ -9,7 +9,7 @@ module Kube
       def service_account
         namespace = File.read(NAMESPACE_PATH).chomp
         token = File.read(TOKEN_PATH).chomp
-        kube_host = "https://kubernetes.#{namespace}.svc"
+        kube_host = "https://172.16.30.192:6443"
 
         conf_file = File.tempfile("config") do |file|
           conf = {
