@@ -6,9 +6,24 @@ module Kube
       NAMESPACE_PATH = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
       TOKEN_PATH     = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 
+      # Will read the contents of the {NAMESPACE_PATH} file
+      # @return [String] the namespace of the service account
+      def read_namespace : String
+        File.read(NAMESPACE_PATH).chomp
+      rescue
+        "default"
+      end
+
+      # Will read the contents of the {TOKEN_PATH} file
+      # @return [String] the token for the service account
+      def read_token : String
+        File.read(TOKEN_PATH).chomp
+      end
+
       def service_account
-        namespace = File.read(NAMESPACE_PATH).chomp
-        token = File.read(TOKEN_PATH).chomp
+        namespace = read_namespace
+        token = read_token
+
         kube_host = "https://kubernetes.#{namespace}.svc"
 
         conf_file = File.tempfile("config") do |file|
