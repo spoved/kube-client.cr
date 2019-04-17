@@ -23,7 +23,7 @@ module Kube
       # Will return the address for the kubernetes api
       # @return [String] the token for the service account
       def kube_address : String
-        "https://kubernetes.#{namespace}.svc"
+        "https://kubernetes.#{read_namespace}.svc"
       end
 
       def service_account
