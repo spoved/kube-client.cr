@@ -2,10 +2,13 @@ require "./version"
 require "./client_mixin"
 require "./client/*"
 require "halite"
+require "spoved/logger"
 
 # TODO: Write documentation for `Kube::Client`
 module Kube
   class Client
+    spoved_logger
+
     include ClientMixin
     extend ServiceAccount
 
@@ -13,13 +16,13 @@ module Kube
     getter config : Kube::Client::Config
 
     # Initialize a Client using the `KUBECONFIG` env
+    # TODO: handle multiple config files
     def self.new
       unless ENV["KUBECONFIG"]?
         raise Error.new("Must define KUBECONFIG env")
       end
 
       instance = Client.allocate
-      # TODO: handle multiple config files
       # ```
       # export  KUBECONFIG=$KUBECONFIG:config-demo:config-demo-2
       # ```

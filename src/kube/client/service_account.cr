@@ -20,11 +20,16 @@ module Kube
         File.read(TOKEN_PATH).chomp
       end
 
+      # Will return the address for the kubernetes api
+      # @return [String] the token for the service account
+      def kube_address : String
+        "https://kubernetes.#{namespace}.svc"
+      end
+
       def service_account
         namespace = read_namespace
         token = read_token
-
-        kube_host = "https://kubernetes.#{namespace}.svc"
+        kube_host = kube_address
 
         conf_file = File.tempfile("config") do |file|
           conf = {
