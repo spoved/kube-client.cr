@@ -123,6 +123,9 @@ module Kube
         end
       end
 
+      # TODO: Enable exec support
+      # TODO: Enable auth provider
+      # TODO: Enable support for user/pass
       def fetch_user_auth_options(user : YAML::Any)
         options = Hash(Symbol, String).new
         if user["token"]?
