@@ -96,6 +96,15 @@ module Kube
       api.get("namespaces/#{namespace}/pods", params: params)
     end
 
+    # Delete pod
+    def delete_pod(namespace : String? = nil, name : String)
+      if namespace.nil?
+        namespace = context[:namespace] || "default"
+      end
+
+      api.delete("namespaces/#{namespace}/pods/#{name}")
+    end
+
     # Will select pods with the provided status
     def select_pods(namespace : String? = nil, label_selector : Hash(String, String)? = nil, status : String? = nil) : Array(JSON::Any)
       data = pods(namespace, label_selector)["items"].as_a
