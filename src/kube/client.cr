@@ -97,7 +97,7 @@ module Kube
     end
 
     # Delete pod
-    def delete_pod(namespace : String? = nil, name : String)
+    def delete_pod(name : String, namespace : String? = nil)
       if namespace.nil?
         namespace = context[:namespace] || "default"
       end
