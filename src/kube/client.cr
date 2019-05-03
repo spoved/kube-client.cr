@@ -14,6 +14,7 @@ module Kube
 
     property context = Hash(Symbol, String | YAML::Any | Nil).new
     getter config : Kube::Client::Config
+    getter api : Api
 
     # Initialize a Client using the `KUBECONFIG` env
     # TODO: handle multiple config files
