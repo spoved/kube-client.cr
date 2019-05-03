@@ -147,6 +147,17 @@ module Kube
       resp
     end
 
+    def patch(path, data)
+      api.default_headers = format_headers.merge({
+        "Content-Type" => "application/json-patch+json",
+        "Accept"       => "application/json",
+      })
+
+      resp = api.patch(path, body: data.to_json)
+      api.default_headers = format_headers
+      resp
+    end
+
     private def format_label_selectors(params, label_selector)
       if label_selector
         params["labelSelector"] = label_selector.map { |k, v| "#{k}=#{v}" }.join(",")
