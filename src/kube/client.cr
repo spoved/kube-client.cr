@@ -1,4 +1,3 @@
-require "./version"
 require "./client_mixin"
 require "./client/*"
 require "halite"
