@@ -10,7 +10,7 @@ module Kube
       @[JSON::Field(key: "apiVersion")]
       property api_version : String
 
-      property metadata : NodeListMetadata
+      property metadata : Metadata
 
       property items : Array(Node)
     end
@@ -18,14 +18,14 @@ module Kube
     class Node
       include JSON::Serializable
 
-      property metadata : NodeMetadata
+      property metadata : Metadata
 
       property spec : SpecClass
 
       property status : StatusClass
     end
 
-    class NodeMetadata
+    class Metadata
       include JSON::Serializable
 
       property name : String
@@ -92,6 +92,12 @@ module Kube
       property application : String?
 
       property logbackend : String?
+
+      @[JSON::Field(key: "beta.kubernetes.io/masq-agent-ds-ready")]
+      property beta_kubernetes_io_masq_agent_ds_ready : String?
+
+      @[JSON::Field(key: "projectcalico.org/ds-ready")]
+      property projectcalico_org_ds_ready : String?
     end
 
     class SpecClass
@@ -255,16 +261,6 @@ module Kube
 
       @[JSON::Field(key: "devicePath")]
       property device_path : String
-    end
-
-    class NodeListMetadata
-      include JSON::Serializable
-
-      @[JSON::Field(key: "selfLink")]
-      property self_link : String
-
-      @[JSON::Field(key: "resourceVersion")]
-      property resource_version : String
     end
   end
 end
