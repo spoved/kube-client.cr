@@ -11,6 +11,8 @@ license: MIT
 dependencies:
   halite:
     github: icyleaf/halite
+  spoved:
+    github: spoved/spoved.cr
 development_dependencies:
   vcr:
     github: spoved/vcr.cr

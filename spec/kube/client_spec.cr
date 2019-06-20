@@ -47,5 +47,22 @@ load_cassette("Kube::Client") do
       resp = client.pods(label_selector: {"app" => "mysqlha", "component" => "helper"})
       resp["items"].as_a.size.should eq 1
     end
+
+    it "selects pods based on status" do
+      resp = client.select_pods(status: "Running")
+      resp.size.should eq 26
+      resp = client.select_pods(status: "Terminating")
+      resp.size.should eq 0
+    end
+
+    it "gathers nodes" do
+      client.nodes["items"].as_a.size.should eq 3
+    end
+
+    it "adds labels to pod" do
+      pod = client.add_pod_label("mysqlha-htvtb", "test", "test")
+      name = pod["metadata"]["name"].to_s
+      pod["metadata"]["labels"]["test"].as_s.should eq "test"
+    end
   end
 end
