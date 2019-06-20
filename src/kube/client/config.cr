@@ -127,28 +127,24 @@ module Kube
       # TODO: Enable auth provider
       # TODO: Enable support for user/pass
       def fetch_user_auth_options(user : YAML::Any)
-        options = Hash(Symbol, String).new
+        options = Hash(Symbol | String, String).new
         if user["token"]?
           options[:bearer_token] = user["token"].as_s
+
           # TODO: Enable exec support
           # elsif user["exec"]?
           #   exec_opts = user["exec"].as_a.dup
           #   exec_opts["command"] = ext_command_path(exec_opts["command"]) if exec_opts["command"]?
           #   options[:bearer_token] = Kubeclient::ExecCredentials.token(exec_opts)
-          # TODO: Enable auth provider
-          # elsif user["auth-provider"]?
-          #   auth_provider = user["auth-provider"]
-          #   options[:bearer_token] = case auth_provider["name"].as_s
-          #                            when "gcp"
-          #                            then Kubeclient::GoogleApplicationDefaultCredentials.token
-          #                            when "oidc"
-          #                            then Kubeclient::OIDCAuthProvider.token(auth_provider["config"])
-          #                            end
-          # TODO: Enable support for user/pass
-          # else
-          #   %w[username password].each do |attr|
-          #     options[attr.to_sym] = user[attr].as_s if user[attr]?
-          #   end
+
+        elsif user["auth-provider"]?
+          auth_provider = user["auth-provider"]
+          options[:bearer_token] = AuthProvider.get_token(user["auth-provider"]["name"].to_s, user["auth-provider"]["config"])
+        else
+          %w[username password].each do |attr|
+            options[:basic_auth] = "true"
+            options[attr] = user[attr].as_s if user[attr]?
+          end
         end
         options
       end
