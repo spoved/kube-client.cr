@@ -7,7 +7,7 @@ module Kube
           key_path = config["token-key"].as_s
           case name
           when "gcp"
-            JSON.parse(`cmd`)["credential"]["access_token"].as_s
+            JSON.parse(`#{cmd}`)["credential"]["access_token"].as_s
           else
             raise "Unsupported auth provider: #{name}"
           end
