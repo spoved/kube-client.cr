@@ -57,7 +57,7 @@ module Kube
       params = Hash(String, String).new
       format_label_selectors(params, label_selector)
 
-      api.get("nodes", params: params)
+      NodeList.from_json api.get("nodes", params: params).to_json
     end
 
     def stream

@@ -56,7 +56,7 @@ load_cassette("Kube::Client") do
     end
 
     it "gathers nodes" do
-      client.nodes["items"].as_a.size.should eq 3
+      client.nodes.items.size.should eq 3
     end
 
     it "adds labels to pod" do
