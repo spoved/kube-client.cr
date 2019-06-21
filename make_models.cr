@@ -40,13 +40,18 @@ Dir.open(dir).children.sort.each do |ver|
     end
 
     failed = false
-    puts "Running big command"
+    puts "Running quicktype command"
+
+    last_dropped = ""
     while !system("quicktype -s schema --lang cr -o all.cr #{files.join(' ')}")
       failed = true
-      puts "Dropping #{files.pop}"
+      last_dropped = files.pop
     end
 
-    exit 1 if failed
+    if failed
+      puts "Last file to be dropped: #{last_dropped}"
+      exit 1
+    end
   end
 
   # break
