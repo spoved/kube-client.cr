@@ -9,3 +9,5 @@
 /shard.lock
 
 src/kube/models
+spec/files/kube_config_test.yml
+spec/fixtures/vcr
