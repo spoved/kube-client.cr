@@ -8,6 +8,7 @@
 # Dependencies will be locked in applications that use them
 /shard.lock
 
-src/kube/models
+*.temp
+
 spec/files/kube_config_test.yml
 spec/fixtures/vcr

@@ -1,7 +1,9 @@
-require "./client_mixin"
-require "./client/*"
 require "halite"
 require "spoved/logger"
+
+require "./client_mixin"
+require "./client/*"
+require "./resource"
 
 # TODO: Write documentation for `Kube::Client`
 module Kube
