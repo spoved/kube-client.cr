@@ -1,7 +1,9 @@
-require "./client_mixin"
-require "./client/*"
 require "halite"
 require "spoved/logger"
+
+require "./client_mixin"
+require "./client/*"
+require "./resource"
 
 # TODO: Write documentation for `Kube::Client`
 module Kube
@@ -51,6 +53,13 @@ module Kube
     def change_context(context_name : String)
       @context = config.fetch_context(context_name)
       update_api
+    end
+
+    def namespaces(label_selector : Hash(String, String)? = nil)
+      params = Hash(String, String).new
+      format_label_selectors(params, label_selector)
+
+      api.get("namespaces", params: params)
     end
 
     def nodes(label_selector : Hash(String, String)? = nil)

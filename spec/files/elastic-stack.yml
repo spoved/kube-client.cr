@@ -1,0 +1,16 @@
+elasticsearch:
+  enabled: true
+  client:
+    replicas: 1
+  master:
+    replicas: 1
+    persistence:
+      enabled: false
+  data:
+    replicas: 1
+    persistence:
+      enabled: false
+logstash:
+  enabled: true
+  persistence:
+    enabled: false

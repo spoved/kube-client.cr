@@ -12,7 +12,7 @@ describe Kube::Client::Config do
     contexts = config.contexts
     contexts.should be_a(Array(String))
     contexts.empty?.should be_false
-    contexts[0].should eq "mysql-test"
+    contexts[0].should eq "context-test"
   end
 
   it "returns absolute file path" do
@@ -28,7 +28,7 @@ describe Kube::Client::Config do
   end
 
   it "fetches specific context" do
-    res = config._fetch_context("mysql-test")
+    res = config._fetch_context("context-test")
     res[:namespace].should be_nil
     res[:cluster].should_not be_nil
     res[:user].should_not be_nil
@@ -41,28 +41,28 @@ describe Kube::Client::Config do
   end
 
   it "fetches cluster ca data" do
-    res = config._fetch_context("mysql-test")
+    res = config._fetch_context("context-test")
     res[:cluster].should_not be_nil
     data = config._fetch_cluster_ca_data(res[:cluster].as(YAML::Any))
     data.should eq CA_DATA
   end
 
   it "fetches user cert data" do
-    res = config._fetch_context("mysql-test")
+    res = config._fetch_context("context-test")
     res[:user].should_not be_nil
     data = config._fetch_user_cert_data(res[:user].as(YAML::Any))
     data.should eq USER_CERT_DATA
   end
 
   it "fetches user key data" do
-    res = config._fetch_context("mysql-test")
+    res = config._fetch_context("context-test")
     res[:user].should_not be_nil
     data = config._fetch_user_key_data(res[:user].as(YAML::Any))
     data.should eq USER_KEY_DATA
   end
 
   it "returns namespace of context" do
-    res = config._fetch_context("mysql-helper")
+    res = config._fetch_context("minikube")
     res[:namespace].should eq "default"
   end
 end
