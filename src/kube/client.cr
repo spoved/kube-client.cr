@@ -69,11 +69,15 @@ module Kube
       NodeList.from_json api.get("nodes", params: params).to_json
     end
 
-    def secrets(label_selector : Hash(String, String)? = nil)
+    def secrets(namespace : String? = nil, label_selector : Hash(String, String)? = nil)
+      if namespace.nil?
+        namespace = context[:namespace] || "default"
+      end
+
       params = Hash(String, String).new
       format_label_selectors(params, label_selector)
 
-      api.get("secrets", params: params)
+      api.get("namespaces/#{namespace}/secrets", params: params)
     end
 
     def stream
