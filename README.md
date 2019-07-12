@@ -1,4 +1,4 @@
-# kube-client
+# kube-client [![Build Status](https://travis-ci.org/spoved/kube-client.cr.svg?branch=master)](https://travis-ci.org/spoved/kube-client.cr)
 
 A very basic lib to communicate with kubernetes API.
 
