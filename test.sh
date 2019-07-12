@@ -5,7 +5,9 @@ export CLUSTER_NAME="minikube"
 export APP_NAME="kubecr-test"
 
 setup_minikube(){
+  set +e
   mini_k_status=$(minikube status --format "{{.APIServer}}")
+  set -e
 
   if [[ "${mini_k_status}" != "Running" ]]; then
     minikube delete
@@ -47,3 +49,5 @@ export KUBE_TOKEN=$(kubectl get secrets -n kube-system -o jsonpath="{.items[?(@.
 
 # minikube dashboard
 run_spec
+
+echo ${env | sort} > .env

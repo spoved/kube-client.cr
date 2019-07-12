@@ -10,7 +10,7 @@ module Kube
       @[JSON::Field(key: "apiVersion")]
       property api_version : String
 
-      property metadata : Metadata
+      property metadata : Metadata?
 
       property items : Array(Node)
     end
@@ -28,12 +28,12 @@ module Kube
     class Metadata
       include JSON::Serializable
 
-      property name : String
+      property name : String?
 
       @[JSON::Field(key: "selfLink")]
       property self_link : String
 
-      property uid : String
+      property uid : String?
 
       @[JSON::Field(key: "resourceVersion")]
       property resource_version : String
