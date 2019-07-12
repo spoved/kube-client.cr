@@ -1,7 +1,10 @@
+require "dotenv"
+Dotenv.load(".env_test")
+
 require "spec"
 require "../src/kube-client"
 
-Spoved.logger.level = Logger::DEBUG
+# Spoved.logger.level = Logger::DEBUG
 
 TEST_KUBE_CONFIG_TEMPLATE = "./spec/files/kube_config_template.yml"
 TEST_KUBE_CONFIG_FILE     = "./spec/files/kube_config_test.yml"

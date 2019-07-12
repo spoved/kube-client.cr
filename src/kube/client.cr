@@ -66,7 +66,7 @@ module Kube
       params = Hash(String, String).new
       format_label_selectors(params, label_selector)
 
-      NodeList.from_json api.get("nodes", params: params).to_json
+      api.get("nodes", params: params)
     end
 
     def secrets(namespace : String? = nil, label_selector : Hash(String, String)? = nil)

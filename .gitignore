@@ -11,4 +11,3 @@
 *.temp
 
 spec/files/kube_config_test.yml
-spec/fixtures/vcr
