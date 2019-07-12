@@ -1,4 +1,4 @@
-require "../error"
+require "./error"
 require "./config/*"
 require "yaml"
 require "base64"

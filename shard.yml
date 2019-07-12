@@ -4,7 +4,7 @@ version: 0.1.2
 authors:
   - Holden Omans <holden.omans@gmail.com>
 
-crystal: 0.27.2
+crystal: 0.29.0
 
 license: MIT
 
@@ -16,3 +16,5 @@ dependencies:
 development_dependencies:
   vcr:
     github: spoved/vcr.cr
+  dotenv:
+    github: gdotdesign/cr-dotenv

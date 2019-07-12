@@ -34,7 +34,7 @@ check_helm(){
 }
 
 run_spec(){
-  crystal spec --verbose
+  crystal spec
 }
 
 
