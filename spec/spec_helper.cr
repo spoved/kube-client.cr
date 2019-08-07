@@ -2,6 +2,8 @@ require "dotenv"
 Dotenv.load(".env_test")
 
 require "spec"
+require "vcr"
+
 require "../src/kube-client"
 
 # Spoved.logger.level = Logger::DEBUG
@@ -31,6 +33,7 @@ def gen_kube_config_file
     # user["user"].as_h[YAML::Any.new("token")] = YAML::Any.new(Base64.strict_encode(ENV["KUBE_TOKEN"]))
     user["user"].as_h[YAML::Any.new("token")] = YAML::Any.new(ENV["KUBE_TOKEN"])
   end
+
   File.open(TEST_KUBE_CONFIG_FILE, "w+") do |file|
     file.puts temp.to_yaml
   end
@@ -44,6 +47,14 @@ USER_KEY_DATA  = Base64.decode_string(CONFIGURE_YAML["users"].as_a[2]["user"]["c
 
 CONFIGURE_YAML = YAML.parse(File.read(TEST_KUBE_CONFIG_FILE))
 TEST_CLIENT    = Kube::Client.new(TEST_KUBE_CONFIG_FILE)
+
+class HelperTest
+  include Kube::Helper
+
+  def initialize
+    @client = TEST_CLIENT
+  end
+end
 
 module Kube
   class Client

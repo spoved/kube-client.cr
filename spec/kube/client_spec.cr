@@ -1,5 +1,4 @@
 require "../spec_helper"
-require "vcr"
 
 load_cassette("Kube::Client") do
   describe Kube::Client do
