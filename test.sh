@@ -48,7 +48,7 @@ export KUBE_API_SERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\
 export KUBE_TOKEN=$(kubectl get secrets -n kube-system -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='default')].data.token}"|base64 -d)
 
 
-# env | sort > .env_test
+env | egrep "APP_NAME|CLUSTER_NAME|KUBE_" | sort > .env_test
 
 # minikube dashboard
 run_spec
