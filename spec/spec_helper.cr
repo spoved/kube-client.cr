@@ -8,6 +8,8 @@ require "../src/kube-client"
 
 Kube::Client::Api::Log.level = :error
 
+Spec.before_suite { load_cassette("Kube::Client") }
+
 TEST_KUBE_CONFIG_TEMPLATE = "./spec/files/kube_config_template.yml"
 TEST_KUBE_CONFIG_FILE     = "./spec/files/kube_config_test.yml"
 
