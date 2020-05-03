@@ -19,16 +19,17 @@ setup_minikube(){
 
 check_helm(){
   set +e
-  helm list 1>/dev/null 2>&1
+  /usr/local/Cellar/helm@2/2.16.6/bin/helm list 1>/dev/null 2>&1
   if [[ $? -ne 0 ]]; then
-    helm init 1>/dev/null 2>&1
+    /usr/local/Cellar/helm@2/2.16.6/bin/helm init 1>/dev/null 2>&1
     sleep 10
   fi
   set -e
 
-  chart_status=$(helm list --output json 2>/dev/null | jq '.Releases | .[] | select(.Name == "kubecr-test") | .Status' -r)
+  chart_status=$(/usr/local/Cellar/helm@2/2.16.6/bin/helm list --output json | jq '.Releases | .[] | select(.Name == "kubecr-test") | .Status' -r)
+
   if [[ -z "${chart_status}" ]];then
-    helm install stable/elastic-stack --name ${APP_NAME} -f ./spec/files/elastic-stack.yml 1>/dev/null 2>&1
+    /usr/local/Cellar/helm@2/2.16.6/bin/helm install stable/elastic-stack --name ${APP_NAME} -f ./spec/files/elastic-stack.yml 1>/dev/null 2>&1
     sleep 60
   fi
 }

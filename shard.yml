@@ -1,5 +1,5 @@
 name: kube-client
-version: 0.1.3
+version: 0.1.4
 
 authors:
   - Holden Omans <holden.omans@gmail.com>
@@ -11,10 +11,8 @@ license: MIT
 dependencies:
   halite:
     github: icyleaf/halite
-    version: 0.10.3
   spoved:
     github: spoved/spoved.cr
-    version: 0.1.8
 development_dependencies:
   vcr:
     github: spoved/vcr.cr

@@ -13,19 +13,20 @@ TEST_KUBE_CONFIG_FILE     = "./spec/files/kube_config_test.yml"
 
 def gen_kube_config_file
   unless ENV["KUBE_TOKEN"]?
-    ENV["KUBE_TOKEN"] = "eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRl" \
-                        "cy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY" \
-                        "291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLThjZ2NiIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC" \
-                        "9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2U" \
-                        "tYWNjb3VudC51aWQiOiIwZTA5YjliMS05NmI1LTExZTktOGY5My0wODAwMjc2MTJmYzgiLCJzdWIiOiJzeXN0ZW06c2Vy" \
-                        "dmljZWFjY291bnQ6a3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.BIp8V62G2sZJ8AnPUaJ22npfbkJSufimcK9DWqjEp_VtNut3" \
-                        "1RQlK15VI7C4QPv2uwS65_GyLfIS5DI8E9kikHkM_nglvNkSTr63hSzJuyPZlDNopVC4NGi3BVJLMQUrcGU4ihjLiqeAS" \
-                        "TvqQkiTb8CIfCbKLf4hyBsjBzf6tfQP4wdNRSjJrKUtuGzqKtwnyZQrqiYA-GA0GVifyhNYI9rTen_SRQJrv-S__aXVwO" \
-                        "R7p263-n86iKnr7ZLxiJ_TlBVEW2BEs8bOQb1GjAH0doKoKEhWDWAhX19MRVebA9i47PvhBWbuRoxGXxCoKgeWkS901a4" \
-                        "7SzfrTR7I8UQXDA"
+    ENV["KUBE_TOKEN"] = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ik1YYkdlT3BOckFJNTB2U240MFUtZzdKUnVzaWY4Yy1YRG53TzAtZUdfRFEifQ" \
+                        ".eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uY" \
+                        "W1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJ" \
+                        "kZWZhdWx0LXRva2VuLThzcmI3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQub" \
+                        "mFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJ" \
+                        "mYmEyYzM0NC0zYzExLTQ4MGUtYmFkMS1jYmM2M2I3ZTQ3ZGMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a" \
+                        "3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.qZNlSnERXx4sAP9-5GF1glGprtrocTIhCRsNi-EX3qvwGIqnWVJV87U3OsQnkg" \
+                        "7cajVDOg0gpFiTW56lOFDhI8tJdwzfENqs51h_Zg_uO1c4A7QD8POKJP11yWFxWXsP3bAI-9XckKi5G8u1d5_4-cVn" \
+                        "H2RTa9FpM9yPBNoRDKEGJZ3Lwtkr-tSw-CjknhbsYvFs2BV8gsUKQCOyQop4U7HZLrKZjYqcdWG-_2n7oW97jEicVp" \
+                        "BZRAamuihbldfRTH8auhoaje76eg-pWfJTnm_WpriDCgO9ZvmKClz5JjOIMxM_BSzPXDvKLRQFqvJJiDK3BQxjOqVd" \
+                        "2m-40xZIlQ"
   end
 
-  ENV["KUBE_API_SERVER"] = "https://192.168.99.104:8443" unless ENV["KUBE_API_SERVER"]?
+  ENV["KUBE_API_SERVER"] = "https://192.168.64.4:8443" unless ENV["KUBE_API_SERVER"]?
 
   temp = YAML.parse(File.read(TEST_KUBE_CONFIG_TEMPLATE))
   temp["clusters"].as_a[0]["cluster"].as_h[YAML::Any.new("server")] = YAML::Any.new(ENV["KUBE_API_SERVER"])
