@@ -4,7 +4,7 @@ version: 0.1.4
 authors:
   - Holden Omans <holden.omans@gmail.com>
 
-crystal: 0.29.0
+crystal: 0.34.0
 
 license: MIT
 

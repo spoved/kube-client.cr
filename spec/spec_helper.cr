@@ -6,7 +6,7 @@ require "vcr"
 
 require "../src/kube-client"
 
-# Spoved.logger.level = Logger::DEBUG
+Spoved::Log.level = :error
 
 TEST_KUBE_CONFIG_TEMPLATE = "./spec/files/kube_config_template.yml"
 TEST_KUBE_CONFIG_FILE     = "./spec/files/kube_config_test.yml"
