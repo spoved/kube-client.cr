@@ -1,16 +1,14 @@
 name: kube-client
 version: 0.2.0
 
+crystal: ">= 0.36.1, < 2.0.0"
+
 authors:
   - Holden Omans <holden.omans@gmail.com>
-
-crystal: 1.0.0
 
 license: MIT
 
 dependencies:
-  halite:
-    github: icyleaf/halite
   spoved:
     github: spoved/spoved.cr
 development_dependencies:
