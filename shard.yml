@@ -1,5 +1,5 @@
 name: kube-client
-version: 0.2.0
+version: 0.2.1
 
 crystal: ">= 0.36.1, < 2.0.0"
 
