@@ -9,8 +9,14 @@ authors:
 license: MIT
 
 dependencies:
+  k8s:
+    github: spoved/k8s.cr
+    branch: master
   spoved:
     github: spoved/spoved.cr
+  halite:
+    github: icyleaf/halite
+
 development_dependencies:
   vcr:
     github: spoved/vcr.cr
