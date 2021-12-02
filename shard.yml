@@ -16,6 +16,11 @@ dependencies:
     github: spoved/spoved.cr
   halite:
     github: icyleaf/halite
+  openssl_ext:
+    github: spider-gazelle/openssl_ext
+    version: ~> 2.1.5
+  db:
+    github: crystal-lang/crystal-db
 
 development_dependencies:
   vcr:

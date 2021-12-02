@@ -19,12 +19,16 @@ module Kube
       @[JSON::Field(key: "certificate-authority")]
       @[YAML::Field(key: "certificate-authority")]
       property certificate_authority : String? = nil
+      @[JSON::Field(key: "certificate-authority-data")]
+      @[YAML::Field(key: "certificate-authority-data")]
+      property certificate_authority_data : String? = nil
+
       property server : String
       @[JSON::Field(key: "insecure-skip-tls-verify")]
       @[YAML::Field(key: "insecure-skip-tls-verify")]
       property insecure_skip_tls_verify : Bool = false
 
-      def initialize(@certificate_authority, @server, @insecure_skip_tls_verify); end
+      def initialize(@certificate_authority, @certificate_authority_data, @server, @insecure_skip_tls_verify); end
     end
   end
 end
