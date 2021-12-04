@@ -1,0 +1,90 @@
+require "spoved/logger"
+require "./transport"
+
+module Kube
+  class ApiClient
+    spoved_logger
+    private getter transport : Transport
+    getter api_version : String
+    @api_resources : Array(K8S::Apimachinery::Apis::Meta::V1::APIResource)? = nil
+
+    # *api_version* : either core version (v1) or apigroup/apiversion (apps/v1)
+    def self.path(api_version : String) : String
+      if api_version.includes? "/"
+        File.join("/apis", api_version)
+      else
+        File.join("/api", api_version)
+      end
+    end
+
+    def initialize(@transport : Transport, @api_version : String); end
+
+    def path(*path)
+      @transport.path(self.class.path(@api_version), *path)
+    end
+
+    # api_resources loaded yet?
+    def api_resources? : Bool
+      !@api_resources.nil?
+    end
+
+    # Force-update APIResources
+    def api_resources! : Array(K8S::Apimachinery::Apis::Meta::V1::APIResource)
+      @api_resources = @transport.get(
+        path,
+        response_class: K8S::Apimachinery::Apis::Meta::V1::APIResourceList
+      ).as(K8S::Apimachinery::Apis::Meta::V1::APIResourceList).resources
+    end
+
+    # Cached APIResources
+    def api_resources : Array(K8S::Apimachinery::Apis::Meta::V1::APIResource)
+      @api_resources || api_resources!
+    end
+
+    # @param resource_name [String]
+    # @raise [K8s::Error::UndefinedResource]
+    # @return [K8s::Resource]
+    def find_api_resource(resource_name)
+      found_resource = api_resources.find { |api_resource| api_resource.name == resource_name }
+      found_resource ||= api_resources!.find { |api_resource| api_resource.name == resource_name }
+      raise Kube::Error::UndefinedResource.new("Unknown resource #{resource_name} for #{@api_version}") unless found_resource
+
+      found_resource
+    end
+
+    def resource(resource_name, namespace : String? = nil) : ResourceClient
+      ResourceClient.new(@transport, self, find_api_resource(resource_name), namespace: namespace)
+    end
+
+    def client_for_resource(resource, namespace : String? = nil) : ResourceClient
+      unless @api_version == resource.api_version
+        raise K8s::Error::UndefinedResource.new("Invalid apiVersion=#{resource.api_version} for #{@api_version} client")
+      end
+
+      found_resource = api_resources.find { |api_resource| api_resource.kind == resource.kind }
+      found_resource ||= api_resources!.find { |api_resource| api_resource.kind == resource.kind }
+      raise K8s::Error::UndefinedResource.new("Unknown resource kind=#{resource.kind} for #{@api_version}") unless found_resource
+
+      ResourceClient.new(@transport, self, found_resource, namespace: resource.metadata.namespace || namespace)
+    end
+
+    # TODO: skip non-namespaced resources if namespace is given, or ignore namespace?
+    def resources(namespace : String? = nil)
+      api_resources.map { |api_resource|
+        ResourceClient.new(@transport, self, api_resource, namespace: namespace)
+      }
+    end
+
+    # Pipeline list requests for multiple resource types.
+    #
+    # Returns flattened array with mixed resource kinds.
+    #
+    # @param resources [Array<K8s::ResourceClient>] default is all listable resources for api
+    # @param options @see [K8s::ResourceClient#list]
+    # @return [Array<K8s::Resource>]
+    def list_resources(resources = nil, **options) : Array(ResourceClient)
+      resources ||= self.resources.select(&.list?)
+      ResourceClient.list(resources, @transport, **options)
+    end
+  end
+end

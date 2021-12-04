@@ -18,15 +18,44 @@ module Kube
       end
     end
 
+    class UndefinedResource < Error; end
+
+    class ArgumentError < Error; end
+
+    HTTP_STATUS_ERRORS = {
+      400 => BadRequest,
+      401 => Unauthorized,
+      403 => Forbidden,
+      404 => NotFound,
+      405 => MethodNotAllowed,
+      409 => Conflict,
+      422 => Invalid,
+      429 => Timeout,
+      500 => InternalError,
+      503 => ServiceUnavailable,
+      504 => ServerTimeout,
+    }
+
     class API < Error
-      @method : String
-      @path : String
-      @code : Int32
-      @reason : String
-      @status : K8S::Apimachinery::Apis::Meta::V1::Status?
+      getter method : String
+      getter path : String
+      getter code : Int32
+      getter reason : String
+      getter status : K8S::Apimachinery::Apis::Meta::V1::Status?
+
+      private macro create_subclass
+        case code.code
+        {% for code, name in HTTP_STATUS_ERRORS %}
+        when {{code}}
+          {{name}}.new(method, path, code, nil, status)
+        {% end %}
+        else
+          new(method, path, code, nil, status)
+        end
+      end
 
       def self.new(method, path, code : HTTP::Status, status : K8S::Apimachinery::Apis::Meta::V1::Status)
-        new(method, path, code, nil, status)
+        create_subclass
       end
 
       def initialize(@method, @path, code : HTTP::Status, reason : String?, @status = nil)
@@ -39,5 +68,17 @@ module Kube
         end
       end
     end
+
+    macro define_api_errors
+      {% for code, name in HTTP_STATUS_ERRORS %}
+      class {{name}} < API
+        def initialize(method, path, code, reason, status)
+          super(method, path, code, reason, status)
+        end
+      end
+      {% end %}
+    end
+
+    define_api_errors
   end
 end
