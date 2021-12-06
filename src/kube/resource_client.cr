@@ -21,15 +21,9 @@ module Kube
     #
     # Returns flattened array with mixed resource kinds.
     #
-    # @param resources [Array<K8s::ResourceClient>]
-    # @param transport [K8s::Transport]
-    # @param namespace [String, nil]
-    # @param labelSelector [nil, String, Hash{String => String}]
-    # @param fieldSelector [nil, String, Hash{String => String}]
-    # @param skip_forbidden [Boolean] skip resources that return HTTP 403 errors
-    # @return [Array<K8s::Resource>]
+    # `skip_forbidden` [Boolean] skip resources that return HTTP 403 errors
     def self.list(resources : Array(ResourceClient), transport : Transport, namespace : String? = nil,
-                  label_selector = nil, field_selector = nil, skip_forbidden = false)
+                  label_selector = nil, field_selector = nil, skip_forbidden = false) : Array(K8S::Resource)
       api_paths = resources.map(&.path(namespace: namespace))
 
       api_lists = transport.gets(
@@ -42,10 +36,11 @@ module Kube
         skip_forbidden: skip_forbidden
       )
 
-      resources.zip(api_lists)
-      # zipped.flat_map do |resource, api_list|
-      #   api_list ? resource.process_list(api_list) : [] of K8S::Kubernetes::Resource
-      # end
+      # api_lists.each { |r| puts r.class }
+      # resources.zip(api_lists)
+      resources.zip(api_lists).flat_map do |resource, api_list|
+        api_list ? resource.process_list(api_list) : [] of K8S::Kubernetes::Resource
+      end.reject(Nil)
     end
 
     module Utils
@@ -90,45 +85,18 @@ module Kube
       def self.new(transport, api_client, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace = nil)
         ver = (api_resource.version.nil? ||  api_resource.version.not_nil!.empty?) ? "v1" : api_resource.version.not_nil!
         group = api_resource.group.nil? ? "" : api_resource.group.not_nil!
-        {% others = {} of StringLiteral => TypeNode %}
-        {% for resource in K8S::Kubernetes::Resource.subclasses %}
-          {% if resource.annotation(::K8S::GroupVersionKind) %}
-          {% anno = resource.annotation(::K8S::GroupVersionKind) %}
-            {% value = "{#{anno[:group]},#{anno[:version]},#{anno[:kind]}}" %}
-            {% if !others[value] %} {% others[value] = resource %} {% end %}
-          {% end %}
-        {% end %}
-        {% for resource in K8S::Kubernetes::Resource.subclasses %}
-          {% if resource.annotation(::K8S::GroupVersionKind) %}
-            {% anno = resource.annotation(::K8S::GroupVersionKind) %}
-            {% value = "{\"\",#{anno[:version]},#{anno[:kind]}}" %}
-            {% if anno[:group] != "" && !others[value] %} {% others[value] = resource %} {% end %}
-            {% value1 = "{\"core\",#{anno[:version]},#{anno[:kind]}}" %}
-            {% if !others[value1] && anno[:group] == "" %} {% others[value1] = resource %} {% end %}
-          {% end %}
-        {% end %}
-        {% for mapping in K8S::Kubernetes::Resource::MAPPINGS %}
-          {% value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}> %}
-          {% if !others[value] %} {% others[value] = mapping[2].resolve %} {% end %}
-          {% if mapping[0] =~ /\// %}{% split = mapping[0].split('/') %}
-          {% value1 = "{#{split.first},#{split.last},#{anno[:kind]}}" %}
-          {% if !others[value1] && anno[:group] == "" %} {% others[value1] = resource %} {% end %}
-          {% end %}
-        {% end %}
-
-        case {group, ver, api_resource.kind}
-        {% for key, resource in others %}
-        when {{key.id}}
+        klass = k8s_resource_class(group, ver, api_resource.kind)
+        case klass
+        {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+        {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+        when {{resource.id}}.class
           ::Kube::ResourceClient({{resource.id}}).new(transport, api_client, api_resource, namespace, {{resource.id}})
-        {% end %}
+        {% end %}{% end %}
         else
-          if api_resource.kind =~ /List$/
-            return ::Kube::ResourceClient(K8S::Kubernetes::ResourceList(K8S::Kubernetes::GenericResource)).new(transport, api_client, api_resource, namespace, K8S::Kubernetes::ResourceList(K8S::Kubernetes::GenericResource))
-          end
-          logger.warn &.emit %<Unknown api resource: "#{group}/#{ver}/#{api_resource.kind}">,
-            group: group, version: ver, kind: api_resource.kind
-          ::Kube::ResourceClient(K8S::Kubernetes::Resource).new(transport, api_client, api_resource, namespace, K8S::Kubernetes::Resource)
+          raise Kube::Error::UndefinedResource.new("Unknown resource kind: #{klass.inspect}")
         end
+      rescue ex : K8S::Error::UnknownResource
+        ::Kube::ResourceClient(K8S::Kubernetes::Resource).new(transport, api_client, api_resource, namespace, K8S::Kubernetes::Resource)
       end
     end
 
@@ -219,6 +187,16 @@ module Kube
     # @return [Bool]
     def list?
       @api_resource.verbs.includes? "list"
+    end
+
+    # @param list [K8s::Resource]
+    # @return [Array<Object>] array of instances of resource_class
+    def process_list(list)
+      if (list.is_a?(K8S::Kubernetes::ResourceList))
+        list.items
+      else
+        nil
+      end
     end
 
     # @return [Array<Object>] array of instances of resource_class

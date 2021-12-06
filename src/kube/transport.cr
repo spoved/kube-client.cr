@@ -1,3 +1,4 @@
+require "./error"
 require "./auth_provider/*"
 require "openssl_ext"
 require "./transport/*"
@@ -76,7 +77,11 @@ module Kube
       @ssl_contxt.ca_certificates = @options[:ssl_ca_file].not_nil! unless @options[:ssl_ca_file].nil?
 
       @pool = DB::Pool(HTTP::Client).new(max_pool_size: pool_options.pool_capacity, initial_pool_size: pool_options.initial_pool_size, checkout_timeout: pool_options.pool_timeout) do
-        HTTP::Client.new(uri: @server, tls: @ssl_contxt)
+        if @server.scheme == "https"
+          HTTP::Client.new(uri: @server, tls: @ssl_contxt)
+        else
+          HTTP::Client.new(uri: @server)
+        end
       end
     end
 

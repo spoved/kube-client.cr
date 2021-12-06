@@ -111,6 +111,11 @@ module Kube
       response = _request(options, req_options)
       t = Time.monotonic - t1
       obj = parse_response(response, options, response_class: response_class)
+    rescue ex : K8S::Error::UnknownResource
+      logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
+      logger.debug { "Request: #{options[:body]?}" } if options[:body]?
+      logger.debug { "Response: #{response.body}" } unless response.nil?
+      nil
     rescue ex
       logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
       logger.debug { "Request: #{options[:body]?}" } if options[:body]?
@@ -123,11 +128,13 @@ module Kube
       obj
     end
 
-    def requests(*options, skip_missing = false, skip_forbidden = false, retry_errors = true, **common_options)
-      requests(options, skip_missing, skip_forbidden, retry_errors, **common_options)
+    def requests(*options, skip_missing = false, skip_forbidden = false, retry_errors = true, skip_unknown = true, **common_options)
+      requests(options, skip_missing, skip_forbidden, retry_errors, skip_unknown, **common_options)
     end
 
-    def requests(options : Enumerable(NamedTuple(method: String, path: String)), skip_missing = false, skip_forbidden = false, retry_errors = true, **common_options)
+    def requests(options : Enumerable(NamedTuple(method: String, path: String)),
+                 skip_missing = false, skip_forbidden = false, retry_errors = true, skip_unknown = true,
+                 **common_options)
       t1 = Time.monotonic
       responses = options.map { |opts| request(**request_options(**common_options.merge(opts))) }
       responses = options.map { |opts| _request(opts, common_options) }
@@ -139,6 +146,9 @@ module Kube
 
         begin
           parse_response(response, request_options, response_class: response_class)
+        rescue e : Kube::Error::UndefinedResource | K8S::Error::UnknownResource
+          raise e unless skip_unknown
+          nil
         rescue e : Kube::Error::NotFound
           raise e unless skip_missing
           nil

@@ -58,14 +58,18 @@ module Kube
 
     def client_for_resource(resource, namespace : String? = nil) : ResourceClient
       unless @api_version == resource.api_version
-        raise K8s::Error::UndefinedResource.new("Invalid apiVersion=#{resource.api_version} for #{@api_version} client")
+        raise Kube::Error::UndefinedResource.new("Invalid apiVersion=#{resource.api_version} for #{@api_version} client")
       end
 
       found_resource = api_resources.find { |api_resource| api_resource.kind == resource.kind }
       found_resource ||= api_resources!.find { |api_resource| api_resource.kind == resource.kind }
-      raise K8s::Error::UndefinedResource.new("Unknown resource kind=#{resource.kind} for #{@api_version}") unless found_resource
+      raise Kube::Error::UndefinedResource.new("Unknown resource kind=#{resource.kind} for #{@api_version}") unless found_resource
 
-      ResourceClient.new(@transport, self, found_resource, namespace: resource.metadata.namespace || namespace)
+      if resource.is_a?(::K8S::Kubernetes::Resource::Object)
+        ResourceClient.new(@transport, self, found_resource, namespace: resource.metadata.namespace || namespace)
+      else
+        ResourceClient.new(@transport, self, found_resource, namespace: namespace)
+      end
     end
 
     # TODO: skip non-namespaced resources if namespace is given, or ignore namespace?
@@ -78,14 +82,10 @@ module Kube
     # Pipeline list requests for multiple resource types.
     #
     # Returns flattened array with mixed resource kinds.
-    #
-    # @param resources [Array<K8s::ResourceClient>] default is all listable resources for api
-    # @param options @see [K8s::ResourceClient#list]
-    # @return [Array<K8s::Resource>]
-    def list_resources(resources = nil, **options) : Array(ResourceClient)
+    def list_resources(resources : Array(Kube::ResourceClient)? = nil, **options) : Array(K8S::Resource)
       Log.trace { "list_resources(#{resources}, #{options})" }
-      # resources ||= self.resources.select(&.list?)
-      # ResourceClient.list(resources, @transport, **options)
+      resources ||= self.resources.select(&.list?)
+      ResourceClient.list(resources, @transport, **options)
     end
   end
 end
