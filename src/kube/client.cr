@@ -84,7 +84,8 @@ module Kube
               api(api_resource_list.group_version).api_resources = api_resource_list.resources
             end
           end
-        rescue ex : Kube::Error::API::NotFound | Kube::Error::API::ServiceUnavailable
+        rescue ex : Kube::Error::NotFound | Kube::Error::ServiceUnavailable
+          logger.error { ex.message }
           # kubernetes api is in unstable state
           # because this is only performance optimization, better to skip prefetch and move on
         end
@@ -98,10 +99,23 @@ module Kube
       apis(prefetch_resources: true).flat_map { |api|
         begin
           api.resources(namespace: namespace)
-        rescue ex : Kube::Error::API::ServiceUnavailable | Kube::Error::API::NotFound
+        rescue ex : Kube::Error::ServiceUnavailable | Kube::Error::NotFound
+          logger.error { ex.message }
           Array(Kube::ResourceClient(K8S::Kubernetes::Resource)).new
         end
       }
+    end
+
+    # Pipeline list requests for multiple resource types.
+    #
+    # Returns flattened array with mixed resource kinds.
+    def list_resources(resources : Array(Kube::ResourceClient)? = nil, **options)
+      logger.trace { "list_resources(#{resources}, #{options})" }
+      resources ||= self.resources.select(&.list?)
+      ResourceClient.list(resources, @transport, **options)
+    rescue ex : Kube::Error::NotFound
+      logger.error { ex.message }
+      raise ex
     end
   end
 end

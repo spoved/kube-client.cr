@@ -83,8 +83,9 @@ module Kube
     # @param options @see [K8s::ResourceClient#list]
     # @return [Array<K8s::Resource>]
     def list_resources(resources = nil, **options) : Array(ResourceClient)
-      resources ||= self.resources.select(&.list?)
-      ResourceClient.list(resources, @transport, **options)
+      Log.trace { "list_resources(#{resources}, #{options})" }
+      # resources ||= self.resources.select(&.list?)
+      # ResourceClient.list(resources, @transport, **options)
     end
   end
 end

@@ -19,4 +19,10 @@ describe Kube::Client do
     resources = client.resources
     resources.should_not be_empty
   end
+
+  it "#list_resources", focus: true do
+    client = Kube::Client.new(new_transport)
+    resources = client.list_resources
+    # resources.should_not be_empty
+  end
 end

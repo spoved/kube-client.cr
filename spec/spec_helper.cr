@@ -6,7 +6,7 @@ require "../src/kube-client/v1.22"
 
 # Kube::Client::Api::Log.level = :error
 Spec.before_suite {
-# spoved_logger :trace, bind: true, clear: true
+  spoved_logger :warn, bind: true, clear: true
 }
 
 Spec.before_each do
