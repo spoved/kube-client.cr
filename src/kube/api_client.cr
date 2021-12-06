@@ -56,19 +56,23 @@ module Kube
       ResourceClient.new(@transport, self, find_api_resource(resource_name), namespace: namespace)
     end
 
-    def client_for_resource(resource, namespace : String? = nil) : ResourceClient
-      unless @api_version == resource.api_version
-        raise Kube::Error::UndefinedResource.new("Invalid apiVersion=#{resource.api_version} for #{@api_version} client")
+    def client_for_resource(api_version : String, kind : String, namespace : String? = nil)
+      unless @api_version == api_version
+        raise Kube::Error::UndefinedResource.new("Invalid apiVersion=#{api_version} for #{@api_version} client")
       end
 
-      found_resource = api_resources.find { |api_resource| api_resource.kind == resource.kind }
-      found_resource ||= api_resources!.find { |api_resource| api_resource.kind == resource.kind }
-      raise Kube::Error::UndefinedResource.new("Unknown resource kind=#{resource.kind} for #{@api_version}") unless found_resource
+      found_resource = api_resources.find { |api_resource| api_resource.kind == kind }
+      found_resource ||= api_resources!.find { |api_resource| api_resource.kind == kind }
+      raise Kube::Error::UndefinedResource.new("Unknown resource kind=#{kind} for #{@api_version}") unless found_resource
 
+      ResourceClient.new(@transport, self, found_resource, namespace: namespace)
+    end
+
+    def client_for_resource(resource, namespace : String? = nil) : ResourceClient
       if resource.is_a?(::K8S::Kubernetes::Resource::Object)
-        ResourceClient.new(@transport, self, found_resource, namespace: resource.metadata.namespace || namespace)
+        client_for_resource(resource.api_version, resource.kind, resource.metadata.try(&.namespace) || namespace)
       else
-        ResourceClient.new(@transport, self, found_resource, namespace: namespace)
+        client_for_resource(resource.api_version, resource.kind, namespace)
       end
     end
 

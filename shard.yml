@@ -27,3 +27,6 @@ development_dependencies:
     github: spoved/vcr.cr
   dotenv:
     github: gdotdesign/cr-dotenv
+  spectator:
+    gitlab: arctic-fox/spectator
+    version: ~> 0.10.1

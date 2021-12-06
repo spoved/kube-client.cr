@@ -57,7 +57,7 @@ module Kube
         when Hash
           selector.map { |k, v| "#{k}=#{v}" }.join ","
         else
-          fail "Invalid selector type. #{selector.inspect}"
+          raise Kube::Error.new "Invalid selector type. #{selector.inspect}"
         end
       end
 
@@ -111,7 +111,7 @@ module Kube
         @subresource = nil
       end
 
-      fail("Resource #{api_resource.name} is not namespaced") unless api_resource.namespaced || !namespace
+      raise Kube::Error.new("Resource #{api_resource.name} is not namespaced") unless api_resource.namespaced || !namespace
     end
 
     def api_version : String
@@ -132,7 +132,7 @@ module Kube
     end
 
     def path(name = nil, subresource = @subresource, namespace = @namespace)
-      namespace_part = namespace ? {"namespaces", namespace} : {""}
+      namespace_part = namespace ? {"namespaces", namespace} : {"", ""}
 
       if name && subresource
         @api_client.path(*namespace_part, @resource, name, subresource)
@@ -143,45 +143,42 @@ module Kube
       end
     end
 
-    def create?
-      @api_resource.verbs.include? "create"
+    def create? : Bool
+      @api_resource.verbs.includes? "create"
     end
 
     # @param resource [#metadata] with metadata.namespace and metadata.name set
     # @return [Object] instance of resource_class
-    def create_resource(resource : T)
+    def create_resource(resource : T) : T
       @transport.request(
         method: "POST",
-        path: path(namespace: resource.metadata.namespace),
+        path: path(namespace: resource.metadata!.namespace),
         request_object: resource,
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
     # @return [Bool]
     def get? : Bool
-      @api_resource.verbs.include? "get"
+      @api_resource.verbs.includes? "get"
     end
 
-    # @param name [String]
-    # @param namespace [String, NilClass]
-    # @return [Object] instance of resource_class
-    def get(name, namespace = @namespace)
+    # @raise [`Kube::Error::NotFound`] if resource is not found
+    def get(name, namespace = @namespace) : T
       @transport.request(
         method: "GET",
         path: path(name, namespace: namespace),
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
-    # @param resource [resource_class]
-    # @return [Object] instance of resource_class
-    def get_resource(resource)
+    # @raise [`Kube::Error::NotFound`] if resource is not found
+    def get(resource : T) : T
       @transport.request(
         method: "GET",
-        path: path(resource.metadata.name, namespace: resource.metadata.namespace),
+        path: path(resource.metadata!.name, namespace: resource.metadata!.namespace),
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
     # @return [Bool]
@@ -191,16 +188,17 @@ module Kube
 
     # @param list [K8s::Resource]
     # @return [Array<Object>] array of instances of resource_class
-    def process_list(list)
-      if (list.is_a?(K8S::Kubernetes::ResourceList))
+    def process_list(list) : Array(T)
+      if (list.is_a?(K8S::Kubernetes::ResourceList(T)))
         list.items
       else
-        nil
+        Array(T).new
       end
     end
 
     # @return [Array<Object>] array of instances of resource_class
-    def list(label_selector : String | Hash(String, String) | Nil = nil, field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace)
+    def list(label_selector : String | Hash(String, String) | Nil = nil,
+             field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace) : Array(T)
       list = meta_list(label_selector: label_selector, field_selector: field_selector, namespace: namespace)
       process_list(list)
     end
@@ -211,7 +209,7 @@ module Kube
         path: path(namespace: namespace),
         query: make_query({
           "labelSelector" => selector_query(label_selector),
-          "fieldSelector" => selector_query(fieldSelector),
+          "fieldSelector" => selector_query(field_selector),
         })
       )
     end
@@ -223,24 +221,24 @@ module Kube
     end
 
     # @return [Boolean]
-    def update?
-      @api_resource.verbs.include? "update"
+    def update? : Bool
+      @api_resource.verbs.includes? "update"
     end
 
     # @param resource [#metadata] with metadata.resourceVersion set
     # @return [Object] instance of resource_class
-    def update_resource(resource)
+    def update_resource(resource : T) : T
       @transport.request(
         method: "PUT",
-        path: path(resource.metadata.name, namespace: resource.metadata.namespace),
+        path: path(resource.metadata!.name, namespace: resource.metadata!.namespace),
         request_object: resource,
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
     # @return [Boolean]
-    def patch?
-      @api_resource.verbs.include? "patch"
+    def patch? : Bool
+      @api_resource.verbs.includes? "patch"
     end
 
     # @param name [String]
@@ -248,48 +246,47 @@ module Kube
     # @param namespace [String, nil]
     # @param strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Merge Patch (arrays of objects are merged by name)
     # @return [Object] instance of resource_class
-    def merge_patch(name, obj, namespace = @namespace, strategic_merge = true)
+    def merge_patch(name, obj, namespace = @namespace, strategic_merge = true) : T
       @transport.request(
         method: "PATCH",
         path: path(name, namespace: namespace),
         content_type: strategic_merge ? "application/strategic-merge-patch+json" : "application/merge-patch+json",
         request_object: obj,
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
     # @param name [String]
     # @param ops [Hash] json-patch operations
     # @param namespace [String, nil]
     # @return [Object] instance of resource_class
-    def json_patch(name, ops, namespace = @namespace)
+    def json_patch(name, ops, namespace = @namespace) : T
       @transport.request(
         method: "PATCH",
         path: path(name, namespace: namespace),
         content_type: "application/json-patch+json",
         request_object: ops,
         response_class: @resource_class
-      )
+      ).as(T)
     end
 
-    # @return [Boolean]
-    def delete?
-      @api_resource.verbs.include? "delete"
+    def delete? : Bool
+      @api_resource.verbs.includes? "delete"
     end
 
     # @param name [String]
     # @param namespace [String, nil]
     # @param propagationPolicy [String, nil] The propagationPolicy to use for the API call. Possible values include “Orphan”, “Foreground”, or “Background”
     # @return [K8s::Resource]
-    def delete(name, namespace = @namespace, propagation_policy = nil)
+    def delete(name, namespace = @namespace, propagation_policy = nil) : T
       @transport.request(
         method: "DELETE",
         path: path(name, namespace: namespace),
         query: make_query(
           {"propagationPolicy" => propagation_policy}
         ),
-        response_class: @resource_class
-      )
+        response_class: @resource_class,
+      ).as(T)
     end
 
     # @return [Array<Object>] array of instances of resource_class
@@ -313,8 +310,8 @@ module Kube
     # @param options [Hash]
     # @see #delete for possible options
     # @return [K8s::Resource]
-    def delete_resource(resource, **options)
-      delete(resource.metadata.name, **options.merge({namespace: resource.metadata.namespace}))
+    def delete_resource(resource : T, **options)
+      delete(resource.metadata!.name, **options.merge({namespace: resource.metadata!.namespace}))
     end
   end
 end

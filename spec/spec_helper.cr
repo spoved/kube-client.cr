@@ -1,16 +1,17 @@
 require "dotenv"
 Dotenv.load(".env_test")
 
-require "spec"
+require "spectator"
 require "../src/kube-client/v1.20"
 
-# Kube::Client::Api::Log.level = :error
-Spec.before_suite {
-# spoved_logger :trace, bind: true, clear: true
-}
+Spectator.configure do |config|
+  config.before_suite {
+  # spoved_logger :trace, bind: true, clear: true
+  }
 
-Spec.before_each do
-  ENV["KUBECONFIG"] = ""
+  config.before_all do
+    ENV["KUBECONFIG"] = ""
+  end
 end
 
 TEST_KUBE_CONFIG_TEMPLATE = "./spec/files/kube_config_template.yml"

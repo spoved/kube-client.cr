@@ -17,7 +17,7 @@ module Kube
         headers["Authorization"] = "Basic #{Base64.strict_encode("#{@auth_username}:#{@auth_password}")}"
       end
 
-      if request_object.is_a?(::JSON::Serializable)
+      if request_object.is_a?(::JSON::Serializable) || request_object.is_a?(NamedTuple) || request_object.is_a?(Hash)
         options.merge(
           headers: headers,
           body: request_object.to_json,
@@ -106,24 +106,23 @@ module Kube
                     else
                       request_options(**options)
                     end
-
       t1 = Time.monotonic
       response = _request(options, req_options)
       t = Time.monotonic - t1
       obj = parse_response(response, options, response_class: response_class)
     rescue ex : K8S::Error::UnknownResource
       logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
-      logger.debug { "Request: #{options[:body]?}" } if options[:body]?
+      logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" } unless response.nil?
       nil
     rescue ex
       logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
-      logger.debug { "Request: #{options[:body]?}" } if options[:body]?
+      logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" } unless response.nil?
       raise ex
     else
       logger.info { "#{format_request(options)} => HTTP #{response.status}: #{obj.inspect} in #{t}s" }
-      logger.debug { "Request: #{options[:body]?}" } if options[:body]?
+      logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" }
       obj
     end

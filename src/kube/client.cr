@@ -79,7 +79,7 @@ module Kube
 
         # load into Kube::ApiClient.api_resources=
         begin
-          @transport.gets(api_paths, skip_missing: skip_missing).each do |api_resource_list|
+          @transport.gets(api_paths, response_class: K8S::Apimachinery::Apis::Meta::V1::APIResourceList, skip_missing: skip_missing).each do |api_resource_list|
             if api_resource_list && api_resource_list.is_a?(K8S::Apimachinery::Apis::Meta::V1::APIResource)
               api(api_resource_list.group_version).api_resources = api_resource_list.resources
             end

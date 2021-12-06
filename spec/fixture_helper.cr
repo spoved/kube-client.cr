@@ -1,4 +1,5 @@
 module FixtureHelpers
+  extend self
   FIXTURES_PATH = File.join(File.dirname(__FILE__), "fixtures")
 
   # @return [String] file path

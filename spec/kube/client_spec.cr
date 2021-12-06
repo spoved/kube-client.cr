@@ -1,29 +1,29 @@
 require "../spec_helper"
 
-describe Kube::Client do
+Spectator.describe Kube::Client do
   it "should be able to create a new client" do
     client = Kube::Client.new(new_transport)
-    client.should be_a(Kube::Client)
+    expect(client).to be_a Kube::Client
   end
 
   it "#api_groups" do
     client = Kube::Client.new(new_transport)
     groups = client.api_groups
-    groups.should_not be_nil
-    groups.should_not be_empty
-    groups.includes?("apps/v1").should be_true
+    expect(groups).to_not be_nil
+    expect(groups).to_not be_empty
+    expect(groups).to contain("apps/v1")
   end
 
   it "#resources" do
     client = Kube::Client.new(new_transport)
     resources = client.resources
-    resources.should_not be_empty
+    expect(resources).to_not be_empty
   end
 
   it "#list_resources" do
     client = Kube::Client.new(new_transport)
     resources = client.list_resources
-    resources.should_not be_empty
-    resources.should be_a Array(K8S::Resource)
+    expect(resources).to_not be_empty
+    expect(resources).to be_a Array(K8S::Resource)
   end
 end
