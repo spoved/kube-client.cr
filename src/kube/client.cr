@@ -1,6 +1,5 @@
 require "spoved/logger"
 require "spoved/system_cmd"
-require "../ext/*"
 require "./types"
 require "./transport"
 require "./config"

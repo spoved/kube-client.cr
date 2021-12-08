@@ -17,7 +17,7 @@ Crystal client library for the Kubernetes (1.11+) API
 ## Usage
 
 ```crystal
-require "kube-client"
+require "kube-client/v1.20"
 
 client = Kube::Client.autoconfig
 ```
@@ -92,8 +92,8 @@ This will fetch the API resource lists for all API groups in a single pipelined 
 ### Listing resources
 
 ```crystal
-client.api("v1").resource("pods", namespace: "default").list(labelSelector: {"role" => "test"}).each do |pod|
-  puts "namespace=#{pod.metadata.namespace} pod: #{pod.metadata.name} node=#{pod.spec.nodeName}"
+client.api("v1").resource("pods", namespace: "default").list(label_selector: {"role" => "test"}).each do |pod|
+  puts "namespace=#{pod.metadata.namespace} pod: #{pod.metadata.name} node=#{pod.spec.node_name}"
 end
 ```
 
