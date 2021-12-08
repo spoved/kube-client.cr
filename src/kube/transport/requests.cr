@@ -21,24 +21,20 @@ module Kube
         options.merge(
           headers: headers,
           body: request_object.to_json,
+          query: options[:query]?,
         )
       else
         options.merge(
           headers: headers,
+          query: options[:query]?,
         )
       end
     end
 
-    # @param options [Hash] as passed to Excon#request
-    # @return [String]
     def format_request(options)
       method = options[:method]
       path = options[:path]
       body = nil
-
-      # if options[:query]
-      #   path += Excon::Utils.query_string(options)
-      # end
 
       if obj = options[:request_object]?
         body = "<#{obj.class.name}>"
@@ -47,19 +43,21 @@ module Kube
       [method, path, body].compact.join " "
     end
 
-    private def _parse_resp(method, path, response, content_type, response_class = nil)
+    private def _parse_resp(method, path, response, content_type, response_class : T.class | Nil = nil) forall T
       case content_type
       when "application/json"
         if response_class
           response_class.from_json(response.body)
         else
-          JSON.parse(response.body)
+          K8S::Kubernetes::Resource.from_json(response.body)
+          # JSON.parse(response.body)
         end
       when "application/yaml"
         if response_class
           response_class.from_yaml(response.body)
         else
-          YAML.parse(response.body)
+          K8S::Kubernetes::Resource.from_yaml(response.body)
+          # YAML.parse(response.body)
         end
       when "text/plain"
         response.body
@@ -68,9 +66,11 @@ module Kube
       end
     end
 
-    def parse_response(response, options, response_class = K8S::Kubernetes::Resource)
-      method = options[:method]
-      path = options[:path]
+    # def parse_response(response : HTTP::Client::Response, **options)
+    #   parse_response(response, **{response_class: K8S::Kubernetes::Resource}.merge(options))
+    # end
+
+    def parse_response(response : HTTP::Client::Response, method : String, path : String, response_class : T.class | Nil = nil, **options) forall T
       content_type = response.headers["Content-Type"].split(';', 2).first
 
       if response.success?
@@ -86,18 +86,32 @@ module Kube
       end
     end
 
+    # Format request path with query params
+    private def _request_path(options, query : Hash(String, String | Array(String))? = nil) : String
+      path = options[:path]
+
+      unless query.nil?
+        path += "?#{URI::Params.encode(query.as(Hash(String, String | Array(String))))}"
+      end
+      path
+    end
+
     private def _request(options, req_options)
       using_connection do |client|
         client.exec(
           method: options[:method],
-          path: options[:path],
+          path: _request_path(options, req_options[:query]?),
           headers: req_options[:headers]?,
           body: req_options[:body]?,
         )
       end
     end
 
-    def request(response_class = K8S::Kubernetes::Resource, **options)
+    def request(**options)
+      request(**options, response_class: K8S::Kubernetes::Resource)
+    end
+
+    def request(response_class : T.class, **options) forall T
       opts = options.to_h
       req_options = if opts[:method]? == "DELETE" && need_delete_body?
                       request_options(**options.merge({
@@ -109,7 +123,7 @@ module Kube
       t1 = Time.monotonic
       response = _request(options, req_options)
       t = Time.monotonic - t1
-      obj = parse_response(response, options, response_class: response_class)
+      obj = parse_response(**options, response: response, response_class: response_class)
     rescue ex : K8S::Error::UnknownResource
       logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
       logger.debug { "Request: #{req_options}" } unless req_options.nil?
@@ -131,20 +145,16 @@ module Kube
       requests(options, skip_missing, skip_forbidden, retry_errors, skip_unknown, **common_options)
     end
 
-    def requests(options : Enumerable(NamedTuple(method: String, path: String)),
-                 skip_missing = false, skip_forbidden = false, retry_errors = true, skip_unknown = true,
-                 **common_options)
+    def requests(options : Enumerable(W), skip_missing = false, skip_forbidden = false, retry_errors = true, skip_unknown = true,
+                 **common_options) forall W
       t1 = Time.monotonic
-      responses = options.map { |opts| request(**request_options(**common_options.merge(opts))) }
       responses = options.map { |opts| _request(opts, common_options) }
 
       t = Time.monotonic - t1
 
       objects = responses.zip(options).map do |response, request_options|
-        response_class = request_options[:response_class]? || common_options[:response_class]? || K8S::Kubernetes::Resource
-
         begin
-          parse_response(response, request_options, response_class: response_class)
+          parse_response(**request_options.merge({response: response}))
         rescue e : Kube::Error::UndefinedResource | K8S::Error::UnknownResource
           raise e unless skip_unknown
           nil
@@ -158,7 +168,7 @@ module Kube
           raise e unless retry_errors
           logger.warn { "Retry #{format_request(request_options)} => HTTP #{e.code} #{e.reason} in #{t}" }
           # only retry the failed request, not the entire pipeline
-          request(**common_options.merge(request_options).merge({response_class: response_class}))
+          request(**common_options.merge(request_options))
         end
       end
     rescue e : Kube::Error::API
@@ -170,25 +180,29 @@ module Kube
     end
 
     # Returns true if delete options should be sent as bode of the DELETE request
-    def need_delete_body?
+    def need_delete_body? : Bool
       @need_delete_body ||= ::K8S::Kubernetes::VERSION < DELETE_OPTS_BODY_VERSION_MIN
     end
 
-    # @return [K8s::Resource]
-    def version
+    def version : K8S::Apimachinery::Version::Info
       @version ||= get("/version", response_class: K8S::Apimachinery::Version::Info).as(K8S::Apimachinery::Version::Info)
     end
 
-    def get(*path, **options)
+    def get(*path)
+      get(*path, response_class: K8S::Kubernetes::Resource)
+    end
+
+    def get(*path, response_class : T.class, **options) forall T
       request(
         **options.merge({
-          method: "GET",
-          path:   self.path(*path),
+          method:         "GET",
+          path:           self.path(*path),
+          response_class: response_class,
         })
       )
     end
 
-    def gets(paths : Array(String), **options)
+    def gets(paths : Array(String), response_class : T.class, **options) forall T
       requests(
         paths.map { |path|
           {
@@ -196,11 +210,17 @@ module Kube
             path:   self.path(path),
           }
         },
-        **options
+        **options.merge({
+          response_class: response_class,
+        })
       )
     end
 
-    def gets(*paths, **options)
+    def gets(*paths)
+      gets(*paths, response_class: K8S::Kubernetes::Resource)
+    end
+
+    def gets(*paths, response_class : T.class, **options) forall T
       requests(
         *paths.map { |path|
           options.merge({
@@ -208,7 +228,9 @@ module Kube
             path:   self.path(path),
           })
         },
-        **options
+        **options.merge({
+          response_class: response_class,
+        })
       )
     end
 

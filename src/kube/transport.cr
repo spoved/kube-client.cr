@@ -1,8 +1,8 @@
 require "./error"
 require "./auth_provider/*"
-require "openssl_ext"
 require "./transport/*"
 require "db/pool"
+require "http"
 
 module Kube
   class Transport
@@ -148,6 +148,7 @@ module Kube
         )
       end
 
+      # ameba:disable Metrics/CyclomaticComplexity
       def config(conf : Kube::Config, server : String? = nil, **overrides) : Kube::Transport
         server ||= conf.cluster.server
         raise Kube::Error::MissingConfig.new("server") if server.nil?

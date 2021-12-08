@@ -68,7 +68,7 @@ module Kube
       ResourceClient.new(@transport, self, found_resource, namespace: namespace)
     end
 
-    def client_for_resource(resource, namespace : String? = nil) : ResourceClient
+    def client_for_resource(resource : T, namespace : String? = nil) : ResourceClient(T) forall T
       if resource.is_a?(::K8S::Kubernetes::Resource::Object)
         client_for_resource(resource.api_version, resource.kind, resource.metadata.try(&.namespace) || namespace)
       else

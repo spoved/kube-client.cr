@@ -1,6 +1,33 @@
 require "../spec_helper"
 
 Spectator.describe Kube::ResourceClient do
+  def random_string(length)
+    chars = ('a'..'z').to_a
+    String.build(length) do |builder|
+      length.times { builder << chars.sample }
+    end
+  end
+
+  def pod_resource(name : String? = nil)
+    K8S::Api::Core::V1::Pod.new(
+      metadata: ::K8S::ObjectMeta.new(
+        name: name.nil? ? random_string(10) : name,
+        namespace: "default",
+        labels: {
+          "app" => "kube-client-test",
+        },
+      ),
+      spec: K8S::Api::Core::V1::PodSpec.new(
+        containers: [
+          K8S::Api::Core::V1::Container.new(
+            name: "test",
+            image: "test",
+          ),
+        ],
+      )
+    )
+  end
+
   let(transport) { new_transport }
   let(node_name) { "k3d-k3d-cluster-test-server-0" }
 
@@ -167,34 +194,25 @@ Spectator.describe Kube::ResourceClient do
 
     before_each do
       begin
-        subject.delete("test", "default")
-        sleep(0.2)
+        subject.delete_collection(namespace: "default", label_selector: "app=kube-client-test")
       rescue Kube::Error::NotFound
       end
+      sleep(0.2)
     end
 
-    let(resource) { K8S::Api::Core::V1::Pod.new(
-      metadata: ::K8S::ObjectMeta.new(name: "test", namespace: "default"),
-      spec: K8S::Api::Core::V1::PodSpec.new(
-        containers: [
-          K8S::Api::Core::V1::Container.new(
-            name: "test",
-            image: "test",
-          ),
-        ],
-      )
-    ) }
+    let(resource) { pod_resource }
     let(resource_list) { K8S::ResourceList(K8S::Api::Core::V1::Pod).new(metadata: K8S::ListMeta.new, items: [resource]) }
 
     context "POST /api/v1/pods/namespaces/default/pods" do
       describe "#create_resource" do
         it "returns a resource" do
-          obj = subject.create_resource(resource)
+          r = pod_resource
+          obj = subject.create_resource(r)
 
           expect(obj).to match K8S::Api::Core::V1::Pod
           expect(obj.kind).to eq "Pod"
           expect(obj.metadata!.namespace).to eq "default"
-          expect(obj.metadata!.name).to eq "test"
+          expect(obj.metadata!.name).to eq r.metadata!.name
         end
       end
     end
@@ -202,14 +220,43 @@ Spectator.describe Kube::ResourceClient do
     context "PATCH /api/v1/pods/namespaces/default/pods/test" do
       describe "#merge_patch" do
         it "returns a resource" do
-          subject.create_resource(resource)
+          r = pod_resource
+          subject.create_resource(r)
           sleep(0.2)
-          obj = subject.merge_patch("test", {spec: {activeDeadlineSeconds: 10}}, namespace: "default")
+          obj = subject.merge_patch(r.metadata!.name, {spec: {activeDeadlineSeconds: 10}}, namespace: "default")
 
           expect(obj).to match K8S::Api::Core::V1::Pod
           expect(obj.kind).to eq "Pod"
           expect(obj.metadata!.namespace).to eq "default"
-          expect(obj.metadata!.name).to eq "test"
+          expect(obj.metadata!.name).to eq r.metadata!.name
+        end
+      end
+    end
+
+    context "DELETE /api/v1/pods/*" do
+      describe "#delete" do
+        it "deletes a resource and returns it" do
+          r = pod_resource
+          subject.create_resource(r)
+          sleep(0.2)
+          obj = subject.delete(r.metadata!.name, namespace: "default")
+
+          expect(obj).to match K8S::Api::Core::V1::Pod
+          expect(obj.kind).to eq "Pod"
+          expect(obj.metadata!.name).to eq r.metadata!.name
+        end
+      end
+
+      describe "#delete_collection" do
+        it "deletes resources and returns them" do
+          r = pod_resource
+          subject.create_resource(r)
+          sleep(0.2)
+          items = subject.delete_collection(namespace: "default", label_selector: "app=kube-client-test")
+
+          expect(items).to match Array(K8S::Api::Core::V1::Pod)
+          expect(items.map(&.kind)).to all eq "Pod"
+          expect(items.map(&.metadata!.name)).to have r.metadata!.name
         end
       end
     end

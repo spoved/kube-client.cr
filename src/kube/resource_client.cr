@@ -63,10 +63,12 @@ module Kube
 
       # @param options [Hash]
       # @return [Hash, NilClass]
-      def make_query(options)
-        query = options.compact
+      def make_query(options) : Hash(String, String | Array(String))?
+        query = Hash(String, String | Array(String)).new
+        options.each do |k, v|
+          query[k] = v unless v.nil?
+        end
         return nil if query.empty?
-        query
       end
     end
 
@@ -110,7 +112,7 @@ module Kube
         @resource = @api_resource.name
         @subresource = nil
       end
-
+      # ameba:disable Style/NegatedConditionsInUnless
       raise Kube::Error.new("Resource #{api_resource.name} is not namespaced") unless api_resource.namespaced || !namespace
     end
 
@@ -293,7 +295,7 @@ module Kube
     def delete_collection(namespace = @namespace,
                           label_selector : String | Hash(String, String) | Nil = nil,
                           field_selector : String | Hash(String, String) | Nil = nil,
-                          propagation_policy : String? = nil)
+                          propagation_policy : String? = nil) : Array(T)
       list = @transport.request(
         method: "DELETE",
         path: path(namespace: namespace),

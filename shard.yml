@@ -1,7 +1,7 @@
 name: kube-client
 version: 0.2.1
 
-crystal: ">= 0.36.1, < 2.0.0"
+crystal: ">= 1.2.2, < 2.0.0"
 
 authors:
   - Holden Omans <holden.omans@gmail.com>
@@ -11,14 +11,10 @@ license: MIT
 dependencies:
   k8s:
     github: spoved/k8s.cr
-    branch: master
+    # branch: master
+    version: ">= 0.0.1"
   spoved:
     github: spoved/spoved.cr
-  halite:
-    github: icyleaf/halite
-  openssl_ext:
-    github: spider-gazelle/openssl_ext
-    version: ~> 2.1.5
   db:
     github: crystal-lang/crystal-db
 

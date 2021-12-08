@@ -1,4 +1,3 @@
-require "halite"
 require "spoved/logger"
 require "spoved/system_cmd"
 require "../ext/*"
