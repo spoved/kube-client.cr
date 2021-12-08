@@ -25,9 +25,8 @@ module Kube
     property preferences : Hash(String, String) = Hash(String, String).new
     property users : Array(User) = Array(User).new
 
-    def initialize(@clusters, @contexts, @current_context, @api_version = "v1", @kind = "Config"); end
-
-    def initialize(@clusters, @contexts, @current_context, @preferences, @users, @api_version = "v1", @kind = "Config"); end
+    def initialize(@clusters, @contexts, @current_context,
+                   @preferences = Hash(String, String).new, @users = Array(User).new, @api_version = "v1", @kind = "Config"); end
 
     def initialize; end
 
@@ -61,9 +60,15 @@ module Kube
                    cluster_name : String = "kubernetes", user : String = "k8s-client", context : String = "k8s-client", **options)
       new(
         **{
-          clusters:        [{name: cluster_name, cluster: {server: server, certificate_authority_data: ca}}],
-          users:           [{name: user, user: {token: auth_token}}],
-          contexts:        [{name: context, context: {cluster: cluster_name, user: user}}],
+          clusters: [
+            Cluster.new(name: cluster_name, cluster: ClusterDef.new(server: server, certificate_authority_data: ca)),
+          ],
+          users: [
+            User.new(name: user, user: UserDef.new(token: auth_token)),
+          ],
+          contexts: [
+            Context.new(name: context, context: ContextDef.new(cluster: cluster_name, user: user)),
+          ],
           current_context: context,
         }.merge(options)
       )
