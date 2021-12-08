@@ -42,9 +42,9 @@ else
   create_cluster
 end
 
-if helm_status == "deployed"
-  Log.info { "Helm chart #{APP_NAME} is already deployed" }
-  # exit 0
-else
-  helm_install
-end
+# if helm_status == "deployed"
+#   Log.info { "Helm chart #{APP_NAME} is already deployed" }
+#   # exit 0
+# else
+#   helm_install
+# end

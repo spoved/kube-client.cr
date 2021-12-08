@@ -12,6 +12,56 @@ module Kube
     Client.new(Transport.new(**options))
   end
 
+  def self.config(config : Kube::Config, namespace : String? = nil, **options) : Kube::Client
+    Client.new(Transport.new(config, **options), namespace)
+  end
+
+  # An `Kube::Client` instance from in-cluster config within a kube pod, using the kubernetes service envs and serviceaccount secrets
+  def self.in_cluster_config(namespace : String? = nil, **options) : Kube::Client
+    Client.new(Transport.in_cluster_config(**options), namespace)
+  end
+
+  # Attempts to create a K8s::Client instance automatically using environment variables, existing configuration
+  # files or in cluster configuration.
+  #
+  # Look-up order:
+  #   - KUBE_TOKEN, KUBE_CA, KUBE_SERVER environment variables
+  #   - KUBECONFIG environment variable
+  #   - $HOME/.kube/config file
+  #   - In cluster configuration
+  #
+  # Will raise when no means of configuration is available
+  def self.autoconfig(namespace : String? = nil, **options) : Kube::Client
+    config = if ENV.has_key?("KUBE_TOKEN") && ENV.has_key?("KUBE_CA") && ENV.has_key?("KUBE_SERVER")
+               kube_ca = Base64.decode(ENV["KUBE_CA"])
+               unless kube_ca =~ /CERTIFICATE/
+                 raise "KUBE_CA does not seem to be base64 encoded"
+               end
+               kube_token = Base64.decode(ENV["KUBE_TOKEN"])
+               kube_server = ENV["KUBE_SERVER"]
+               Kube::Config.build(kube_server, kube_ca, kube_token)
+             elsif ENV.has_key?("KUBECONFIG")
+               Kube::Config.from_kubeconfig_env
+             else
+               found_config = [
+                 File.join(Path.home, ".kube", "config"),
+                 "/etc/kubernetes/admin.conf",
+                 "/etc/kubernetes/kubelet.conf",
+               ].find { |path| File.exist?(path) && File.readable?(path) }
+               if found_config
+                 Kube::Config.load_file(found_config)
+               else
+                 nil
+               end
+             end
+
+    if config.nil?
+      self.in_cluster_config
+    else
+      self.config(config, namespace, **options)
+    end
+  end
+
   # Top-level client wrapper.
   # Uses a `Transport` instance to talk to the kube API.
   # Offers access to `Kube::ApiClient` and `ResourceClient` instances.
@@ -115,6 +165,53 @@ module Kube
     rescue ex : Kube::Error::NotFound
       logger.error { ex.message }
       raise ex
+    end
+
+    def client_for_resource(resource : T, namespace : String? = nil) forall T
+      api(resource.api_version).client_for_resource(resource, namespace: namespace)
+    end
+
+    def create_resource(resource : T) forall T
+      client_for_resource(resource).create_resource(resource)
+    end
+
+    def get_resource(resource : T) forall T
+      client_for_resource(resource).get_resource(resource)
+    end
+
+    def get_resources(resources : Enumerable(T)) forall T
+      # prefetch api resources, skip missing APIs
+      resource_apis = apis(resources.map(&.api_version), prefetch_resources: true, skip_missing: true)
+
+      # map each resource to  request options, or nil if resource is not (yet) defined
+      requests = resources.zip(resource_apis).map { |resource, api_client|
+        next nil unless api_client.api_resources?
+
+        resource_client = api_client.client_for_resource(resource)
+
+        {
+          method:         "GET",
+          path:           resource_client.path(resource.metadata.name, namespace: resource.metadata.namespace),
+          response_class: resource_client.resource_class,
+        }
+      }
+
+      # map non-nil requests to response objects, or nil for nil request options
+      K8S::Util.compact_map(requests) { |reqs|
+        @transport.requests(*reqs, skip_missing: true)
+      }
+    end
+
+    def update_resource(resource : T) forall T
+      client_for_resource(resource).update_resource(resource)
+    end
+
+    def delete_resource(resource : T, **options) forall T
+      client_for_resource(resource).delete_resource(resource, **options)
+    end
+
+    def patch_resource(resource, attrs)
+      client_for_resource(resource).json_patch(resource.metadata.name, attrs)
     end
   end
 end
