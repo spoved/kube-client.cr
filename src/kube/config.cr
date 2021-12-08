@@ -25,6 +25,8 @@ module Kube
     property preferences : Hash(String, String) = Hash(String, String).new
     property users : Array(User) = Array(User).new
 
+    def initialize(@clusters, @contexts, @current_context, @api_version = "v1", @kind = "Config"); end
+
     def initialize(@clusters, @contexts, @current_context, @preferences, @users, @api_version = "v1", @kind = "Config"); end
 
     def initialize; end
