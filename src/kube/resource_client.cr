@@ -220,6 +220,7 @@ module Kube
               field_selector : String | Hash(String, String) | Nil = nil,
               resource_version : String? = nil, timeout : Int32 = nil, namespace = @namespace)
       # TODO: add watch
+      raise "Watch is not implemented"
     end
 
     # @return [Boolean]
