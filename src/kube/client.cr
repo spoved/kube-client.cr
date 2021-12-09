@@ -20,7 +20,7 @@ module Kube
     @version : K8S::Apimachinery::Version::Info? = nil
 
     def self.config(config : Kube::Config, namespace : String? = nil, **options) : Kube::Client
-      Client.new(Transport.new(config, **options), namespace)
+      Client.new(Transport.config(config, **options), namespace)
     end
 
     # An `Kube::Client` instance from in-cluster config within a kube pod, using the kubernetes service envs and serviceaccount secrets
@@ -54,7 +54,7 @@ module Kube
                    File.join(Path.home, ".kube", "config"),
                    "/etc/kubernetes/admin.conf",
                    "/etc/kubernetes/kubelet.conf",
-                 ].find { |path| File.exist?(path) && File.readable?(path) }
+                 ].find { |path| File.exists?(path) && File.readable?(path) }
                  if found_config
                    Kube::Config.load_file(found_config)
                  else

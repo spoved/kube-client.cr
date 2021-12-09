@@ -68,7 +68,7 @@ Not all kubeconfig options are supported, only the following kubeconfig options 
 ##### With overrides
 
 ```crystal
-client = Kube::Client.config(K8s::Config.load_file("~/.kube/config"),
+client = Kube::Client.config(Kube::Config.load_file("~/.kube/config"),
   server: "http://localhost:8001",
 )
 ```
@@ -93,7 +93,8 @@ This will fetch the API resource lists for all API groups in a single pipelined 
 
 ```crystal
 client.api("v1").resource("pods", namespace: "default").list(label_selector: {"role" => "test"}).each do |pod|
-  puts "namespace=#{pod.metadata.namespace} pod: #{pod.metadata.name} node=#{pod.spec.node_name}"
+  pod = pod.as(K8S::Api::Core::V1::Pod)
+  puts "namespace=#{pod.metadata!.namespace} pod: #{pod.metadata!.name} node=#{pod.spec.try &.node_name}"
 end
 ```
 
@@ -101,7 +102,7 @@ end
 
 ```crystal
 node = client.api("v1").resource("nodes").get("test-node")
-node.spec.unschedulable = true
+node.as(K8S::Api::Core::V1::Node).spec.not_nil!.unschedulable = true
 client.api("v1").resource("nodes").update_resource(node)
 ```
 

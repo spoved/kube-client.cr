@@ -141,9 +141,9 @@ module Kube
         new(
           "https://#{host}:#{port}",
           **options.merge({
-            ssl_verify_peer: true,
-            ssl_ca_file:     File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/ca.crt"),
-            auth_token:      File.read(File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/token")),
+            verify_ssl:  OpenSSL::SSL::VerifyMode::PEER,
+            ssl_ca_file: File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/ca.crt"),
+            auth_token:  File.read(File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/token")),
           }),
         )
       end
