@@ -28,7 +28,7 @@ module Kube
       @[YAML::Field(key: "insecure-skip-tls-verify")]
       property insecure_skip_tls_verify : Bool = false
 
-      def initialize(@certificate_authority, @certificate_authority_data, @server, @insecure_skip_tls_verify = false); end
+      def initialize(@server, @certificate_authority = nil, @certificate_authority_data = nil, @insecure_skip_tls_verify = false); end
     end
   end
 end
