@@ -20,7 +20,7 @@ module Kube
       property user : String
       property namespace : String? = nil
 
-      def initialize(@cluster, @user, @namespace); end
+      def initialize(@cluster, @user, @namespace = nil); end
     end
   end
 end
