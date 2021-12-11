@@ -79,6 +79,12 @@ client = Kube::Client.config(Kube::Config.load_file("~/.kube/config"),
 client = Kube::Client.in_cluster_config
 ```
 
+### API Resources
+
+Resources are a sub class of `::K8S::Kubernetes::Resource`, which is generated and defined in the [k8s.cr](https://github.com/spoved/k8s.cr) sub-shard.
+
+Please note that custom resources are not supported at this time.
+
 ### Prefetching API resources
 
 Operations like mapping a resource `kind` to an API resource URL require knowledge of the API resource lists for the API group. Mapping resources for multiple API groups would require fetching the API resource lists for each API group in turn, leading to additional request latency. This can be optimized using resource prefetching:
