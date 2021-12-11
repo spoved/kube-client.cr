@@ -31,13 +31,15 @@ jobs:
         with:
           skipClusterCreation: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup k3s cluster
+        run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
         run: shards update --ignore-crystal-version
-      - name: Setup k3s cluster
-        run: k3d cluster create --k3s-server-args="--disable-agent" -c ./spec/files/k3d/${{ matrix.k8s }}.yml
+      - name: Run tests
+        run: crystal spec -Dk8s_${{ matrix.k8s }}
       - name: Tear down cluster
         run: k3d cluster delete k3d-cluster-test
