@@ -13,39 +13,31 @@ jobs:
       fail-fast: false
       matrix:
         k8s:
-          # - "v1.11"
-          # - "v1.12"
-          # - "v1.13"
-          # - "v1.14"
-          # - "v1.15"
-          # - "v1.16"
-          # - "v1.17"
-          # - "v1.18"
-          # - "v1.19"
+          - "v1.16"
+          - "v1.17"
+          - "v1.18"
+          - "v1.19"
           - "v1.20"
-          # - "v1.22"
-          # - "v1.23"
+          - "v1.22"
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
             crystal: 1.2.2
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Deploy k3s cluster
-        uses: rinx/setup-k3d@v0.0.2
-        with:
-          version: ${{ matrix.k8s }}
-          # github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Download source
         uses: actions/checkout@v2
+      - uses: rinx/setup-k3d@v0.0.2
+        with:
+          skipClusterCreation: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
         run: shards update --ignore-crystal-version
-      - name: Run tests
-        run: crystal spec --order=random
-      - name: Check formatting
-        run: crystal tool format --check
-        if: matrix.crystal == null && matrix.os == 'ubuntu-latest'
+      - name: Setup k3s cluster
+        run: k3d cluster create --k3s-server-args="--disable-agent" -c ./spec/files/k3d/${{ matrix.k8s }}.yml
+      - name: Tear down cluster
+        run: k3d cluster delete k3d-cluster-test

@@ -4,4 +4,4 @@ kind: Simple
 name: k3d-cluster-test
 servers: 1
 agents: 0
-image: docker.io/rancher/k3s:v1.20.4-k3s1
+image: docker.io/rancher/k3s:v1.17.17-k3s1
