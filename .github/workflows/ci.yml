@@ -30,8 +30,8 @@ jobs:
         uses: actions/checkout@v2
       - uses: rinx/setup-k3d@v0.0.2
         with:
-          version: ${{ matrix.k8s }}
-          # options: "-c ./spec/files/k3d/${{ matrix.k8s }}.yml"
+          # version: ${{ matrix.k8s }}
+          options: "-c ./spec/files/k3d/${{ matrix.k8s }}.yml"
       # - name: Setup k3s cluster
       #   run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
       - name: Install Crystal
@@ -43,4 +43,4 @@ jobs:
       - name: Run tests
         run: crystal spec -Dk8s_${{ matrix.k8s }}
       - name: Tear down cluster
-        run: k3d cluster delete k3d-cluster-test
+        run: k3d cluster delete k3d-cluster-${{ matrix.k8s }}
