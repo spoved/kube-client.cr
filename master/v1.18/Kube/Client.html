@@ -391,14 +391,14 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
   </h2>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube-client/version.cr#L2" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube-client/version.cr#L2" target="_blank">
         kube-client/version.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L17" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L17" target="_blank">
         kube/client.cr
       </a>
     
@@ -498,7 +498,7 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
       <li class="entry-summary">
         <a href="#api%28api_version%3AString%3D%22v1%22%29%3AKube%3A%3AApiClient-instance-method" class="signature"><strong>#api</strong>(api_version : String = <span class="s">&quot;v1&quot;</span>) : Kube::ApiClient</a>
         
-          <div class="summary"><p>@param api_version [String] &quot;group/version&quot; or &quot;version&quot; (core)</p></div>
+          <div class="summary"><p>api_version [String] &quot;group/version&quot; or &quot;version&quot; (core)</p></div>
         
       </li>
     
@@ -519,7 +519,7 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
       <li class="entry-summary">
         <a href="#apis%28api_versions%3Dnil%2Cprefetch_resources%3Dfalse%2Cskip_missing%3Dfalse%29-instance-method" class="signature"><strong>#apis</strong>(api_versions = <span class="n">nil</span>, prefetch_resources = <span class="n">false</span>, skip_missing = <span class="n">false</span>)</a>
         
-          <div class="summary"><p>@param api_versions [Array<String>] defaults to all APIs @param prefetch_resources [Boolean] prefetch any missing api_resources for each api_version @param skip_missing [Boolean] return Kube::ApiClient without api_resources? if 404 @return [Array<a href="Kube::ApiClient">Kube::ApiClient</a>]</p></div>
+          <div class="summary"><p>api_versions [Array(String)] defaults to all APIs prefetch_resources [Bool] prefetch any missing api_resources for each api_version skip_missing [Bool] return Kube::ApiClient without api_resources? if 404</p></div>
         
       </li>
     
@@ -568,7 +568,7 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
       <li class="entry-summary">
         <a href="#resources%28namespace%3AString%3F%3Dnil%29-instance-method" class="signature"><strong>#resources</strong>(namespace : String? = <span class="n">nil</span>)</a>
         
-          <div class="summary"><p>@param namespace [String, nil]</p></div>
+          <div class="summary"><p>namespace [String, nil]</p></div>
         
       </li>
     
@@ -579,8 +579,6 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
     
       <li class="entry-summary">
         <a href="#version%3AK8S%3A%3AApimachinery%3A%3AVersion%3A%3AInfo-instance-method" class="signature"><strong>#version</strong> : K8S::Apimachinery::Version::Info</a>
-        
-          <div class="summary"><p>@raise [K8s::Error] @return [K8s::Resource]</p></div>
         
       </li>
     
@@ -635,7 +633,7 @@ Offers access to <code><a href="../Kube/ApiClient.html">Kube::ApiClient</a></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -677,7 +675,7 @@ files or in cluster configuration.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -693,7 +691,7 @@ files or in cluster configuration.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -714,7 +712,7 @@ files or in cluster configuration.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -730,7 +728,7 @@ files or in cluster configuration.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -757,13 +755,13 @@ files or in cluster configuration.</p>
       
         <div class="doc">
           
-          <p>@param api_version [String] &quot;group/version&quot; or &quot;version&quot; (core)</p>
+          <p>api_version [String] &quot;group/version&quot; or &quot;version&quot; (core)</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -784,7 +782,7 @@ files or in cluster configuration.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -806,7 +804,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L95" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -821,16 +819,15 @@ Required if creating new CRDs/apiservices.</p>
       
         <div class="doc">
           
-          <p>@param api_versions [Array<String>] defaults to all APIs
-@param prefetch_resources [Boolean] prefetch any missing api_resources for each api_version
-@param skip_missing [Boolean] return Kube::ApiClient without api_resources? if 404
-@return [Array<a href="Kube::ApiClient">Kube::ApiClient</a>]</p>
+          <p>api_versions [Array(String)] defaults to all APIs
+prefetch_resources [Bool] prefetch any missing api_resources for each api_version
+skip_missing [Bool] return Kube::ApiClient without api_resources? if 404</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -846,7 +843,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L169" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L166" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -862,7 +859,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L173" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -878,7 +875,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L205" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -894,7 +891,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L177" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -910,7 +907,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -932,7 +929,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L160" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L157" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -948,7 +945,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -964,7 +961,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L212" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L209" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -979,13 +976,13 @@ Required if creating new CRDs/apiservices.</p>
       
         <div class="doc">
           
-          <p>@param namespace [String, nil]</p>
+          <p>namespace [String, nil]</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L143" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1001,7 +998,7 @@ Required if creating new CRDs/apiservices.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L204" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L201" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1014,16 +1011,10 @@ Required if creating new CRDs/apiservices.</p>
         <a class="method-permalink" href="#version%3AK8S%3A%3AApimachinery%3A%3AVersion%3A%3AInfo-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@raise [K8s::Error]
-@return [K8s::Resource]</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/client.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/client.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>

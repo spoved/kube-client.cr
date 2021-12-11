@@ -418,7 +418,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L8" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L8" target="_blank">
         kube/resource_client.cr
       </a>
     
@@ -507,14 +507,14 @@
       <li class="entry-summary">
         <a href="#create_resource%28resource%3AT%29%3AT-instance-method" class="signature"><strong>#create_resource</strong>(resource : T) : T</a>
         
-          <div class="summary"><p>@param resource [#metadata] with metadata.namespace and metadata.name set @return [Object] instance of resource_class</p></div>
+          <div class="summary"><p>resource [#metadata] with metadata.namespace and metadata.name set</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#delete%28name%2Cnamespace%3D%40namespace%2Cpropagation_policy%3Dnil%29%3AT-instance-method" class="signature"><strong>#delete</strong>(name, namespace = @namespace, propagation_policy = <span class="n">nil</span>) : T</a>
         
-          <div class="summary"><p>@param name [String] @param namespace [String, nil] @param propagationPolicy [String, nil] The propagationPolicy to use for the API call.</p></div>
+          <div class="summary"><p>name [String] namespace [String, nil] propagationPolicy [String, nil] The propagationPolicy to use for the API call.</p></div>
         
       </li>
     
@@ -526,42 +526,40 @@
       <li class="entry-summary">
         <a href="#delete_collection%28namespace%3D%40namespace%2Clabel_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cpropagation_policy%3AString%3F%3Dnil%29%3AArray%28T%29-instance-method" class="signature"><strong>#delete_collection</strong>(namespace = @namespace, label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, propagation_policy : String? = <span class="n">nil</span>) : Array(T)</a>
         
-          <div class="summary"><p>@return [Array<Object>] array of instances of resource_class</p></div>
+          <div class="summary"><p>returns array of instances of resource_class</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#delete_resource%28resource%3AT%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#delete_resource</strong>(resource : T, **options)</a>
         
-          <div class="summary"><p>@param resource [resource_class] with metadata @param options [Hash] @see #delete for possible options @return [K8s::Resource]</p></div>
+          <div class="summary"><p>resource [resource_class] with metadata options [Hash] see #delete for possible options</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#get%28resource%3AT%29%3AT-instance-method" class="signature"><strong>#get</strong>(resource : T) : T</a>
         
-          <div class="summary"><p>@raise [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p></div>
+          <div class="summary"><p>raises [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#get%28name%2Cnamespace%3D%40namespace%29%3AT-instance-method" class="signature"><strong>#get</strong>(name, namespace = @namespace) : T</a>
         
-          <div class="summary"><p>@raise [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p></div>
+          <div class="summary"><p>raises [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#get%3F%3ABool-instance-method" class="signature"><strong>#get?</strong> : Bool</a>
         
-          <div class="summary"><p>@return [Bool]</p></div>
-        
       </li>
     
       <li class="entry-summary">
         <a href="#json_patch%28name%2Cops%2Cnamespace%3D%40namespace%29%3AT-instance-method" class="signature"><strong>#json_patch</strong>(name, ops, namespace = @namespace) : T</a>
         
-          <div class="summary"><p>@param name [String] @param ops [Hash] json-patch operations @param namespace [String, nil] @return [Object] instance of resource_class</p></div>
+          <div class="summary"><p>name [String] ops [Hash] json-patch operations namespace [String, nil]</p></div>
         
       </li>
     
@@ -573,14 +571,12 @@
       <li class="entry-summary">
         <a href="#list%28label_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cnamespace%3D%40namespace%29%3AArray%28T%29-instance-method" class="signature"><strong>#list</strong>(label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, namespace = @namespace) : Array(T)</a>
         
-          <div class="summary"><p>@return [Array<Object>] array of instances of resource_class</p></div>
+          <div class="summary"><p>returns array of instances of resource_class</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#list%3F-instance-method" class="signature"><strong>#list?</strong></a>
-        
-          <div class="summary"><p>@return [Bool]</p></div>
         
       </li>
     
@@ -592,7 +588,7 @@
       <li class="entry-summary">
         <a href="#merge_patch%28name%2Cobj%2Cnamespace%3D%40namespace%2Cstrategic_merge%3Dtrue%29%3AT-instance-method" class="signature"><strong>#merge_patch</strong>(name, obj, namespace = @namespace, strategic_merge = <span class="n">true</span>) : T</a>
         
-          <div class="summary"><p>@param name [String] @param obj [#to_json] @param namespace [String, nil] @param strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Merge Patch (arrays of objects are merged by name) @return [Object] instance of resource_class</p></div>
+          <div class="summary"><p>name [String] obj [#to_json] namespace [String, nil] strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Merge Patch (arrays of objects are merged by name)</p></div>
         
       </li>
     
@@ -616,8 +612,6 @@
       <li class="entry-summary">
         <a href="#patch%3F%3ABool-instance-method" class="signature"><strong>#patch?</strong> : Bool</a>
         
-          <div class="summary"><p>@return [Boolean]</p></div>
-        
       </li>
     
       <li class="entry-summary">
@@ -627,8 +621,6 @@
     
       <li class="entry-summary">
         <a href="#process_list%28list%29%3AArray%28T%29-instance-method" class="signature"><strong>#process_list</strong>(list) : Array(T)</a>
-        
-          <div class="summary"><p>@param list [K8s::Resource] @return [Array<Object>] array of instances of resource_class</p></div>
         
       </li>
     
@@ -655,14 +647,12 @@
       <li class="entry-summary">
         <a href="#update%3F%3ABool-instance-method" class="signature"><strong>#update?</strong> : Bool</a>
         
-          <div class="summary"><p>@return [Boolean]</p></div>
-        
       </li>
     
       <li class="entry-summary">
         <a href="#update_resource%28resource%3AT%29%3AT-instance-method" class="signature"><strong>#update_resource</strong>(resource : T) : T</a>
         
-          <div class="summary"><p>@param resource [#metadata] with metadata.resourceVersion set @return [Object] instance of resource_class</p></div>
+          <div class="summary"><p>returns instance of resource_class</p></div>
         
       </li>
     
@@ -746,7 +736,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L107" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L103" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -762,7 +752,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -797,7 +787,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -813,7 +803,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -841,7 +831,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -857,7 +847,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L115" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -873,7 +863,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -888,14 +878,13 @@
       
         <div class="doc">
           
-          <p>@param resource [#metadata] with metadata.namespace and metadata.name set
-@return [Object] instance of resource_class</p>
+          <p>resource [#metadata] with metadata.namespace and metadata.name set</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L149" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -910,16 +899,15 @@
       
         <div class="doc">
           
-          <p>@param name [String]
-@param namespace [String, nil]
-@param propagationPolicy [String, nil] The propagationPolicy to use for the API call. Possible values include “Orphan”, “Foreground”, or “Background”
-@return [K8s::Resource]</p>
+          <p>name [String]
+namespace [String, nil]
+propagationPolicy [String, nil] The propagationPolicy to use for the API call. Possible values include “Orphan”, “Foreground”, or “Background”</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L284" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L269" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -935,7 +923,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L276" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L262" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -950,13 +938,13 @@
       
         <div class="doc">
           
-          <p>@return [Array<Object>] array of instances of resource_class</p>
+          <p>returns array of instances of resource_class</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L296" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L281" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -971,16 +959,15 @@
       
         <div class="doc">
           
-          <p>@param resource [resource_class] with metadata
-@param options [Hash]
-@see #delete for possible options
-@return [K8s::Resource]</p>
+          <p>resource [resource_class] with metadata
+options [Hash]
+see #delete for possible options</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L316" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L300" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -995,13 +982,13 @@
       
         <div class="doc">
           
-          <p>@raise [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p>
+          <p>raises [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L172" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1016,13 +1003,13 @@
       
         <div class="doc">
           
-          <p>@raise [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p>
+          <p>raises [<code><a href="../Kube/Error/NotFound.html">Kube::Error::NotFound</a></code>] if resource is not found</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L169" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1035,15 +1022,10 @@
         <a class="method-permalink" href="#get%3F%3ABool-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@return [Bool]</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L158" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,16 +1040,15 @@
       
         <div class="doc">
           
-          <p>@param name [String]
-@param ops [Hash] json-patch operations
-@param namespace [String, nil]
-@return [Object] instance of resource_class</p>
+          <p>name [String]
+ops [Hash] json-patch operations
+namespace [String, nil]</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L266" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L252" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1083,7 +1064,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L128" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L124" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1098,13 +1079,13 @@
       
         <div class="doc">
           
-          <p>@return [Array<Object>] array of instances of resource_class</p>
+          <p>returns array of instances of resource_class</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L202" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1117,15 +1098,10 @@
         <a class="method-permalink" href="#list%3F-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@return [Bool]</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1141,7 +1117,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1156,17 +1132,16 @@
       
         <div class="doc">
           
-          <p>@param name [String]
-@param obj [#to_json]
-@param namespace [String, nil]
-@param strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Merge Patch (arrays of objects are merged by name)
-@return [Object] instance of resource_class</p>
+          <p>name [String]
+obj [#to_json]
+namespace [String, nil]
+strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Merge Patch (arrays of objects are merged by name)</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L252" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L239" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1182,7 +1157,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L199" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1203,7 +1178,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L120" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1219,7 +1194,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L77" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1232,15 +1207,10 @@
         <a class="method-permalink" href="#patch%3F%3ABool-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@return [Boolean]</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L243" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L231" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1256,7 +1226,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L132" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1269,16 +1239,10 @@
         <a class="method-permalink" href="#process_list%28list%29%3AArray%28T%29-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@param list [K8s::Resource]
-@return [Array<Object>] array of instances of resource_class</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L193" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L184" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1294,7 +1258,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1310,7 +1274,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1326,7 +1290,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1342,7 +1306,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L132" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1355,15 +1319,10 @@
         <a class="method-permalink" href="#update%3F%3ABool-instance-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>@return [Boolean]</p>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L217" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1378,14 +1337,13 @@
       
         <div class="doc">
           
-          <p>@param resource [#metadata] with metadata.resourceVersion set
-@return [Object] instance of resource_class</p>
+          <p>returns instance of resource_class</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L233" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1401,7 +1359,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/caf8500a7f8607c9416098d4694599c2607276c7/src/kube/resource_client.cr#L219" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/b0c8e4d1493082ad997aa93d2c7d8fb6cfe9c236/src/kube/resource_client.cr#L210" target="_blank">View source</a>]
         
       </div>
     </div>
