@@ -2,7 +2,7 @@ require "dotenv"
 Dotenv.load(".env_test")
 
 require "spectator"
-require "../src/kube-client/v1.20"
+require "../src/kube-client"
 
 Spectator.configure do |config|
   config.before_suite {

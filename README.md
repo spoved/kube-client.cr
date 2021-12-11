@@ -18,10 +18,24 @@ Crystal client library for the Kubernetes (1.11+) API
 
 ## Usage
 
+Specify the kubernetes api version of the client to use:
+
 ```crystal
 require "kube-client/v1.20"
 
 client = Kube::Client.autoconfig
+```
+
+Or you can specify the kubernetes api version at compile time via the `-Dk8s_v{major}.{minor}` flag:
+
+```crystal
+require "kube-client"
+
+client = Kube::Client.autoconfig
+```
+
+```shell
+$ crystal build -Dk8s_v1.20 kube-client.cr
 ```
 
 ### Overview
