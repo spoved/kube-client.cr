@@ -26,13 +26,11 @@ jobs:
             crystal: 1.2.2
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Download source
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - uses: rinx/setup-k3d@v0.0.2
       - name: Setup k3s cluster
         run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
-      - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
+      - uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
