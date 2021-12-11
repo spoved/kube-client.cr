@@ -29,11 +29,8 @@ jobs:
       - name: Download source
         uses: actions/checkout@v2
       - uses: rinx/setup-k3d@v0.0.2
-        with:
-          # version: ${{ matrix.k8s }}
-          options: "-c ./spec/files/k3d/${{ matrix.k8s }}.yml"
-      # - name: Setup k3s cluster
-      #   run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
+      - name: Setup k3s cluster
+        run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
