@@ -10,6 +10,7 @@ on:
 jobs:
   test:
     strategy:
+      max-parallel: 2
       fail-fast: false
       matrix:
         k8s:
@@ -30,7 +31,6 @@ jobs:
       - uses: rinx/setup-k3d@v0.0.2
         with:
           options: "-c ./spec/files/k3d/${{ matrix.k8s }}.yml"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       # - name: Setup k3s cluster
       #   run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
       - name: Install Crystal
