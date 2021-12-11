@@ -2,6 +2,8 @@
 
 Crystal client library for the Kubernetes (1.11+) API
 
+[![.github/workflows/docs.yml](https://github.com/spoved/kube-client.cr/actions/workflows/docs.yml/badge.svg)](https://github.com/spoved/kube-client.cr/actions/workflows/docs.yml) [![GitHub release](https://img.shields.io/github/release/spoved/kube-client.cr.svg)](https://github.com/spoved/kube-client.cr/releases) [![Chat on Telegram](https://img.shields.io/badge/chat-telegram-blue)](https://t.me/k8s_cr)
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:

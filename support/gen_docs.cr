@@ -51,8 +51,6 @@ def generate_docs_for(prefix, version)
 end
 
 def _generate_docs(version_file, docs_dir, rel_ver, git_commit, api_ver)
-  # lib/k8s/src/versions
-
   args = [
     "doc",
     "--project-name", PROJ_NAME,
@@ -61,10 +59,10 @@ def _generate_docs(version_file, docs_dir, rel_ver, git_commit, api_ver)
     "--source-refname", git_commit,
   ]
 
-  Dir.glob("./lib/k8s/src/k8s/*.cr").each do |file|
-    args << file
-  end
-  args << File.join(".", "lib/k8s/src/versions", File.basename(version_file))
+  # Dir.glob("./lib/k8s/src/k8s/*.cr").each do |file|
+  #   args << file
+  # end
+  # args << File.join(".", "lib/k8s/src/versions", File.basename(version_file))
   args << version_file
 
   system "crystal", args
@@ -92,8 +90,8 @@ def generate_release_docs
 
   current_ref = git_commit
   get_git_tags.each do |tag|
-    docs << tag[0].lchop('v')
-    generate_release_docs_for(tag[0].lchop('v'), tag[1])
+    versions = generate_release_docs_for(tag[0].lchop('v'), tag[1])
+    docs << tag[0].lchop('v') unless versions.empty?
   end
 
   `git checkout master`
@@ -109,7 +107,8 @@ def generate_release_docs_for(tag, commit)
     versions << prefix
   end
   docs_dir = File.join(".", DOCS_DIR, tag)
-  generate_version_list(docs_dir, versions, "Kubernetes APIs")
+  generate_version_list(docs_dir, versions, "Kubernetes APIs") unless versions.empty?
+  versions
 end
 
 def generate_version_list(docs_dir, docs, title = nil)
