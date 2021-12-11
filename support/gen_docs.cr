@@ -88,7 +88,6 @@ def generate_release_docs
   generate_release_docs_for("master", git_commit)
   docs = ["master"]
 
-  current_ref = git_commit
   get_git_tags.each do |tag|
     versions = generate_release_docs_for(tag[0].lchop('v'), tag[1])
     docs << tag[0].lchop('v') unless versions.empty?
