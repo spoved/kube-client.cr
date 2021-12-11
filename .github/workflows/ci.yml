@@ -14,8 +14,8 @@ jobs:
       fail-fast: true
       matrix:
         k8s:
-          - "v1.16"
-          - "v1.17"
+          # - "v1.16"
+          # - "v1.17"
           - "v1.18"
           - "v1.19"
           - "v1.20"
@@ -28,6 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: rinx/setup-k3d@v0.0.2
+        with:
+          skipClusterCreation: true
       - name: Setup k3s cluster
         run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
       - uses: crystal-lang/install-crystal@v1
