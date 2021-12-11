@@ -109,7 +109,7 @@ module Kube
         end
       end
 
-      # @raise [Kube::Error::ExecutionError] if the request fails
+      # raises [Kube::Error::ExecutionError] if the request fails
       def token_from_exec(conf : Kube::Config::UserDef::Exec) : String
         logger.debug { "Executing #{conf.command} #{conf.args.join(" ")}" }
 
@@ -131,7 +131,7 @@ module Kube
       end
 
       # In-cluster config within a kube pod, using the kubernetes service envs and serviceaccount secrets
-      # @raise [Kube::Error::MissingEnv] if the required env vars are not set
+      # raises [Kube::Error::MissingEnv] if the required env vars are not set
       def in_cluster_config(**options) : Kube::Transport
         host = ENV.fetch("KUBERNETES_SERVICE_HOST", "")
         raise Kube::Error::MissingEnv.new("KUBERNETES_SERVICE_HOST") if host.empty?

@@ -79,13 +79,11 @@ module Kube
 
     def initialize(@transport : Kube::Transport, @namespace : String? = nil); end
 
-    # @raise [K8s::Error]
-    # @return [K8s::Resource]
     def version : K8S::Apimachinery::Version::Info
       @version ||= @transport.version
     end
 
-    # @param api_version [String] "group/version" or "version" (core)
+    # api_version [String] "group/version" or "version" (core)
     def api(api_version : String = "v1") : Kube::ApiClient
       self.api_clients[api_version] ||= Kube::ApiClient.new(@transport, api_version)
     end
@@ -111,10 +109,9 @@ module Kube
       @api_groups || api_groups!
     end
 
-    # @param api_versions [Array<String>] defaults to all APIs
-    # @param prefetch_resources [Boolean] prefetch any missing api_resources for each api_version
-    # @param skip_missing [Boolean] return Kube::ApiClient without api_resources? if 404
-    # @return [Array<Kube::ApiClient>]
+    # api_versions [Array(String)] defaults to all APIs
+    # prefetch_resources [Bool] prefetch any missing api_resources for each api_version
+    # skip_missing [Bool] return Kube::ApiClient without api_resources? if 404
     def apis(api_versions = nil, prefetch_resources = false, skip_missing = false)
       api_versions ||= ["v1"] + api_groups
 
@@ -142,7 +139,7 @@ module Kube
       api_versions.map { |api_version| api(api_version) }
     end
 
-    # @param namespace [String, nil]
+    # namespace [String, nil]
     def resources(namespace : String? = nil)
       apis(prefetch_resources: true).flat_map { |api|
         begin

@@ -41,9 +41,7 @@ module Kube
       @api_resources || api_resources!
     end
 
-    # @param resource_name [String]
-    # @raise [K8s::Error::UndefinedResource]
-    # @return [K8s::Resource]
+    # raises `K8s::Error::UndefinedResource` if resource not found
     def find_api_resource(resource_name)
       found_resource = api_resources.find { |api_resource| api_resource.name == resource_name }
       found_resource ||= api_resources!.find { |api_resource| api_resource.name == resource_name }
