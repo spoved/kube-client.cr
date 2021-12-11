@@ -370,9 +370,15 @@
     <use href="#octicon-link"/>
   </svg>
 </a>Usage</h2>
+<p>Specify the kubernetes api version of the client to use:</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;kube-client/v1.20&quot;</span>
 
 client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.autoconfig</code></pre>
+<p>Or you can specify the kubernetes api version at compile time via the <code>-Dk8s_v{major}.{minor}</code> flag:</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;kube-client&quot;</span>
+
+client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.autoconfig</code></pre>
+<pre><code class="language-shell">$ crystal build -Dk8s_v1.20 kube-client.cr</code></pre>
 <h3><a id="overview" class="anchor" href="#overview">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
