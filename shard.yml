@@ -12,7 +12,7 @@ dependencies:
   k8s:
     github: spoved/k8s.cr
     # branch: master
-    version: ">= 0.0.1"
+    version: ">= 0.0.2"
   spoved:
     github: spoved/spoved.cr
   db:
