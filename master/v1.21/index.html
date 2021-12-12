@@ -516,10 +516,9 @@ pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).r
     <use href="#octicon-link"/>
   </svg>
 </a>From file(s)</h4>
-<p>Currently, only single resource files are supported.</p>
-<pre><code class="language-crystal">resource <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
+<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
 
-resource <span class="o">=</span> client.create_resource(resource)</code></pre>
+resources <span class="o">=</span> client.create_resource(resource)</code></pre>
 <h3><a id="patching-resources" class="anchor" href="#patching-resources">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
