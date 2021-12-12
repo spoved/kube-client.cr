@@ -171,7 +171,7 @@ pod = client.api("v1").resource("pods").create_resource(pod)
 ```crystal
 resources = K8S::Resource.from_file("./test.yaml")
 
-resources = client.create_resource(resource)
+resources = client.create_resources(resources)
 ```
 
 ### Patching resources
