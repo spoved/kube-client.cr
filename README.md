@@ -168,12 +168,10 @@ pod = client.api("v1").resource("pods").create_resource(pod)
 
 #### From file(s)
 
-Currently, only single resource files are supported.
-
 ```crystal
-resource = K8S::Resource.from_file("./test.yaml")
+resources = K8S::Resource.from_file("./test.yaml")
 
-resource = client.create_resource(resource)
+resources = client.create_resource(resource)
 ```
 
 ### Patching resources
