@@ -6,7 +6,7 @@ require "../src/kube-client"
 
 Spectator.configure do |config|
   config.before_suite {
-  # spoved_logger :trace, bind: true, clear: true
+    spoved_logger :trace, bind: true, clear: true
   }
 
   config.before_all do

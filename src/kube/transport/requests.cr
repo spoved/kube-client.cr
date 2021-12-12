@@ -64,6 +64,10 @@ module Kube
       else
         raise Kube::Error::API.new(method, path, response.status, "Invalid response Content-Type: #{content_type}")
       end
+    rescue ex : JSON::SerializableError
+      Log.error { "Invalid response: #{ex.message}" }
+      Log.error { "Response: #{response.body}" }
+      raise ex
     end
 
     # def parse_response(response : HTTP::Client::Response, **options)

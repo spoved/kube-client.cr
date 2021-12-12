@@ -1,7 +1,0 @@
----
-apiVersion: k3d.io/v1alpha3
-kind: Simple
-name: k3d-cluster-test
-# servers: 1
-# agents: 0
-image: docker.io/rancher/k3s:v1.16.15-k3s1

@@ -20,7 +20,7 @@ Spectator.describe Kube::Client do
     expect(resources).to_not be_empty
   end
 
-  it "#list_resources" do
+  it "#list_resources", focus: true do
     client = Kube::Client.new(new_transport)
     resources = client.list_resources
     expect(resources).to_not be_empty
