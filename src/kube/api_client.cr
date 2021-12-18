@@ -74,11 +74,17 @@ module Kube
       end
     end
 
-    # TODO: skip non-namespaced resources if namespace is given, or ignore namespace?
+    # If namespace is given, non-namespaced resources will be skipped
     def resources(namespace : String? = nil)
-      api_resources.map { |api_resource|
-        ResourceClient.new(@transport, self, api_resource, namespace: namespace)
-      }
+      api_resources.map do |api_resource|
+        if api_resource.namespaced
+          ResourceClient.new(@transport, self, api_resource, namespace: namespace)
+        elsif namespace.nil?
+          ResourceClient.new(@transport, self, api_resource)
+        else
+          nil
+        end
+      end.reject(Nil)
     end
 
     # Pipeline list requests for multiple resource types.
