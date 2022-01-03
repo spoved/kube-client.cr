@@ -406,14 +406,14 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L8" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L8" target="_blank">
         kube/transport.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L2" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L2" target="_blank">
         kube/transport/requests.cr
       </a>
     
@@ -521,6 +521,11 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#_watch_request%28response_class%3AT.class%2Cresponse_channel%2Cpath%2Creq_options%29forallT-instance-method" class="signature"><strong>#_watch_request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_channel, path, req_options) forall T</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#format_request%28options%29-instance-method" class="signature"><strong>#format_request</strong>(options)</a>
         
       </li>
@@ -588,7 +593,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#request%28response_class%3AT.class%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, **options) forall T</a>
+        <a href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc? = <span class="n">nil</span>, **options) forall T</a>
         
       </li>
     
@@ -624,6 +629,11 @@
     
       <li class="entry-summary">
         <a href="#version%3AK8S%3A%3AApimachinery%3A%3AVersion%3A%3AInfo-instance-method" class="signature"><strong>#version</strong> : K8S::Apimachinery::Version::Info</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#watch_request%28response_class%3AT.class%2Cresponse_channel%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#watch_request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_channel, **options) forall T</a>
         
       </li>
     
@@ -688,7 +698,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L67" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L67" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -716,7 +726,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -733,6 +743,22 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="_watch_request(response_class:T.class,response_channel,path,req_options)forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>_watch_request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_channel, path, req_options) forall T
+
+        <a class="method-permalink" href="#_watch_request%28response_class%3AT.class%2Cresponse_channel%2Cpath%2Creq_options%29forallT-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="format_request(options)-instance-method">
       <div class="signature">
         
@@ -744,7 +770,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -760,7 +786,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L195" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L221" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -776,7 +802,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L199" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L225" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -792,7 +818,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L223" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L249" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -808,7 +834,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L209" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L235" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -824,7 +850,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L227" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L253" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -840,7 +866,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -861,7 +887,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L213" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -877,7 +903,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -893,7 +919,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -909,7 +935,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -925,7 +951,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L241" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L267" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -941,23 +967,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L65" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="request(response_class:T.class,**options)forallT-instance-method">
+    <div class="entry-detail" id="request(response_class:T.class,response_block:Proc?=nil,**options)forallT-instance-method">
       <div class="signature">
         
-        def <strong>request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, **options) forall T
+        def <strong>request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc? = <span class="n">nil</span>, **options) forall T
 
-        <a class="method-permalink" href="#request%28response_class%3AT.class%2C%2A%2Aoptions%29forallT-instance-method">#</a>
+        <a class="method-permalink" href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -973,7 +999,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L114" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -989,7 +1015,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1005,7 +1031,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L152" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1021,7 +1047,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L148" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L174" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1037,7 +1063,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1053,7 +1079,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,7 +1095,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/574f88a90bee2610d304d8fd3ba37380338ae637/src/kube/transport/requests.cr#L191" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L217" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="watch_request(response_class:T.class,response_channel,**options)forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>watch_request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_channel, **options) forall T
+
+        <a class="method-permalink" href="#watch_request%28response_class%3AT.class%2Cresponse_channel%2C%2A%2Aoptions%29forallT-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/a989f06c26b49b03d8eeee4877f4175514fd89a7/src/kube/transport/requests.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
