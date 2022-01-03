@@ -184,7 +184,21 @@ client.api("apps/v1").resource("deployments", namespace: "default").merge_patch(
 
 ### Watching resources
 
-Watching resources is currently not supported.
+Watching resources spawns a background fiber that will push `K8S::Kubernetes::WatchEvent`s for the resouce onto the returned `Channel`.
+
+```crystal
+resource_client = client.api("v1").resource("pods")
+channel = resource_client.watch(resource_version: "4651")
+
+while !channel.closed?
+  event = channel.receive
+  if event.is_a?(Kube::Error::API)
+    # Handle error
+  else
+    pp event # => K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Pod)
+  end
+end
+```
 
 ## Contributing
 

@@ -65,6 +65,7 @@ module Kube
           query[k] = v unless v.nil?
         end
         return nil if query.empty?
+        query
       end
     end
 
@@ -209,9 +210,24 @@ module Kube
 
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
               field_selector : String | Hash(String, String) | Nil = nil,
-              resource_version : String? = nil, timeout : Int32 = nil, namespace = @namespace)
-      # TODO: add watch
-      raise "Watch is not implemented"
+              resource_version : String? = nil, timeout : Int32? = nil,
+              namespace = @namespace)
+      channel = Channel(::K8S::WatchEvent(T) | Kube::Error::API).new
+      query = make_query({
+        "labelSelector"   => selector_query(label_selector),
+        "fieldSelector"   => selector_query(field_selector),
+        "resourceVersion" => resource_version,
+        "timeoutSeconds"  => timeout,
+        "watch"           => "true",
+      })
+      logger.warn { "Watching #{query}" }
+      @transport.watch_request(
+        path: path(namespace: namespace),
+        query: query,
+        response_class: ::K8S::WatchEvent(T),
+        response_channel: channel,
+      )
+      channel
     end
 
     def update? : Bool

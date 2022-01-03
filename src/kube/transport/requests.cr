@@ -50,7 +50,6 @@ module Kube
           response_class.from_json(response.body)
         else
           K8S::Kubernetes::Resource.from_json(response.body)
-          # JSON.parse(response.body)
         end
       when "application/yaml"
         if response_class
@@ -69,10 +68,6 @@ module Kube
       Log.error { "Response: #{response.body}" }
       raise ex
     end
-
-    # def parse_response(response : HTTP::Client::Response, **options)
-    #   parse_response(response, **{response_class: K8S::Kubernetes::Resource}.merge(options))
-    # end
 
     def parse_response(response : HTTP::Client::Response, method : String, path : String, response_class : T.class | Nil = nil, **options) forall T
       content_type = response.headers["Content-Type"].split(';', 2).first
@@ -115,7 +110,38 @@ module Kube
       request(**options, response_class: K8S::Kubernetes::Resource)
     end
 
-    def request(response_class : T.class, **options) forall T
+    def watch_request(response_class : T.class, response_channel, **options) forall T
+      req_options = request_options(**options)
+      path = _request_path(options, req_options[:query]?)
+      spawn _watch_request(response_class, response_channel, path, req_options)
+    end
+
+    def _watch_request(response_class : T.class, response_channel, path, req_options) forall T
+      using_connection do |client|
+        client.exec(method: "GET", path: path, headers: req_options[:headers]?) do |response|
+          if response.success?
+            io = response.body_io
+            while !io.closed?
+              raw_event = io.gets
+              if raw_event
+                event = response_class.from_json(raw_event)
+                response_channel.send(event)
+              end
+            end
+          else
+            raise Kube::Error::API.new("GET", path, response.status, response.body)
+          end
+        end
+      end
+    rescue ex : Kube::Error::API
+      response_channel.send(ex)
+      response_channel.close
+    rescue ex
+      response_channel.close
+      raise ex
+    end
+
+    def request(response_class : T.class, response_block : Proc? = nil, **options) forall T
       opts = options.to_h
       req_options = if opts[:method]? == "DELETE" && need_delete_body?
                       request_options(**options.merge({
