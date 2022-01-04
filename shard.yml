@@ -11,7 +11,7 @@ license: MIT
 dependencies:
   k8s:
     github: spoved/k8s.cr
-    version: "~> 0.0.4"
+    version: "~> 0.0.5"
   spoved:
     github: spoved/spoved.cr
   db:
