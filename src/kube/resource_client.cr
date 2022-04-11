@@ -169,6 +169,15 @@ module Kube
       ).as(T)
     end
 
+     # returns response body as a String instead of T
+     def get_as_string(name, namespace = @namespace)
+      @transport.request(
+        method: "GET",
+        path: path(name, namespace: namespace),
+        response_class: @resource_class
+      ).as(String)
+    end
+
     # raises [`Kube::Error::NotFound`] if resource is not found
     def get(resource : T) : T
       @transport.request(
