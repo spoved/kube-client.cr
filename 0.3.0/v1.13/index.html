@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="0.3.0">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -378,7 +378,7 @@ client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</s
   </svg>
 </a>Overview</h3>
 <p>The top-level <code><a href="Kube/Client.html">Kube::Client</a></code> provides access to separate <code>APIClient</code> instances for each Kubernetes API Group (<code>v1</code>, <code>apps/v1</code>, etc.), which in turns provides access to separate <code>ResourceClient</code> instances for each API resource type (<code>nodes</code>, <code>pods</code>, <code>deployments</code>, etc.).</p>
-<p>Individual resources are returned as <code>K8S::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api("v1").resource("nodes").get("foo")</code>, and passed as arguments for <code>client.api("v1").resource("nodes").create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
+<p>Individual resources are returned as <code>K8S::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
 <p>The different <code><a href="Kube/Error/API.html">Kube::Error::API</a></code> subclasses represent different HTTP response codes, such as <code><a href="Kube/Error/NotFound.html">Kube::Error::NotFound</a></code> or <code><a href="Kube/Error/Conflict.html">Kube::Error::Conflict</a></code>.</p>
 <h3><a id="creating-a-client" class="anchor" href="#creating-a-client">
   <svg class="octicon-link" aria-hidden="true">
@@ -447,7 +447,7 @@ client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</s
     <use href="#octicon-link"/>
   </svg>
 </a>Listing resources</h3>
-<pre><code class="language-crystal">client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).list(label_selector: {<span class="s">&quot;role&quot;</span> => <span class="s">&quot;test&quot;</span>}).each <span class="k">do</span> <span class="o">|</span>pod<span class="o">|</span>
+<pre><code class="language-crystal">client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).list(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>}).each <span class="k">do</span> <span class="o">|</span>pod<span class="o">|</span>
   pod <span class="o">=</span> pod.<span class="k">as</span>(<span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>)
   puts <span class="s">&quot;namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s"> pod: </span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> node=</span><span class="i">#{</span>pod.spec.try <span class="o">&amp;</span>.node_name<span class="i">}</span><span class="s">&quot;</span>
 <span class="k">end</span></code></pre>
@@ -465,7 +465,7 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
   </svg>
 </a>Deleting resources</h3>
 <pre><code class="language-crystal">pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete(<span class="s">&quot;test-pod&quot;</span>)</code></pre>
-<pre><code class="language-crystal">pods <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete_collection(label_selector: {<span class="s">&quot;role&quot;</span> => <span class="s">&quot;test&quot;</span>})</code></pre>
+<pre><code class="language-crystal">pods <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete_collection(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>})</code></pre>
 <h3><a id="creating-resources" class="anchor" href="#creating-resources">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -481,7 +481,7 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
     name: name.<span class="k">nil?</span> ? random_string(<span class="n">10</span>) : name,
     namespace: <span class="s">&quot;default&quot;</span>,
     labels: {
-      <span class="s">&quot;app&quot;</span> => <span class="s">&quot;kube-client-test&quot;</span>,
+      <span class="s">&quot;app&quot;</span> =&gt; <span class="s">&quot;kube-client-test&quot;</span>,
     },
   ),
   spec: <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">PodSpec</span>.<span class="k">new</span>(
@@ -528,7 +528,7 @@ resource <span class="o">=</span> client.create_resource(resource)</code></pre>
 <ol>
 <li>Fork it (<a href="https://github.com/spoved/kube-client.cr/fork">https://github.com/spoved/kube-client.cr/fork</a>)</li>
 <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am "Add some feature"</code>)</li>
+<li>Commit your changes (<code>git commit -am &quot;Add some feature&quot;</code>)</li>
 <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
 <li>Create a new Pull Request</li>
 </ol>
