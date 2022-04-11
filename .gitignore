@@ -13,3 +13,4 @@
 spec/files/kube_config_test.yml
 /tmp/
 /test/
+.vscode
