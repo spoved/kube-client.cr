@@ -385,7 +385,7 @@ client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</s
   </svg>
 </a>Overview</h3>
 <p>The top-level <code><a href="Kube/Client.html">Kube::Client</a></code> provides access to separate <code>APIClient</code> instances for each Kubernetes API Group (<code>v1</code>, <code>apps/v1</code>, etc.), which in turns provides access to separate <code>ResourceClient</code> instances for each API resource type (<code>nodes</code>, <code>pods</code>, <code>deployments</code>, etc.).</p>
-<p>Individual resources are returned as <code>K8S::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
+<p>Individual resources are returned as <code>K8S::Kubernetes::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
 <p>The different <code><a href="Kube/Error/API.html">Kube::Error::API</a></code> subclasses represent different HTTP response codes, such as <code><a href="Kube/Error/NotFound.html">Kube::Error::NotFound</a></code> or <code><a href="Kube/Error/Conflict.html">Kube::Error::Conflict</a></code>.</p>
 <h3><a id="creating-a-client" class="anchor" href="#creating-a-client">
   <svg class="octicon-link" aria-hidden="true">
@@ -516,7 +516,7 @@ pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).r
     <use href="#octicon-link"/>
   </svg>
 </a>From file(s)</h4>
-<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
+<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
 
 resources <span class="o">=</span> client.create_resources(resources)</code></pre>
 <h3><a id="patching-resources" class="anchor" href="#patching-resources">
