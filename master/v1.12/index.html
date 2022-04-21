@@ -491,21 +491,21 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
   </svg>
 </a>Programmatically defined resources</h4>
 <pre><code class="language-crystal">pod <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>.<span class="k">new</span>(
-  metadata: <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">ObjectMeta</span>.<span class="k">new</span>(
-    name: name.<span class="k">nil?</span> ? random_string(<span class="n">10</span>) : name,
+  metadata: {
+    name: <span class="s">&quot;pod-name&quot;</span>,
     namespace: <span class="s">&quot;default&quot;</span>,
     labels: {
       <span class="s">&quot;app&quot;</span> =&gt; <span class="s">&quot;kube-client-test&quot;</span>,
     },
-  ),
-  spec: <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">PodSpec</span>.<span class="k">new</span>(
+  },
+  spec: {
     containers: [
-      <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Container</span>.<span class="k">new</span>(
+      {
         name: <span class="s">&quot;test&quot;</span>,
         image: <span class="s">&quot;test&quot;</span>,
-      ),
+      },
     ],
-  )
+  }
 )
 
 logger.info <span class="s">&quot;Create pod=</span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> in namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s">&quot;</span>
