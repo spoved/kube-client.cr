@@ -67,10 +67,10 @@ module Kube
     end
 
     def client_for_resource(resource : T, namespace : String? = nil) : ResourceClient(T) forall T
-      if resource.is_a?(::K8S::Kubernetes::Resource::Object)
-        client_for_resource(resource.api_version, resource.kind, resource.metadata.try(&.namespace) || namespace)
+      if resource.is_a?(::K8S::Kubernetes::Resource)
+        client_for_resource(resource.api_version, resource.kind, resource.metadata.try(&.namespace) || namespace).as(ResourceClient(T))
       else
-        client_for_resource(resource.api_version, resource.kind, namespace)
+        client_for_resource(resource.api_version, resource.kind, namespace).as(ResourceClient(T))
       end
     end
 
@@ -90,7 +90,7 @@ module Kube
     # Pipeline list requests for multiple resource types.
     #
     # Returns flattened array with mixed resource kinds.
-    def list_resources(resources : Array(Kube::ResourceClient)? = nil, **options) : Array(K8S::Resource)
+    def list_resources(resources : Array(Kube::ResourceClient)? = nil, **options) : Indexable
       Log.trace { "list_resources(#{resources}, #{options})" }
       resources ||= self.resources.select(&.list?)
       ResourceClient.list(resources, @transport, **options)

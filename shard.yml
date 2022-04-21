@@ -1,17 +1,17 @@
 name: kube-client
-version: 0.3.2
-
-crystal: ">= 1.2.2, < 2.0.0"
-
+description: Kubernetes Object Mappings for Crystal
 authors:
   - Holden Omans <holden.omans@gmail.com>
-
+repository: "https://github.com/spoved/kube-client.cr"
 license: MIT
+
+version: 0.3.2
+crystal: ">= 1.2.2, < 2.0.0"
 
 dependencies:
   k8s:
     github: spoved/k8s.cr
-    version: "~> 0.0.5"
+    version: "~> 0.1.0"
   spoved:
     github: spoved/spoved.cr
   db:

@@ -17,7 +17,7 @@ module Kube
         headers["Authorization"] = "Basic #{Base64.strict_encode("#{@auth_username}:#{@auth_password}")}"
       end
 
-      if request_object.is_a?(::JSON::Serializable) || request_object.is_a?(NamedTuple) || request_object.is_a?(Hash)
+      if request_object.is_a?(::JSON::Serializable) || request_object.is_a?(NamedTuple) || request_object.is_a?(Hash) || request_object.is_a?(K8S::Kubernetes::Object)
         options.merge(
           headers: headers,
           body: request_object.to_json,
@@ -165,9 +165,9 @@ module Kube
       logger.debug { "Response: #{response.body}" } unless response.nil?
       raise ex
     else
-      logger.info { "#{format_request(options)} => HTTP #{response.status}: #{obj.inspect} in #{t}s" }
       logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" }
+      logger.info { "#{format_request(options)} => HTTP #{response.status}: #{obj.inspect} in #{t}s" }
       obj
     end
 

@@ -105,7 +105,7 @@ Spectator.describe Kube::ApiClient do
 
     describe "#client_for_resource" do
       describe "for an invalid resource apiVersion" do
-        # let(resource) { K8S::Resource.new(
+        # let(resource) { K8S::Kubernetes::Resource.new(
         #   api_version: "test/v1",
         #   kind: "Test",
         # ) }
@@ -118,7 +118,7 @@ Spectator.describe Kube::ApiClient do
       end
 
       describe "for an invalid resource kind" do
-        # let(resource) { K8S::Resource.new(
+        # let(resource) { K8S::Kubernetes::Resource.new(
         #   api_version: "v1",
         #   kind: "Wtf",
         # ) }

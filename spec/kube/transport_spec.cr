@@ -26,7 +26,7 @@ Spectator.describe Kube::Transport do
     resp = trans.get(path)
     expect(resp).to_not be_nil
     expect(resp).to be_a(K8S::Api::Core::V1::NamespaceList)
-    expect(resp.as(K8S::Api::Core::V1::NamespaceList).items).to be_a(Array(K8S::Api::Core::V1::Namespace))
+    expect(resp.as(K8S::Api::Core::V1::NamespaceList).items).to be_a(Indexable(K8S::Api::Core::V1::Namespace))
   end
 
   it "#gets" do

@@ -23,7 +23,7 @@ module Kube
     #
     # `skip_forbidden` [Boolean] skip resources that return HTTP 403 errors
     def self.list(resources : Array(ResourceClient), transport : Transport, namespace : String? = nil,
-                  label_selector = nil, field_selector = nil, skip_forbidden = false) : Array(K8S::Resource)
+                  label_selector = nil, field_selector = nil, skip_forbidden = false) : Indexable
       api_paths = resources.map(&.path(namespace: namespace))
 
       api_lists = transport.gets(
@@ -99,7 +99,9 @@ module Kube
       end
     end
 
-    define_new
+    macro finished
+      define_new
+    end
 
     def initialize(@transport, @api_client, @api_resource, @namespace, @resource_class)
       @logger = ::Log.for("Kube::ResourceClient(#{@resource_class}")
@@ -169,8 +171,8 @@ module Kube
       ).as(T)
     end
 
-     # returns response body as a String instead of T
-     def get_as_string(name, namespace = @namespace)
+    # returns response body as a String instead of T
+    def get_as_string(name, namespace = @namespace)
       @transport.request(
         method: "GET",
         path: path(name, namespace: namespace),
@@ -191,8 +193,8 @@ module Kube
       @api_resource.verbs.includes? "list"
     end
 
-    def process_list(list) : Array(T)
-      if (list.is_a?(K8S::Kubernetes::ResourceList(T)))
+    def process_list(list) : Indexable(T)
+      if (list.is_a?(K8S::Kubernetes::Resource::List(T)))
         list.items
       else
         Array(T).new
@@ -201,7 +203,7 @@ module Kube
 
     # returns array of instances of resource_class
     def list(label_selector : String | Hash(String, String) | Nil = nil,
-             field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace) : Array(T)
+             field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace) : Indexable(T)
       list = meta_list(label_selector: label_selector, field_selector: field_selector, namespace: namespace)
       process_list(list)
     end
@@ -306,7 +308,7 @@ module Kube
     def delete_collection(namespace = @namespace,
                           label_selector : String | Hash(String, String) | Nil = nil,
                           field_selector : String | Hash(String, String) | Nil = nil,
-                          propagation_policy : String? = nil) : Array(T)
+                          propagation_policy : String? = nil) : Indexable(T)
       list = @transport.request(
         method: "DELETE",
         path: path(namespace: namespace),
