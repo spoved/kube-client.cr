@@ -144,21 +144,21 @@ pods = client.api("v1").resource("pods", namespace: "default").delete_collection
 
 ```crystal
 pod = K8S::Api::Core::V1::Pod.new(
-  metadata: ::K8S::ObjectMeta.new(
-    name: name.nil? ? random_string(10) : name,
+  metadata: {
+    name: "pod-name",
     namespace: "default",
     labels: {
       "app" => "kube-client-test",
     },
-  ),
-  spec: K8S::Api::Core::V1::PodSpec.new(
+  },
+  spec: {
     containers: [
-      K8S::Api::Core::V1::Container.new(
+      {
         name: "test",
         image: "test",
-      ),
+      },
     ],
-  )
+  }
 )
 
 logger.info "Create pod=#{pod.metadata!.name} in namespace=#{pod.metadata!.namespace}"
