@@ -24,6 +24,6 @@ Spectator.describe Kube::Client do
     client = Kube::Client.new(new_transport)
     resources = client.list_resources
     expect(resources).to_not be_empty
-    expect(resources).to be_a Array(K8S::Resource)
+    # expect(resources).to be_a Array(K8S::Kubernetes::Resource)
   end
 end

@@ -42,7 +42,7 @@ $ crystal build -Dk8s_v1.20 kube-client.cr
 
 The top-level `Kube::Client` provides access to separate `APIClient` instances for each Kubernetes API Group (`v1`, `apps/v1`, etc.), which in turns provides access to separate `ResourceClient` instances for each API resource type (`nodes`, `pods`, `deployments`, etc.).
 
-Individual resources are returned as `K8S::Resource` instances, which provide attribute access (`resource.metadata.name`). The resource instances are returned by methods such as `client.api("v1").resource("nodes").get("foo")`, and passed as arguments for `client.api("v1").resource("nodes").create_resource(res)`. Resources can also be loaded from disk using `Kube::Resource.from_files(path)`, and passed to the top-level methods such as `client.create_resource(res)`, which lookup the correct API/Resource client from the resource `apiVersion` and `kind`.
+Individual resources are returned as `K8S::Kubernetes::Resource` instances, which provide attribute access (`resource.metadata.name`). The resource instances are returned by methods such as `client.api("v1").resource("nodes").get("foo")`, and passed as arguments for `client.api("v1").resource("nodes").create_resource(res)`. Resources can also be loaded from disk using `Kube::Resource.from_files(path)`, and passed to the top-level methods such as `client.create_resource(res)`, which lookup the correct API/Resource client from the resource `apiVersion` and `kind`.
 
 The different `Kube::Error::API` subclasses represent different HTTP response codes, such as `Kube::Error::NotFound` or `Kube::Error::Conflict`.
 
@@ -169,7 +169,7 @@ pod = client.api("v1").resource("pods").create_resource(pod)
 #### From file(s)
 
 ```crystal
-resources = K8S::Resource.from_file("./test.yaml")
+resources = K8S::Kubernetes::Resource.from_file("./test.yaml")
 
 resources = client.create_resources(resources)
 ```

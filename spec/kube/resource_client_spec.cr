@@ -73,7 +73,11 @@ Spectator.describe Kube::ResourceClient do
         it "returns an array of resources" do
           list = subject.list
 
-          expect(list).to match Array(K8S::Api::Core::V1::Node)
+          expect(list).to be_a Indexable(K8S::Api::Core::V1::Node)
+          expect(list).to be_a K8S::Kubernetes::Resource::ListWrapper(K8S::Api::Core::V1::Node)
+          list.each do |node|
+            expect(node).to be_a K8S::Api::Core::V1::Node
+          end
           expect(list.map { |item| {
             kind:      item.kind,
             namespace: item.metadata!.namespace,
@@ -89,7 +93,7 @@ Spectator.describe Kube::ResourceClient do
       describe "#get" do
         it "returns a resource" do
           obj = subject.get(node_name)
-          expect(obj).to be_a K8S::Resource
+          expect(obj).to be_a K8S::Kubernetes::Resource
           expect(obj).to be_a K8S::Api::Core::V1::Node
           expect(obj.kind).to eq "Node"
           expect(obj.metadata!.namespace).to be nil
@@ -116,7 +120,7 @@ Spectator.describe Kube::ResourceClient do
         it "returns a resource" do
           expect(subject.patch?).to be_true
           obj = subject.merge_patch(node_name, {spec: {unschedulable: true}})
-          expect(obj).to match K8S::Resource
+          expect(obj).to match K8S::Kubernetes::Resource
           expect(obj.kind).to eq "Node"
           expect(obj.metadata!.name).to eq node_name
           expect(obj.spec.try(&.unschedulable)).to be true
@@ -201,7 +205,7 @@ Spectator.describe Kube::ResourceClient do
     end
 
     let(resource) { pod_resource }
-    let(resource_list) { K8S::ResourceList(K8S::Api::Core::V1::Pod).new(metadata: K8S::ListMeta.new, items: [resource]) }
+    let(resource_list) { K8S::Kubernetes::ResourceList(K8S::Api::Core::V1::Pod).new(metadata: K8S::ListMeta.new, items: [resource]) }
 
     context "POST /api/v1/pods/namespaces/default/pods" do
       describe "#create_resource" do
@@ -254,7 +258,7 @@ Spectator.describe Kube::ResourceClient do
           sleep(0.2)
           items = subject.delete_collection(namespace: "default", label_selector: "app=kube-client-test")
 
-          expect(items).to match Array(K8S::Api::Core::V1::Pod)
+          expect(items).to match Indexable(K8S::Api::Core::V1::Pod)
           expect(items.map(&.kind)).to all eq "Pod"
           expect(items.map(&.metadata!.name)).to have r.metadata!.name
         end

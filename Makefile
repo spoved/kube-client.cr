@@ -10,8 +10,8 @@ spec: ## Run tests
 	@k3d cluster delete k3d-cluster-test
 
 
-gen: ## Generate version files
-	@crystal ./bin/gen
+# gen: ## Generate version files
+# 	@crystal ./bin/gen
 
 docs: ## Generate docs
 	@crystal ./bin/gen_docs.cr
