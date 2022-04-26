@@ -12,7 +12,7 @@ jobs:
   test:
     strategy:
       max-parallel: 1
-      fail-fast: true
+      # fail-fast: true
       matrix:
         k8s:
           - "v1.19"
