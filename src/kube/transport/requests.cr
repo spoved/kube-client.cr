@@ -125,6 +125,12 @@ module Kube
               raw_event = io.gets
               if raw_event
                 event = response_class.from_json(raw_event)
+
+                if response_channel.closed?
+                  io.close
+                  break
+                end
+
                 response_channel.send(event)
               end
             end
