@@ -270,11 +270,14 @@ Spectator.describe Kube::ResourceClient do
 
   context "#watch" do
     let(api_client) { Kube::ApiClient.new(transport, "v1") }
-    subject { api_client.api("v1").resource("nodes") }
+    subject { api_client.client_for_resource(K8S::Api::Core::V1::Node) }
 
     it "returns a channel" do
       channel = subject.watch
-      expect(channel).to be_a Kube::WatchChannel
+      expect(channel).to be_a Kube::WatchChannel(K8S::Api::Core::V1::Node)
+      resp = channel.receive
+      expect(resp).to be_a K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Node)
+      channel.close
     end
   end
 end

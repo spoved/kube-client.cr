@@ -46,7 +46,6 @@ module Kube
       found_resource = api_resources.find { |api_resource| api_resource.name == resource_name }
       found_resource ||= api_resources!.find { |api_resource| api_resource.name == resource_name }
       raise Kube::Error::UndefinedResource.new("Unknown resource #{resource_name} for #{@api_version}") unless found_resource
-
       found_resource
     end
 
@@ -66,7 +65,7 @@ module Kube
       ResourceClient.new(@transport, self, found_resource, namespace: namespace)
     end
 
-    def client_for_resource(resource : T, namespace : String? = nil) : ResourceClient(T) forall T
+    def client_for_resource(resource : T.class, namespace : String? = nil) : ResourceClient(T) forall T
       if resource.is_a?(::K8S::Kubernetes::Resource)
         client_for_resource(resource.api_version, resource.kind, resource.metadata.try(&.namespace) || namespace).as(ResourceClient(T))
       else
