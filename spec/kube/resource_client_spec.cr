@@ -150,23 +150,25 @@ Spectator.describe Kube::ResourceClient do
       end
     end
 
-    # context "PUT /api/v1/nodes/*/status" do
-    #   let(:resource) { K8S::Api::Core::V1::Node.new(
-    #     kind: "Node",
-    #     metadata: ::K8S::ObjectMeta.new(name: node_name),
-    #     status: K8S::Api::Core::V1::NodeStatus.new(foo: "bar"),
-    #   ) }
+    context "PUT /api/v1/nodes/*/status" do
+      let(:resource) { K8S::Api::Core::V1::Node.new(
+        kind: "Node",
+        metadata: ::K8S::ObjectMeta.new(name: node_name),
+        status: K8S::Api::Core::V1::NodeStatus.new(foo: "bar"),
+      ) }
 
-    #   describe "#update_resource" do
-    #     it "returns a resource" do
-    #       obj = subject.update_resource(resource)
+      describe "#update_resource" do
+        it "returns a resource" do
+          obj = subject.update_resource(resource)
 
-    #       expect(obj).to match K8s::Resource
-    #       expect(obj.kind).to eq "Node"
-    #       expect(obj.metadata.name).to eq "test"
-    #     end
-    #   end
-    # end
+          expect(obj).to match K8S::Kubernetes::Resource
+          expect(obj.kind).to eq "Node"
+          expect(obj.metadata!.name).to eq node_name
+        end
+      end
+
+      # TODO: test patch
+    end
   end
 
   context "for the pods API" do
@@ -263,6 +265,19 @@ Spectator.describe Kube::ResourceClient do
           expect(items.map(&.metadata!.name)).to have r.metadata!.name
         end
       end
+    end
+  end
+
+  context "#watch" do
+    let(api_client) { Kube::ApiClient.new(transport, "v1") }
+    subject { api_client.client_for_resource(K8S::Api::Core::V1::Node) }
+
+    it "returns a channel" do
+      channel = subject.watch
+      expect(channel).to be_a Kube::WatchChannel(K8S::Api::Core::V1::Node)
+      resp = channel.receive
+      expect(resp).to be_a K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Node)
+      channel.close
     end
   end
 end

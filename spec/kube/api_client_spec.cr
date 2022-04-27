@@ -7,6 +7,14 @@ Spectator.describe Kube::ApiClient do
     expect(client).to be_a(Kube::ApiClient)
   end
 
+  context "#client_for_resource" do
+    subject { client.client_for_resource(K8S::Api::Core::V1::Node) }
+
+    it "should return a client for the given resource" do
+      expect(subject).to be_a Kube::ResourceClient(K8S::Api::Core::V1::Node)
+    end
+  end
+
   context "for the v1 API" do
     it "#api_resources" do
       expect(client.api_resources).to be_a(Array(::K8S::APIResource))

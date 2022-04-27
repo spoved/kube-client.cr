@@ -222,8 +222,7 @@ module Kube
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
               field_selector : String | Hash(String, String) | Nil = nil,
               resource_version : String? = nil, timeout : Int32? = nil,
-              namespace = @namespace)
-      channel = Channel(::K8S::WatchEvent(T) | Kube::Error::API).new
+              namespace = @namespace) : Kube::WatchChannel(T)
       query = make_query({
         "labelSelector"   => selector_query(label_selector),
         "fieldSelector"   => selector_query(field_selector),
@@ -232,13 +231,17 @@ module Kube
         "watch"           => "true",
       })
       logger.warn { "Watching #{query}" }
+
+      wc = Kube::WatchChannel(T).new(@transport)
+
       @transport.watch_request(
         path: path(namespace: namespace),
         query: query,
-        response_class: ::K8S::WatchEvent(T),
-        response_channel: channel,
+        response_class: K8S::Kubernetes::WatchEvent(T),
+        response_channel: wc.channel,
       )
-      channel
+
+      wc
     end
 
     def update? : Bool

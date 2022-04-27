@@ -110,13 +110,13 @@ module Kube
       request(**options, response_class: K8S::Kubernetes::Resource)
     end
 
-    def watch_request(response_class : T.class, response_channel, **options) forall T
+    def watch_request(response_class : T, response_channel, **options) forall T
       req_options = request_options(**options)
       path = _request_path(options, req_options[:query]?)
       spawn _watch_request(response_class, response_channel, path, req_options)
     end
 
-    def _watch_request(response_class : T.class, response_channel, path, req_options) forall T
+    def _watch_request(response_class : T, response_channel, path, req_options) forall T
       using_connection do |client|
         client.exec(method: "GET", path: path, headers: req_options[:headers]?) do |response|
           if response.success?
@@ -125,7 +125,18 @@ module Kube
               raw_event = io.gets
               if raw_event
                 event = response_class.from_json(raw_event)
-                response_channel.send(event)
+
+                if response_channel.closed?
+                  io.close
+                  break
+                end
+
+                begin
+                  response_channel.send(event)
+                rescue ex : Channel::ClosedError
+                  io.close unless io.closed?
+                  break
+                end
               end
             end
           else
