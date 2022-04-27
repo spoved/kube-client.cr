@@ -22,7 +22,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.2.2
+            crystal: 1.4.0
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
