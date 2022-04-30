@@ -77,7 +77,10 @@ module Kube
       else
         response_data = _parse_resp(method, path, response, content_type)
 
-        if (response_data.is_a?(JSON::Any) || response_data.is_a?(YAML::Any)) && response_data["kind"]? == "Status"
+        if response_data.is_a?(K8S::Apimachinery::Apis::Meta::V1::Status)
+          raise Kube::Error::API.new(method, path, response.status, response_data)
+        elsif (response_data.is_a?(JSON::Any) || response_data.is_a?(YAML::Any)) &&
+              (response_data["kind"]? == "Status" && response_data["apiVersion"]? == "v1")
           raise Kube::Error::API.new(method, path, response.status, K8S::Apimachinery::Apis::Meta::V1::Status.from_json(response.body))
         else
           raise Kube::Error::API.new(method, path, response.status, response.body)
