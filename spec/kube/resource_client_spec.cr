@@ -91,13 +91,23 @@ Spectator.describe Kube::ResourceClient do
 
     context "GET /api/v1/nodes/*" do
       describe "#get" do
-        it "returns a resource" do
-          obj = subject.get(node_name)
-          expect(obj).to be_a K8S::Kubernetes::Resource
-          expect(obj).to be_a K8S::Api::Core::V1::Node
-          expect(obj.kind).to eq "Node"
-          expect(obj.metadata!.namespace).to be nil
-          expect(obj.metadata!.name).to eq node_name
+        context "when resouce exists" do
+          it "returns a resource" do
+            obj = subject.get(node_name)
+            expect(obj).to be_a K8S::Kubernetes::Resource
+            expect(obj).to be_a K8S::Api::Core::V1::Node
+            expect(obj.kind).to eq "Node"
+            expect(obj.metadata!.namespace).to be nil
+            expect(obj.metadata!.name).to eq node_name
+          end
+        end
+
+        context "when resouce doesnt exist" do
+          it "raises Kube::Error::NotFound" do
+            expect_raises Kube::Error::NotFound do
+              subject.get("not-found")
+            end
+          end
         end
       end
     end
