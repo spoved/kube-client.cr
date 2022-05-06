@@ -1,5 +1,5 @@
 module Kube
   class Client
-    VERSION = "0.4.2"
+    VERSION = {{ `shards version "#{__DIR__}"`.chomp.stringify }}
   end
 end
