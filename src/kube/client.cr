@@ -173,7 +173,7 @@ module Kube
       raise ex
     end
 
-    def client_for_resource(resource : T, namespace : String? = nil) forall T
+    def client_for_resource(resource : T.class | T, namespace : String? = nil) forall T
       api_ver = {% if T < K8S::Kubernetes::Resource %}
                   {% anno = T.annotation(::K8S::GroupVersionKind) %}
                   {% if anno && anno.named_args[:group] %}
@@ -184,6 +184,7 @@ module Kube
                 {% else %}
                   resource.api_version
                 {% end %}
+      logger.warn { api_ver }
       api(api_ver).client_for_resource(resource, namespace: namespace)
     end
 
