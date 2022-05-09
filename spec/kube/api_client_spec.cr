@@ -101,7 +101,7 @@ Spectator.describe Kube::ApiClient do
 
     describe "#resource" do
       it "raises error for non-existing resource" do
-        expect_raises Kube::Error::UndefinedResource, "Unknown resource wtfs for v1" do
+        expect_raises Kube::Error::UndefinedResource, "Unknown resource kind: wtfs for v1" do
           client.resource("wtfs")
         end
       end
@@ -112,28 +112,10 @@ Spectator.describe Kube::ApiClient do
     end
 
     describe "#client_for_resource" do
-      describe "for an invalid resource apiVersion" do
-        # let(resource) { K8S::Kubernetes::Resource.new(
-        #   api_version: "test/v1",
-        #   kind: "Test",
-        # ) }
-
-        it "raises error" do
-          expect_raises Kube::Error::UndefinedResource, "Invalid apiVersion=test/v1 for v1 client" do
-            client.client_for_resource(api_version: "test/v1", kind: "Test")
-          end
-        end
-      end
-
       describe "for an invalid resource kind" do
-        # let(resource) { K8S::Kubernetes::Resource.new(
-        #   api_version: "v1",
-        #   kind: "Wtf",
-        # ) }
-
         it "raises error" do
-          expect_raises Kube::Error::UndefinedResource, "Unknown resource kind=Wtf for v1" do
-            client.client_for_resource(api_version: "v1", kind: "Wtf")
+          expect_raises Kube::Error::UndefinedResource, "Resource Wtf is not available in v1" do
+            client.client_for_resource(kind: "Wtf")
           end
         end
       end

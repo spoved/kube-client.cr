@@ -16,6 +16,7 @@ module Kube
   # Offers access to `Kube::ApiClient` and `ResourceClient` instances.
   class Client
     spoved_logger
+
     @mutex = Mutex.new
     @version : K8S::Apimachinery::Version::Info? = nil
 
@@ -75,7 +76,8 @@ module Kube
     private getter namespace : String? = nil
 
     private getter api_clients : Hash(String, Kube::ApiClient) = Hash(String, Kube::ApiClient).new
-    getter api_groups : Array(String)? = nil
+
+    @api_groups : Array(String) = Array(String).new
 
     def initialize(@transport : Kube::Transport, @namespace : String? = nil); end
 
@@ -88,25 +90,30 @@ module Kube
       self.api_clients[api_version] ||= Kube::ApiClient.new(@transport, api_version)
     end
 
+    # Cached /apis preferred group apiVersions
+    def api_groups : Array(String)
+      @api_groups.empty? ? api_groups! : @api_groups
+    end
+
     # Force-update /apis cache.
     # Required if creating new CRDs/apiservices.
     def api_groups! : Array(String)
+      logger.trace { "Updating api groups" }
+
       @mutex.synchronize do
-        @api_groups = @transport.get(
+        groups = @transport.get(
           "/apis",
           response_class: K8S::Apimachinery::Apis::Meta::V1::APIGroupList
         ).as(K8S::Apimachinery::Apis::Meta::V1::APIGroupList)
           .groups.flat_map(&.versions.map(&.group_version))
 
+        @api_groups.clear
         @api_clients.clear
+
+        @api_groups.concat(groups)
       end
 
       @api_groups.not_nil!
-    end
-
-    # Cached /apis preferred group apiVersions
-    def api_groups : Array(String)
-      @api_groups || api_groups!
     end
 
     # api_versions [Array(String)] defaults to all APIs
@@ -142,6 +149,7 @@ module Kube
     # namespace [String, nil]
     def resources(namespace : String? = nil)
       apis(prefetch_resources: true).flat_map { |api|
+        logger.trace { "Fetching resources for #{api.api_version}" }
         begin
           api.resources(namespace: namespace)
         rescue ex : Kube::Error::ServiceUnavailable | Kube::Error::NotFound
@@ -154,17 +162,29 @@ module Kube
     # Pipeline list requests for multiple resource types.
     #
     # Returns flattened array with mixed resource kinds.
-    def list_resources(resources : Array(Kube::ResourceClient)? = nil, **options)
-      logger.trace { "list_resources(#{resources}, #{options})" }
-      resources ||= self.resources.select(&.list?)
-      ResourceClient.list(resources, @transport, **options)
+    def list_resources(resource_list : Array(Kube::ResourceClient)? = nil, **options)
+      logger.trace { "list_resources(#{resource_list}, #{options})" }
+      resource_list ||= self.resources(options[:namespace]?).select(&.list?)
+      logger.trace { "list_resources found #{resource_list.size} API resources" }
+
+      ResourceClient.list(resource_list, @transport, **options)
     rescue ex : Kube::Error::NotFound
       logger.error { ex.message }
       raise ex
     end
 
     def client_for_resource(resource : T, namespace : String? = nil) forall T
-      api(resource.api_version).client_for_resource(resource, namespace: namespace)
+      api_ver = {% if T < K8S::Kubernetes::Resource %}
+                  {% anno = T.annotation(::K8S::GroupVersionKind) %}
+                  {% if anno && anno.named_args[:group] %}
+                    File.join({{anno.named_args[:group]}}, {{anno.named_args[:version]}})
+                  {% else %}
+                    resource.group.empty? ? resource.api_version : File.join(resource.group, resource.api_version)
+                  {% end %}
+                {% else %}
+                  resource.api_version
+                {% end %}
+      api(api_ver).client_for_resource(resource, namespace: namespace)
     end
 
     def create_resource(resource : T) forall T
