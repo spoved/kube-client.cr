@@ -383,7 +383,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L5" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L5" target="_blank">
         kube/api_client.cr
       </a>
     
@@ -476,12 +476,22 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#client_for_resource%28api_version%3AString%2Ckind%3AString%2Cnamespace%3AString%3F%3Dnil%29-instance-method" class="signature"><strong>#client_for_resource</strong>(api_version : String, kind : String, namespace : String? = <span class="n">nil</span>)</a>
+        <a href="#client_for_resource%28kind%3AString%2Cnamespace%3AString%3F%3Dnil%29-instance-method" class="signature"><strong>#client_for_resource</strong>(kind : String, namespace : String? = <span class="n">nil</span>)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#client_for_resource%28resource%3AT.class%2Cnamespace%3AString%3F%3Dnil%29%3AResourceClient%28T%29forallT-instance-method" class="signature"><strong>#client_for_resource</strong>(resource : <span class="t">T</span>.<span class="k">class</span>, namespace : String? = <span class="n">nil</span>) : ResourceClient(T) forall T</a>
+        <a href="#client_for_resource%28resource%3AX.class%2Cnamespace%3AString%3F%3Dnil%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%3F%3Dnil%29forallX-instance-method" class="signature"><strong>#client_for_resource</strong>(resource : <span class="t">X</span>.<span class="k">class</span>, namespace : String? = <span class="n">nil</span>, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource? = <span class="n">nil</span>) forall X</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#client_for_resource%28resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%3Dnil%29-instance-method" class="signature"><strong>#client_for_resource</strong>(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#client_for_subresource%28resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%3Dnil%29-instance-method" class="signature"><strong>#client_for_subresource</strong>(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -493,7 +503,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#list_resources%28resources%3AArray%28Kube%3A%3AResourceClient%29%3F%3Dnil%2C%2A%2Aoptions%29%3AIndexable-instance-method" class="signature"><strong>#list_resources</strong>(resources : Array(Kube::ResourceClient)? = <span class="n">nil</span>, **options) : Indexable</a>
+        <a href="#find_api_resource_by_kind%28kind%29-instance-method" class="signature"><strong>#find_api_resource_by_kind</strong>(kind)</a>
+        
+          <div class="summary"><p>raises <code>K8s::Error::UndefinedResource</code> if resource not found</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#list_resources%28resource_list%3AArray%28Kube%3A%3AResourceClient%29%3F%3Dnil%2C%2A%2Aoptions%29%3AIndexable-instance-method" class="signature"><strong>#list_resources</strong>(resource_list : Array(Kube::ResourceClient)? = <span class="n">nil</span>, **options) : Indexable</a>
         
           <div class="summary"><p>Pipeline list requests for multiple resource types.</p></div>
         
@@ -572,7 +589,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -600,7 +617,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -621,7 +638,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -654,7 +671,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -675,7 +692,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -696,7 +713,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -712,39 +729,71 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="client_for_resource(api_version:String,kind:String,namespace:String?=nil)-instance-method">
+    <div class="entry-detail" id="client_for_resource(kind:String,namespace:String?=nil)-instance-method">
       <div class="signature">
         
-        def <strong>client_for_resource</strong>(api_version : String, kind : String, namespace : String? = <span class="n">nil</span>)
+        def <strong>client_for_resource</strong>(kind : String, namespace : String? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#client_for_resource%28api_version%3AString%2Ckind%3AString%2Cnamespace%3AString%3F%3Dnil%29-instance-method">#</a>
+        <a class="method-permalink" href="#client_for_resource%28kind%3AString%2Cnamespace%3AString%3F%3Dnil%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L67" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="client_for_resource(resource:T.class,namespace:String?=nil):ResourceClient(T)forallT-instance-method">
+    <div class="entry-detail" id="client_for_resource(resource:X.class,namespace:String?=nil,api_resource:K8S::Apimachinery::Apis::Meta::V1::APIResource?=nil)forallX-instance-method">
       <div class="signature">
         
-        def <strong>client_for_resource</strong>(resource : <span class="t">T</span>.<span class="k">class</span>, namespace : String? = <span class="n">nil</span>) : <a href="../Kube/ResourceClient.html">ResourceClient</a>(T) forall T
+        def <strong>client_for_resource</strong>(resource : <span class="t">X</span>.<span class="k">class</span>, namespace : String? = <span class="n">nil</span>, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource? = <span class="n">nil</span>) forall X
 
-        <a class="method-permalink" href="#client_for_resource%28resource%3AT.class%2Cnamespace%3AString%3F%3Dnil%29%3AResourceClient%28T%29forallT-instance-method">#</a>
+        <a class="method-permalink" href="#client_for_resource%28resource%3AX.class%2Cnamespace%3AString%3F%3Dnil%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%3F%3Dnil%29forallX-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="client_for_resource(resource:K8S::Apimachinery::Apis::Meta::V1::APIResource,namespace:String?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>client_for_resource</strong>(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#client_for_resource%28resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%3Dnil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="client_for_subresource(resource:K8S::Apimachinery::Apis::Meta::V1::APIResource,namespace:String?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>client_for_subresource</strong>(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#client_for_subresource%28resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%3Dnil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L111" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -765,17 +814,38 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="list_resources(resources:Array(Kube::ResourceClient)?=nil,**options):Indexable-instance-method">
+    <div class="entry-detail" id="find_api_resource_by_kind(kind)-instance-method">
       <div class="signature">
         
-        def <strong>list_resources</strong>(resources : Array(<a href="../Kube/ResourceClient.html">Kube::ResourceClient</a>)? = <span class="n">nil</span>, **options) : Indexable
+        def <strong>find_api_resource_by_kind</strong>(kind)
 
-        <a class="method-permalink" href="#list_resources%28resources%3AArray%28Kube%3A%3AResourceClient%29%3F%3Dnil%2C%2A%2Aoptions%29%3AIndexable-instance-method">#</a>
+        <a class="method-permalink" href="#find_api_resource_by_kind%28kind%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>raises <code>K8s::Error::UndefinedResource</code> if resource not found</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="list_resources(resource_list:Array(Kube::ResourceClient)?=nil,**options):Indexable-instance-method">
+      <div class="signature">
+        
+        def <strong>list_resources</strong>(resource_list : Array(<a href="../Kube/ResourceClient.html">Kube::ResourceClient</a>)? = <span class="n">nil</span>, **options) : Indexable
+
+        <a class="method-permalink" href="#list_resources%28resource_list%3AArray%28Kube%3A%3AResourceClient%29%3F%3Dnil%2C%2A%2Aoptions%29%3AIndexable-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -787,7 +857,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L92" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -803,7 +873,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -819,7 +889,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -835,7 +905,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -856,7 +926,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/bae71f51572e9d663501ea26185b9173ae3d51c5/src/kube/api_client.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/152e0a607e883dd3fb97c5fffa8a1a4e1db07d1c/src/kube/api_client.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
