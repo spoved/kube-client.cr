@@ -331,11 +331,6 @@
       
     </li>
   
-  <li class=" " data-id="kube-client.cr/Kube/WatchChannel" data-name="kube::watchchannel(t)">
-      <a href="Kube/WatchChannel.html">WatchChannel</a>
-      
-    </li>
-  
 </ul>
 
       
@@ -390,7 +385,7 @@ client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</s
   </svg>
 </a>Overview</h3>
 <p>The top-level <code><a href="Kube/Client.html">Kube::Client</a></code> provides access to separate <code>APIClient</code> instances for each Kubernetes API Group (<code>v1</code>, <code>apps/v1</code>, etc.), which in turns provides access to separate <code>ResourceClient</code> instances for each API resource type (<code>nodes</code>, <code>pods</code>, <code>deployments</code>, etc.).</p>
-<p>Individual resources are returned as <code>K8S::Kubernetes::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
+<p>Individual resources are returned as <code>K8S::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
 <p>The different <code><a href="Kube/Error/API.html">Kube::Error::API</a></code> subclasses represent different HTTP response codes, such as <code><a href="Kube/Error/NotFound.html">Kube::Error::NotFound</a></code> or <code><a href="Kube/Error/Conflict.html">Kube::Error::Conflict</a></code>.</p>
 <h3><a id="creating-a-client" class="anchor" href="#creating-a-client">
   <svg class="octicon-link" aria-hidden="true">
@@ -496,21 +491,21 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
   </svg>
 </a>Programmatically defined resources</h4>
 <pre><code class="language-crystal">pod <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>.<span class="k">new</span>(
-  metadata: {
-    name: <span class="s">&quot;pod-name&quot;</span>,
+  metadata: <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">ObjectMeta</span>.<span class="k">new</span>(
+    name: name.<span class="k">nil?</span> ? random_string(<span class="n">10</span>) : name,
     namespace: <span class="s">&quot;default&quot;</span>,
     labels: {
       <span class="s">&quot;app&quot;</span> =&gt; <span class="s">&quot;kube-client-test&quot;</span>,
     },
-  },
-  spec: {
+  ),
+  spec: <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">PodSpec</span>.<span class="k">new</span>(
     containers: [
-      {
+      <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Container</span>.<span class="k">new</span>(
         name: <span class="s">&quot;test&quot;</span>,
         image: <span class="s">&quot;test&quot;</span>,
-      },
+      ),
     ],
-  }
+  )
 )
 
 logger.info <span class="s">&quot;Create pod=</span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> in namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s">&quot;</span>
@@ -521,7 +516,7 @@ pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).r
     <use href="#octicon-link"/>
   </svg>
 </a>From file(s)</h4>
-<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
+<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
 
 resources <span class="o">=</span> client.create_resources(resources)</code></pre>
 <h3><a id="patching-resources" class="anchor" href="#patching-resources">
