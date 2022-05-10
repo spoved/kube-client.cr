@@ -21,8 +21,9 @@ def git_commit
 end
 
 def get_git_tags
-  `git show-ref --tags -d`.chomp.split("\n")
-    .select(&.=~(/\^\{\}$/)).map do |line|
+  tags = `git show-ref --tags -d`.chomp.split("\n")
+    .reject(&.=~(/\^\{\}$/))
+  tags.map do |line|
     parts = line.split(" ")
     {parts[1].gsub("refs/tags/", "").gsub("^{}", ""), parts[0]}
   end
@@ -94,7 +95,7 @@ def generate_release_docs
   end
 
   `git checkout master`
-  generate_version_list(File.join(".", DOCS_DIR), docs, "K8S Releases")
+  generate_version_list(File.join(".", DOCS_DIR), docs, "Kube Client Releases")
 end
 
 def generate_release_docs_for(tag, commit)
