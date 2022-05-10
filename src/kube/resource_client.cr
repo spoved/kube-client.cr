@@ -6,7 +6,7 @@ module Kube
   #
   # Used to get/list/update/patch/delete specific types of resources, optionally in some specific namespace.
   class ResourceClient(T)
-    @@logger = ::Log.for(Kube::ResourceClient)
+    @@logger = ::Log.for("kube.resource_client")
     @logger : ::Log
 
     def logger
@@ -39,7 +39,8 @@ module Kube
       # api_lists.each { |r| puts r.class }
       # resources.zip(api_lists)
       resources.zip(api_lists).flat_map do |resource, api_list|
-        api_list ? resource.process_list(api_list) : [] of K8S::Kubernetes::Resource
+        # logger.info { "listing #{resource.class} in #{namespace}" }
+        api_list ? resource.process_list(api_list) : nil
       end.reject(Nil)
     end
 
@@ -74,43 +75,24 @@ module Kube
 
     private property transport : Kube::Transport
     private property api_client : Kube::ApiClient
+
     getter api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource
     getter namespace : String? = nil
     getter resource : String
     getter subresource : String? = nil
-    getter resource_class = K8S::Kubernetes::Resource
+    getter? namespaced : Bool
 
-    private macro define_new
-      def self.new(transport, api_client, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace = nil)
-        ver = (api_resource.version.nil? ||  api_resource.version.not_nil!.empty?) ? "v1" : api_resource.version.not_nil!
-        group = api_resource.group.nil? ? "" : api_resource.group.not_nil!
-        klass = k8s_resource_class(group, ver, api_resource.kind)
-        case klass
-        {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
-        {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
-        when {{resource.id}}.class
-          ::Kube::ResourceClient({{resource.id}}).new(transport, api_client, api_resource, namespace, {{resource.id}})
-        {% end %}{% end %}
-        else
-          raise Kube::Error::UndefinedResource.new("Unknown resource kind: #{klass.inspect}")
-        end
-      rescue ex : K8S::Error::UnknownResource
-        ::Kube::ResourceClient(K8S::Kubernetes::Resource).new(transport, api_client, api_resource, namespace, K8S::Kubernetes::Resource)
-      end
-    end
+    def initialize(@transport, @api_client, @api_resource, @namespace = nil)
+      @logger = ::Log.for("kube.resource_client - #{T}")
 
-    macro finished
-      define_new
-    end
-
-    def initialize(@transport, @api_client, @api_resource, @namespace, @resource_class)
-      @logger = ::Log.for("Kube::ResourceClient(#{@resource_class}")
       if @api_resource.name.includes? "/"
         @resource, @subresource = @api_resource.name.split("/", 2)
       else
         @resource = @api_resource.name
         @subresource = nil
       end
+      @namespaced = @api_resource.namespaced
+
       # ameba:disable Style/NegatedConditionsInUnless
       raise Kube::Error.new("Resource #{api_resource.name} is not namespaced") unless api_resource.namespaced || !namespace
     end
@@ -154,7 +136,7 @@ module Kube
         method: "POST",
         path: path(namespace: resource.metadata!.namespace),
         request_object: resource,
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -167,7 +149,7 @@ module Kube
       @transport.request(
         method: "GET",
         path: path(name, namespace: namespace),
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -176,7 +158,7 @@ module Kube
       @transport.request(
         method: "GET",
         path: path(name, namespace: namespace),
-        response_class: @resource_class
+        response_class: T
       ).as(String)
     end
 
@@ -185,7 +167,7 @@ module Kube
       @transport.request(
         method: "GET",
         path: path(resource.metadata!.name, namespace: resource.metadata!.namespace),
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -197,6 +179,7 @@ module Kube
       if (list.is_a?(K8S::Kubernetes::Resource::List(T)))
         list.items
       else
+        logger.error { "Unexpected list type: #{list.class}" }
         Array(T).new
       end
     end
@@ -254,7 +237,7 @@ module Kube
         method: "PUT",
         path: path(resource.metadata!.name, namespace: resource.metadata!.namespace),
         request_object: resource,
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -272,7 +255,7 @@ module Kube
         path: path(name, namespace: namespace),
         content_type: strategic_merge ? "application/strategic-merge-patch+json" : "application/merge-patch+json",
         request_object: obj,
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -285,7 +268,7 @@ module Kube
         path: path(name, namespace: namespace),
         content_type: "application/json-patch+json",
         request_object: ops,
-        response_class: @resource_class
+        response_class: T
       ).as(T)
     end
 
@@ -303,7 +286,7 @@ module Kube
         query: make_query(
           {"propagationPolicy" => propagation_policy}
         ),
-        response_class: @resource_class,
+        response_class: T,
       ).as(T)
     end
 

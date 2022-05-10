@@ -52,7 +52,7 @@ Spectator.describe Kube::ResourceClient do
         "no",
       ]
     ) }
-    subject { Kube::ResourceClient.new(transport, api_client, api_node).as(Kube::ResourceClient(K8S::Api::Core::V1::Node)) }
+    subject { Kube::ResourceClient(K8S::Api::Core::V1::Node).new(transport, api_client, api_node) }
 
     describe "#path" do
       it "returns root path" do
@@ -152,7 +152,7 @@ Spectator.describe Kube::ResourceClient do
         "update",
       ],
     ) }
-    subject { Kube::ResourceClient.new(transport, api_client, api_node).as(Kube::ResourceClient(K8S::Api::Core::V1::Node)) }
+    subject { Kube::ResourceClient(K8S::Api::Core::V1::Node).new(transport, api_client, api_node) }
 
     describe "#path" do
       it "returns a path to node subresource" do
@@ -206,7 +206,7 @@ Spectator.describe Kube::ResourceClient do
       ]
     ) }
 
-    subject { Kube::ResourceClient.new(transport, api_client, api_resource).as(Kube::ResourceClient(K8S::Api::Core::V1::Pod)) }
+    subject { Kube::ResourceClient(K8S::Api::Core::V1::Pod).new(transport, api_client, api_resource) }
 
     before_each do
       begin
