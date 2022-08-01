@@ -110,18 +110,18 @@ module Kube
 
     def client_for_subresource(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = nil)
       parent, subresource = resource.name.split("/", 2)
-      logger.error &.emit "client_for_subresource", parent: parent, subresource: subresource, namespace: namespace
+      logger.trace &.emit "client_for_subresource", parent: parent, subresource: subresource, namespace: namespace
       # TODO: implement subresource clients
       ::Kube::ResourceClient(K8S::Kubernetes::Resource::Generic).new(@transport, self, resource, namespace)
     end
 
     # If namespace is given, non-namespaced resources will be skipped
     def resources(namespace : String? = nil)
-      api_resources.map do |api_resource|
-        if api_resource.namespaced
-          client_for_resource(api_resource, namespace: namespace)
+      api_resources.map do |ar|
+        if ar.namespaced
+          client_for_resource(ar, namespace: namespace)
         elsif namespace.nil?
-          client_for_resource(api_resource)
+          client_for_resource(ar)
         else
           nil
         end

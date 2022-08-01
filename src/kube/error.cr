@@ -46,7 +46,7 @@ module Kube
       private macro create_subclass
         case code.code
         {% for code, name in HTTP_STATUS_ERRORS %}
-        when {{code}}
+        when {{code}}, "{{code}}"
           {{name}}.new(method, path, code, nil, status)
         {% end %}
         else

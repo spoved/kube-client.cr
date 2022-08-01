@@ -100,6 +100,8 @@ module Kube
 
     private def _request(options, req_options)
       using_connection do |client|
+        logger.trace &.emit "#{format_request(options)}", options: options.inspect, req_options: req_options.inspect
+
         client.exec(
           method: options[:method],
           path: _request_path(options, req_options[:query]?),
@@ -181,7 +183,8 @@ module Kube
     else
       logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" }
-      logger.info { "#{format_request(options)} => HTTP #{response.status}: #{obj.inspect} in #{t}s" }
+      logger.info { "#{format_request(options)} => HTTP #{response.status} in #{t}s" }
+      logger.debug { "Response object: #{obj.inspect}" }
       obj
     end
 
@@ -192,7 +195,8 @@ module Kube
     def requests(options : Enumerable(W), skip_missing = false, skip_forbidden = false, retry_errors = true, skip_unknown = true,
                  **common_options) forall W
       t1 = Time.monotonic
-      responses = options.map { |opts| _request(opts, common_options) }
+      req_options = request_options(**common_options)
+      responses = options.map { |opts| _request(opts, req_options) }
 
       t = Time.monotonic - t1
 

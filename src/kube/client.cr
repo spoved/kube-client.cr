@@ -119,19 +119,23 @@ module Kube
     # api_versions [Array(String)] defaults to all APIs
     # prefetch_resources [Bool] prefetch any missing api_resources for each api_version
     # skip_missing [Bool] return Kube::ApiClient without api_resources? if 404
-    def apis(api_versions = nil, prefetch_resources = false, skip_missing = false)
-      api_versions ||= ["v1"] + api_groups
+    def apis(api_versions = nil, prefetch_resources = false, skip_missing = false, skip_forbidden = true, skip_unknown = true) : Array(Kube::ApiClient)
+      api_versions ||= (["v1"] + api_groups).uniq!
 
       if prefetch_resources
         # api groups that are missing their api_resources
         api_paths = api_versions
-          .uniq
           .reject { |api_version| api(api_version).api_resources? }
           .map { |api_version| Kube::ApiClient.path(api_version) }
 
         # load into Kube::ApiClient.api_resources=
         begin
-          @transport.gets(api_paths, response_class: K8S::Apimachinery::Apis::Meta::V1::APIResourceList, skip_missing: skip_missing).each do |api_resource_list|
+          @transport.gets(api_paths,
+            response_class: K8S::Apimachinery::Apis::Meta::V1::APIResourceList,
+            skip_missing: skip_missing,
+            skip_forbidden: skip_forbidden,
+            skip_unknown: skip_unknown,
+          ).each do |api_resource_list|
             if api_resource_list && api_resource_list.is_a?(K8S::Apimachinery::Apis::Meta::V1::APIResource)
               api(api_resource_list.group_version).api_resources = api_resource_list.resources
             end
@@ -146,7 +150,6 @@ module Kube
       api_versions.map { |api_version| api(api_version) }
     end
 
-    # namespace [String, nil]
     def resources(namespace : String? = nil)
       apis(prefetch_resources: true).flat_map { |api|
         logger.trace { "Fetching resources for #{api.api_version}" }
@@ -165,7 +168,7 @@ module Kube
     def list_resources(resource_list : Array(Kube::ResourceClient)? = nil, **options)
       logger.trace { "list_resources(#{resource_list}, #{options})" }
       resource_list ||= self.resources(options[:namespace]?).select(&.list?)
-      logger.trace { "list_resources found #{resource_list.size} API resources" }
+      logger.info { "list_resources found #{resource_list.size} API resources" }
 
       ResourceClient.list(resource_list, @transport, **options)
     rescue ex : Kube::Error::NotFound

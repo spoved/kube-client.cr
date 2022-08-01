@@ -39,8 +39,8 @@ module Kube
       # api_lists.each { |r| puts r.class }
       # resources.zip(api_lists)
       resources.zip(api_lists).flat_map do |resource, api_list|
-        # logger.info { "listing #{resource.class} in #{namespace}" }
-        api_list ? resource.process_list(api_list) : nil
+        logger.trace &.emit "listing #{resource.class}", namespace: namespace, label_selector: label_selector, field_selector: field_selector
+        api_list ? resource.process_list(api_list).each.flatten : nil
       end.reject(Nil)
     end
 
