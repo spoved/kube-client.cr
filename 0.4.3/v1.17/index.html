@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="crystal_docs.project_version" content="0.4.3">
+<meta name="crystal_docs.project_name" content="kube-client.cr">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="kube-client.cr">
+  <title>kube-client.cr 0.4.3</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          kube-client.cr
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.4.3
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="kube-client.cr/Kube" data-name="kube">
+      <a href="Kube.html">Kube</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/ApiClient" data-name="kube::apiclient">
+      <a href="Kube/ApiClient.html">ApiClient</a>
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/AuthProvider" data-name="kube::authprovider">
+      <a href="Kube/AuthProvider.html">AuthProvider</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/AuthProvider/GCP" data-name="kube::authprovider::gcp">
+      <a href="Kube/AuthProvider/GCP.html">GCP</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Client" data-name="kube::client">
+      <a href="Kube/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/ClientMixin" data-name="kube::clientmixin">
+      <a href="Kube/ClientMixin.html">ClientMixin</a>
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/Config" data-name="kube::config">
+      <a href="Kube/Config.html">Config</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/Cluster" data-name="kube::config::cluster">
+      <a href="Kube/Config/Cluster.html">Cluster</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/ClusterDef" data-name="kube::config::clusterdef">
+      <a href="Kube/Config/ClusterDef.html">ClusterDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/Context" data-name="kube::config::context">
+      <a href="Kube/Config/Context.html">Context</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/ContextDef" data-name="kube::config::contextdef">
+      <a href="Kube/Config/ContextDef.html">ContextDef</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/Error" data-name="kube::config::error">
+      <a href="Kube/Config/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/User" data-name="kube::config::user">
+      <a href="Kube/Config/User.html">User</a>
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/Config/UserDef" data-name="kube::config::userdef">
+      <a href="Kube/Config/UserDef.html">UserDef</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/Config/UserDef/AuthProvider" data-name="kube::config::userdef::authprovider">
+      <a href="Kube/Config/UserDef/AuthProvider.html">AuthProvider</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/UserDef/AuthProvider/Config" data-name="kube::config::userdef::authprovider::config">
+      <a href="Kube/Config/UserDef/AuthProvider/Config.html">Config</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/UserDef/Env" data-name="kube::config::userdef::env">
+      <a href="Kube/Config/UserDef/Env.html">Env</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/UserDef/Exec" data-name="kube::config::userdef::exec">
+      <a href="Kube/Config/UserDef/Exec.html">Exec</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Config/Var" data-name="kube::config::var">
+      <a href="Kube/Config/Var.html">Var</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/Error" data-name="kube::error">
+      <a href="Kube/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/API" data-name="kube::error::api">
+      <a href="Kube/Error/API.html">API</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/ArgumentError" data-name="kube::error::argumenterror">
+      <a href="Kube/Error/ArgumentError.html">ArgumentError</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/BadRequest" data-name="kube::error::badrequest">
+      <a href="Kube/Error/BadRequest.html">BadRequest</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/Conflict" data-name="kube::error::conflict">
+      <a href="Kube/Error/Conflict.html">Conflict</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/ConnectionLost" data-name="kube::error::connectionlost">
+      <a href="Kube/Error/ConnectionLost.html">ConnectionLost</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/ExecutionError" data-name="kube::error::executionerror">
+      <a href="Kube/Error/ExecutionError.html">ExecutionError</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/Forbidden" data-name="kube::error::forbidden">
+      <a href="Kube/Error/Forbidden.html">Forbidden</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/InternalError" data-name="kube::error::internalerror">
+      <a href="Kube/Error/InternalError.html">InternalError</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/Invalid" data-name="kube::error::invalid">
+      <a href="Kube/Error/Invalid.html">Invalid</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/MethodNotAllowed" data-name="kube::error::methodnotallowed">
+      <a href="Kube/Error/MethodNotAllowed.html">MethodNotAllowed</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/MissingConfig" data-name="kube::error::missingconfig">
+      <a href="Kube/Error/MissingConfig.html">MissingConfig</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/MissingEnv" data-name="kube::error::missingenv">
+      <a href="Kube/Error/MissingEnv.html">MissingEnv</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/NotFound" data-name="kube::error::notfound">
+      <a href="Kube/Error/NotFound.html">NotFound</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/ServerTimeout" data-name="kube::error::servertimeout">
+      <a href="Kube/Error/ServerTimeout.html">ServerTimeout</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/ServiceUnavailable" data-name="kube::error::serviceunavailable">
+      <a href="Kube/Error/ServiceUnavailable.html">ServiceUnavailable</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/Timeout" data-name="kube::error::timeout">
+      <a href="Kube/Error/Timeout.html">Timeout</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/Unauthorized" data-name="kube::error::unauthorized">
+      <a href="Kube/Error/Unauthorized.html">Unauthorized</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Error/UndefinedResource" data-name="kube::error::undefinedresource">
+      <a href="Kube/Error/UndefinedResource.html">UndefinedResource</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/NamespacedName" data-name="kube::namespacedname">
+      <a href="Kube/NamespacedName.html">NamespacedName</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/NodeName" data-name="kube::nodename">
+      <a href="Kube/NodeName.html">NodeName</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/PatchType" data-name="kube::patchtype">
+      <a href="Kube/PatchType.html">PatchType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/ResourceClient" data-name="kube::resourceclient(t)">
+      <a href="Kube/ResourceClient.html">ResourceClient</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/ResourceClient/Utils" data-name="kube::resourceclient::utils">
+      <a href="Kube/ResourceClient/Utils.html">Utils</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="kube-client.cr/Kube/Transport" data-name="kube::transport">
+      <a href="Kube/Transport.html">Transport</a>
+      
+        <ul>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Transport/ClassMethods" data-name="kube::transport::classmethods">
+      <a href="Kube/Transport/ClassMethods.html">ClassMethods</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Transport/Options" data-name="kube::transport::options">
+      <a href="Kube/Transport/Options.html">Options</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Transport/PoolOptions" data-name="kube::transport::pooloptions">
+      <a href="Kube/Transport/PoolOptions.html">PoolOptions</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/UID" data-name="kube::uid">
+      <a href="Kube/UID.html">UID</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/Util" data-name="kube::util">
+      <a href="Kube/Util.html">Util</a>
+      
+    </li>
+  
+  <li class=" " data-id="kube-client.cr/Kube/WatchChannel" data-name="kube::watchchannel(t)">
+      <a href="Kube/WatchChannel.html">WatchChannel</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="kube-client" class="anchor" href="#kube-client">  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>kube-client</h1>
+<p>Crystal client library for the Kubernetes (1.11+) API</p>
+<p><a href="https://github.com/spoved/kube-client.cr/actions/workflows/ci.yml"><img src="https://github.com/spoved/kube-client.cr/actions/workflows/ci.yml/badge.svg" alt=".github/workflows/ci.yml" /></a> <a href="https://spoved.github.io/kube-client.cr"><img src="https://github.com/spoved/kube-client.cr/actions/workflows/docs.yml/badge.svg" alt=".github/workflows/docs.yml" /></a> <a href="https://github.com/spoved/kube-client.cr/releases"><img src="https://img.shields.io/github/release/spoved/kube-client.cr.svg" alt="GitHub release" /></a> <a href="https://t.me/k8s_cr"><img src="https://img.shields.io/badge/chat-telegram-blue" alt="Chat on Telegram" /></a></p>
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+<ol>
+<li>
+<p>Add the dependency to your <code>shard.yml</code>:</p>
+<pre><code class="language-yaml">dependencies:
+  kube-client:
+    github: spoved/kube-client.cr</code></pre>
+</li>
+<li>
+<p>Run <code>shards install</code></p>
+</li>
+</ol>
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+<p>Specify the kubernetes api version of the client to use:</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;kube-client/v1.20&quot;</span>
+
+client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.autoconfig</code></pre>
+<p>Or you can specify the kubernetes api version at compile time via the <code>-Dk8s_v{major}.{minor}</code> flag:</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;kube-client&quot;</span>
+
+client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.autoconfig</code></pre>
+<pre><code class="language-shell">$ crystal build -Dk8s_v1.20 kube-client.cr</code></pre>
+<h3><a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Overview</h3>
+<p>The top-level <code><a href="Kube/Client.html">Kube::Client</a></code> provides access to separate <code>APIClient</code> instances for each Kubernetes API Group (<code>v1</code>, <code>apps/v1</code>, etc.), which in turns provides access to separate <code>ResourceClient</code> instances for each API resource type (<code>nodes</code>, <code>pods</code>, <code>deployments</code>, etc.).</p>
+<p>Individual resources are returned as <code>K8S::Kubernetes::Resource</code> instances, which provide attribute access (<code>resource.metadata.name</code>). The resource instances are returned by methods such as <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).get(&quot;foo&quot;)</code>, and passed as arguments for <code>client.api(&quot;v1&quot;).resource(&quot;nodes&quot;).create_resource(res)</code>. Resources can also be loaded from disk using <code>Kube::Resource.from_files(path)</code>, and passed to the top-level methods such as <code>client.create_resource(res)</code>, which lookup the correct API/Resource client from the resource <code>apiVersion</code> and <code>kind</code>.</p>
+<p>The different <code><a href="Kube/Error/API.html">Kube::Error::API</a></code> subclasses represent different HTTP response codes, such as <code><a href="Kube/Error/NotFound.html">Kube::Error::NotFound</a></code> or <code><a href="Kube/Error/Conflict.html">Kube::Error::Conflict</a></code>.</p>
+<h3><a id="creating-a-client" class="anchor" href="#creating-a-client">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Creating a client</h3>
+<h4><a id="unauthenticated-client" class="anchor" href="#unauthenticated-client">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Unauthenticated client</h4>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Kube</span>.client(<span class="s">&quot;https://localhost:6443&quot;</span>, ssl_verify_peer: <span class="n">false</span>)</code></pre>
+<p>The keyword options are <a href="src/kube/transport.cr">Kube::Transport::Options</a> options.</p>
+<h4><a id="client-from-kubeconfig" class="anchor" href="#client-from-kubeconfig">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Client from kubeconfig</h4>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.config(
+  <span class="t">Kube</span><span class="t">::</span><span class="t">Config</span>.load_file(
+    <span class="t">File</span>.expand_path <span class="s">&quot;~/.kube/config&quot;</span>
+  )
+)</code></pre>
+<h4><a id="supported-kubeconfig-options" class="anchor" href="#supported-kubeconfig-options">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Supported kubeconfig options</h4>
+<p>Not all kubeconfig options are supported, only the following kubeconfig options work:</p>
+<ul>
+<li><code>current-context</code></li>
+<li><code>context.cluster</code></li>
+<li><code>context.user</code></li>
+<li><code>cluster.server</code></li>
+<li><code>cluster.insecure_skip_tls_verify</code></li>
+<li><code>cluster.certificate_authority</code></li>
+<li><code>cluster.certificate_authority_data</code></li>
+<li><code>user.client_certificate</code> + <code>user.client_key</code></li>
+<li><code>user.client_certificate_data</code> + <code>user.client_key_data</code></li>
+<li><code>user.token</code></li>
+</ul>
+<h5><a id="with-overrides" class="anchor" href="#with-overrides">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>With overrides</h5>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.config(<span class="t">Kube</span><span class="t">::</span><span class="t">Config</span>.load_file(<span class="s">&quot;~/.kube/config&quot;</span>),
+  server: <span class="s">&quot;http://localhost:8001&quot;</span>,
+)</code></pre>
+<h4><a id="in-cluster-client-from-pod-envssecrets" class="anchor" href="#in-cluster-client-from-pod-envssecrets">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>In-cluster client from pod envs/secrets</h4>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</span><span class="t">Client</span>.in_cluster_config</code></pre>
+<h3><a id="api-resources" class="anchor" href="#api-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>API Resources</h3>
+<p>Resources are a sub class of <code>::K8S::Kubernetes::Resource</code>, which is generated and defined in the <a href="https://github.com/spoved/k8s.cr">k8s.cr</a> sub-shard.</p>
+<p>Please note that custom resources are not supported at this time.</p>
+<h3><a id="prefetching-api-resources" class="anchor" href="#prefetching-api-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Prefetching API resources</h3>
+<p>Operations like mapping a resource <code>kind</code> to an API resource URL require knowledge of the API resource lists for the API group. Mapping resources for multiple API groups would require fetching the API resource lists for each API group in turn, leading to additional request latency. This can be optimized using resource prefetching:</p>
+<pre><code class="language-crystal">client.apis(prefetch_resources: <span class="n">true</span>)</code></pre>
+<p>This will fetch the API resource lists for all API groups in a single pipelined request.</p>
+<h3><a id="listing-resources" class="anchor" href="#listing-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Listing resources</h3>
+<pre><code class="language-crystal">client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).list(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>}).each <span class="k">do</span> <span class="o">|</span>pod<span class="o">|</span>
+  pod <span class="o">=</span> pod.<span class="k">as</span>(<span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>)
+  puts <span class="s">&quot;namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s"> pod: </span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> node=</span><span class="i">#{</span>pod.spec.try <span class="o">&amp;</span>.node_name<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span></code></pre>
+<h3><a id="updating-resources" class="anchor" href="#updating-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Updating resources</h3>
+<pre><code class="language-crystal">node <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;nodes&quot;</span>).get(<span class="s">&quot;test-node&quot;</span>)
+node.<span class="k">as</span>(<span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Node</span>).spec.not_nil!.unschedulable <span class="o">=</span> <span class="n">true</span>
+client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;nodes&quot;</span>).update_resource(node)</code></pre>
+<h3><a id="deleting-resources" class="anchor" href="#deleting-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Deleting resources</h3>
+<pre><code class="language-crystal">pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete(<span class="s">&quot;test-pod&quot;</span>)</code></pre>
+<pre><code class="language-crystal">pods <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete_collection(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>})</code></pre>
+<h3><a id="creating-resources" class="anchor" href="#creating-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Creating resources</h3>
+<h4><a id="programmatically-defined-resources" class="anchor" href="#programmatically-defined-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Programmatically defined resources</h4>
+<pre><code class="language-crystal">pod <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>.<span class="k">new</span>(
+  metadata: {
+    name: <span class="s">&quot;pod-name&quot;</span>,
+    namespace: <span class="s">&quot;default&quot;</span>,
+    labels: {
+      <span class="s">&quot;app&quot;</span> =&gt; <span class="s">&quot;kube-client-test&quot;</span>,
+    },
+  },
+  spec: {
+    containers: [
+      {
+        name: <span class="s">&quot;test&quot;</span>,
+        image: <span class="s">&quot;test&quot;</span>,
+      },
+    ],
+  }
+)
+
+logger.info <span class="s">&quot;Create pod=</span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> in namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s">&quot;</span>
+
+pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>).create_resource(pod)</code></pre>
+<h4><a id="from-files" class="anchor" href="#from-files">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>From file(s)</h4>
+<pre><code class="language-crystal">resources <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.from_file(<span class="s">&quot;./test.yaml&quot;</span>)
+
+resources <span class="o">=</span> client.create_resources(resources)</code></pre>
+<h3><a id="patching-resources" class="anchor" href="#patching-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Patching resources</h3>
+<pre><code class="language-crystal">client.api(<span class="s">&quot;apps/v1&quot;</span>).resource(<span class="s">&quot;deployments&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).merge_patch(<span class="s">&quot;test&quot;</span>, {
+    spec: { replicas: <span class="n">3</span> },
+})</code></pre>
+<h3><a id="watching-resources" class="anchor" href="#watching-resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Watching resources</h3>
+<p>Watching resources spawns a background fiber that will push <code>K8S::Kubernetes::WatchEvent</code>s for the resouce onto the returned <code>Channel</code>.</p>
+<pre><code class="language-crystal">resource_client <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>)
+channel <span class="o">=</span> resource_client.watch(resource_version: <span class="s">&quot;4651&quot;</span>)
+
+<span class="k">while</span> <span class="o">!</span>channel.closed?
+  event <span class="o">=</span> channel.receive
+  <span class="k">if</span> event.<span class="k">is_a?</span>(<span class="t">Kube</span><span class="t">::</span><span class="t">Error</span><span class="t">::</span><span class="t">API</span>)
+    <span class="c"># Handle error</span>
+  <span class="k">else</span>
+    pp event <span class="c"># =&gt; K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Pod)</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+<ol>
+<li>Fork it (<a href="https://github.com/spoved/kube-client.cr/fork">https://github.com/spoved/kube-client.cr/fork</a>)</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am &quot;Add some feature&quot;</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
+<h2><a id="contributors" class="anchor" href="#contributors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributors</h2>
+<ul>
+<li><a href="https://github.com/kalinon">Holden Omans</a> - creator and maintainer</li>
+<li><a href="https://github.com/kontena/k8s-client">k8s-client</a> - Ruby client this was heavily sourced from</li>
+</ul>
+</div>
+</body>
+</html>
