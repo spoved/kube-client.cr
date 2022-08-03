@@ -36,11 +36,23 @@ module Kube
         skip_forbidden: skip_forbidden
       )
 
-      # api_lists.each { |r| puts r.class }
-      # resources.zip(api_lists)
+      # resources.each { |r| logger.warn { r.class } }
+      # api_paths.zip(resources.map(&.class)).each { |x, r| logger.warn { "list: #{x} => #{r}" } }
+
       resources.zip(api_lists).flat_map do |resource, api_list|
         logger.trace &.emit "listing #{resource.class}", namespace: namespace, label_selector: label_selector, field_selector: field_selector
-        api_list ? resource.process_list(api_list).each.flatten : nil
+        if api_list.nil?
+          api_list
+        elsif api_list.is_a?(K8S::Kubernetes::Resource::List)
+          begin
+            resource.process_list(api_list).each.flatten
+          rescue ex
+            logger.error &.emit "error listing #{resource.class}", namespace: namespace, label_selector: label_selector, field_selector: field_selector
+            raise ex
+          end
+        else
+          raise "unexpected response type: #{api_list.class}"
+        end
       end.reject(Nil)
     end
 
@@ -175,13 +187,15 @@ module Kube
       @api_resource.verbs.includes? "list"
     end
 
-    def process_list(list) : Indexable(T)
-      if (list.is_a?(K8S::Kubernetes::Resource::List(T)))
-        list.items
-      else
+    def process_list(list : X) : Indexable(T) forall X
+      {% if X >= K8S::Kubernetes::Resource::List(T) %}
+        list.as(K8S::Kubernetes::Resource::List).items.map { |item| item.as(T) }
+      {% else %}
         logger.error { "Unexpected list type: #{list.class}" }
-        Array(T).new
-      end
+        K8S::Kubernetes::Resource::List(T).new
+      {% end %}
+    rescue ex
+      raise ex
     end
 
     # returns array of instances of resource_class

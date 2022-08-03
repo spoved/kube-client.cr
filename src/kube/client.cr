@@ -119,7 +119,7 @@ module Kube
     # api_versions [Array(String)] defaults to all APIs
     # prefetch_resources [Bool] prefetch any missing api_resources for each api_version
     # skip_missing [Bool] return Kube::ApiClient without api_resources? if 404
-    def apis(api_versions = nil, prefetch_resources = false, skip_missing = false, skip_forbidden = true, skip_unknown = true) : Array(Kube::ApiClient)
+    def apis(api_versions : Array(String)? = nil, prefetch_resources = false, skip_missing = false, skip_forbidden = true, skip_unknown = true) : Array(Kube::ApiClient)
       api_versions ||= (["v1"] + api_groups).uniq!
 
       if prefetch_resources
@@ -137,7 +137,9 @@ module Kube
             skip_unknown: skip_unknown,
           ).each do |api_resource_list|
             if api_resource_list && api_resource_list.is_a?(K8S::Apimachinery::Apis::Meta::V1::APIResource)
-              api(api_resource_list.group_version).api_resources = api_resource_list.resources
+              resource_client = api(api_resource_list.group_version)
+              logger.debug { "found resource client: #{api_resource_list.group_version} => #{resource_client.class}" }
+              resource_client.api_resources = api_resource_list.resources
             end
           end
         rescue ex : Kube::Error::NotFound | Kube::Error::ServiceUnavailable

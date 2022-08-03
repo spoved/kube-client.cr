@@ -64,8 +64,8 @@ module Kube
         raise Kube::Error::API.new(method, path, response.status, "Invalid response Content-Type: #{content_type}")
       end
     rescue ex : JSON::SerializableError
-      Log.error { "Invalid response: #{ex.message}" }
-      Log.error { "Response: #{response.body}" }
+      logger.error { "Invalid response: #{ex.message}" }
+      logger.error { "Response: #{response.body}" }
       raise ex
     end
 
@@ -175,6 +175,9 @@ module Kube
       logger.debug { "Request: #{req_options}" } unless req_options.nil?
       logger.debug { "Response: #{response.body}" } unless response.nil?
       nil
+    rescue ex : JSON::ParseException
+      logger.error { "Invalid response: #{ex.message}" }
+      raise ex
     rescue ex
       logger.warn { "#{format_request(options)} => HTTP #{ex} in #{t}s" }
       logger.debug { "Request: #{req_options}" } unless req_options.nil?
@@ -217,6 +220,9 @@ module Kube
           logger.warn { "Retry #{format_request(request_options)} => HTTP #{e.code} #{e.reason} in #{t}" }
           # only retry the failed request, not the entire pipeline
           request(**common_options.merge(request_options))
+        rescue ex : JSON::ParseException
+          logger.error { "Invalid response: #{ex.message}" }
+          nil
         end
       end
     rescue e : Kube::Error::API
