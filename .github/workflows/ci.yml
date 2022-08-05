@@ -19,6 +19,8 @@ jobs:
           - "v1.20"
           - "v1.21"
           - "v1.22"
+          - "v1.23"
+          - "v1.24"
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
