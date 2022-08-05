@@ -1,5 +1,6 @@
 ---
-apiVersion: k3d.io/v1alpha3
+apiVersion: k3d.io/v1alpha4
 kind: Simple
-name: k3d-cluster-test
+metadata:
+  name: k3d-cluster-test
 image: docker.io/rancher/k3s:v1.19.16-k3s1
