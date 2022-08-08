@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     strategy:
-      max-parallel: 1
+      max-parallel: 2
       # fail-fast: true
       matrix:
         k8s:
@@ -24,7 +24,9 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.4.0
+            crystal: 1.4
+          - os: ubuntu-latest
+            crystal: 1.5
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -41,6 +43,6 @@ jobs:
       - name: Write kubeconfig
         run: k3d kubeconfig get k3d-cluster-test > ./spec/files/kube_config_test.yml
       - name: Run tests
-        run: crystal spec -Dk8s_${{ matrix.k8s }} -v
+        run: crystal spec -Dk8s_${{ matrix.k8s }}
       - name: Tear down cluster
         run: k3d cluster delete k3d-cluster-test
