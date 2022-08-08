@@ -189,7 +189,6 @@ module Kube
                 {% else %}
                   resource.api_version
                 {% end %}
-      logger.warn { api_ver }
       api(api_ver).client_for_resource(resource, namespace: namespace)
     end
 

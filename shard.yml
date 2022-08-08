@@ -11,7 +11,7 @@ crystal: ">= 1.4.0, < 2.0.0"
 dependencies:
   k8s:
     github: spoved/k8s.cr
-    version: "~> 0.1.7"
+    version: "~> 0.1.8"
   spoved:
     github: spoved/spoved.cr
   db:
@@ -24,4 +24,4 @@ development_dependencies:
     github: gdotdesign/cr-dotenv
   spectator:
     gitlab: arctic-fox/spectator
-    version: ~> 0.10.1
+    version: ~> 0.11.2
