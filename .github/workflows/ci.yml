@@ -21,11 +21,11 @@ jobs:
           - "v1.22"
           - "v1.23"
           - "v1.24"
-        include:
-          - os: ubuntu-latest
-            crystal: latest
-          - os: ubuntu-latest
-            crystal: 1.4.0
+        os:
+          - ubuntu-latest
+        crystal:
+          - latest
+          - 1.4
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
