@@ -48,15 +48,15 @@ module Kube
     # raises `K8s::Error::UndefinedResource` if resource not found
     def find_api_resource(resource_name)
       found_resource = api_resources.find { |api_resource| api_resource.name == resource_name }
-      found_resource ||= find_api_resource_by_kind(resource_name)
-      raise Kube::Error::UndefinedResource.new("Unknown resource #{resource_name} for #{@api_version}") unless found_resource
-      found_resource
+      found_resource || find_api_resource_by_kind(resource_name)
+    rescue ex : Kube::Error::UndefinedResource
+      raise Kube::Error::UndefinedResource.new("Unknown resource kind: #{resource_name} for #{@api_version}")
     end
 
     # raises `K8s::Error::UndefinedResource` if resource not found
     def find_api_resource_by_kind(kind)
       found_resource = api_resources.find { |api_resource| api_resource.kind == kind }
-      raise Kube::Error::UndefinedResource.new("Unknown resource kind: #{kind} for #{@api_version}") unless found_resource
+      raise Kube::Error::UndefinedResource.new("Resource #{kind} is not available in #{@api_version}") unless found_resource
       found_resource
     end
 
@@ -64,48 +64,51 @@ module Kube
       client_for_resource(find_api_resource(resource_name), namespace: namespace)
     end
 
-    def client_for_resource(kind : String, namespace : String? = nil)
-      # raise Kube::Error::UndefinedResource.new("Invalid apiVersion=#{api_version} for #{@api_version} client") unless api_version == @api_version
-      logger.trace &.emit "client_for_resource", api_version: @api_version, kind: kind, namespace: namespace
-      klass = k8s_resource_class("", @api_version, kind)
-      raise K8S::Error::UnknownResource.new("Resource #{kind} is not available in #{@api_version}") unless klass
-      client_for_resource(klass, namespace)
-    rescue ex : K8S::Error::UnknownResource
-      raise Kube::Error::UndefinedResource.new("Resource #{kind} is not available in #{@api_version}")
+    private macro k8s_resource_client(group, ver, kind, api_resource, namespace = nil)
+      klass = k8s_resource_class(group: {{group}}, ver: {{ver}}, kind: {{kind}})
+      logger.trace { "[k8s_resource_client] #{klass}" }
+      case klass.to_s
+      {% for y in K8S::Kubernetes::Resource.all_subclasses %}
+        {% if !y.abstract? && !(y < K8S::Kubernetes::Resource::List) %}
+      when "{{y}}"
+        ::Kube::ResourceClient({{y}}).new(@transport, self, {{api_resource}}, namespace: {{namespace}})
+        {% end %}
+      {% end %}
+      else
+        raise Kube::Error::UndefinedResource.new("Unknown resource kind: #{kind} for #{@api_version}")
+      end
     end
 
-    def client_for_resource(resource : X.class, namespace : String? = nil, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource? = nil) forall X
-      found_resource = api_resource || find_api_resource_by_kind(resource.kind)
-      logger.trace &.emit "client_for_resource", resource: resource.to_s, namespace: namespace, api_resource: api_resource ? api_resource.kind : nil
+    def client_for_resource(kind : String, namespace : String? = nil, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource? = nil)
+      # raise Kube::Error::UndefinedResource.new("Invalid apiVersion=#{api_version} for #{@api_version} client") unless api_version == @api_version
+      logger.debug &.emit "client_for_resource", api_version: @api_version, kind: kind, namespace: namespace
+      found_resource = api_resource || find_api_resource_by_kind(kind)
 
-      {% if X.abstract? %}
-        case resource.kind
-        {% for y in X.all_subclasses %}{% if !y.abstract? && !(y < K8S::Kubernetes::Resource::List) %}
-        when {{y}}.kind
-          ::Kube::ResourceClient({{y}}).new(@transport, self, found_resource, namespace)
-        {% end %}{% end %}
-        else
-          ::Kube::ResourceClient(X).new(@transport, self, found_resource, namespace)
-        end
-      {% else %}
-        ::Kube::ResourceClient(X).new(@transport, self, found_resource, namespace)
-      {% end %}
-    rescue ex : K8S::Error::UnknownResource
-      raise Kube::Error::UndefinedResource.new("Resource #{resource.kind} is not available in #{@api_version}")
+      if @api_version =~ /\//
+        parts = @api_version.split("/")
+        ver = parts.pop
+        group = parts.empty? ? "" : parts.shift
+        logger.trace &.emit "client_for_resource", group: group, ver: ver, kind: kind, namespace: namespace
+        k8s_resource_client(group: group, ver: ver, kind: kind, namespace: namespace, api_resource: found_resource)
+      else
+        logger.trace &.emit "client_for_resource", group: "", ver: @api_version, kind: kind, namespace: namespace
+        k8s_resource_client(group: "", ver: @api_version, kind: kind, namespace: namespace, api_resource: found_resource)
+      end
     end
 
     def client_for_resource(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = nil)
       if resource.name.includes? "/"
         client_for_subresource(resource, namespace)
       else
-        logger.trace &.emit "client_for_resource", api_resouce: resource.to_json, namespace: namespace
-        klass = K8S::Util.get_resource_klass({api_version: @api_version, kind: resource.kind})
-        raise K8S::Error::UnknownResource.new("Resource #{resource.kind} is not available in #{@api_version}") unless klass
-        client_for_resource(klass, namespace: namespace, api_resource: resource)
+        client_for_resource(kind: resource.kind, namespace: namespace, api_resource: resource)
       end
-    rescue ex : K8S::Error::UnknownResource
-      logger.trace &.emit "client_for_resource: unable to find resouce", api_resouce: resource.to_json, namespace: namespace
-      ::Kube::ResourceClient(K8S::Kubernetes::Resource::Generic).new(@transport, self, resource, namespace)
+      # rescue ex : K8S::Error::UnknownResource
+      #   logger.error &.emit "client_for_resource: unable to find resouce", api_version: @api_version, kind: resource.kind, namespace: namespace
+      #   ::Kube::ResourceClient(K8S::Kubernetes::Resource::Generic).new(@transport, self, resource, namespace)
+    end
+
+    def client_for_resource(resource : X.class, namespace : String? = nil, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource? = nil) forall X
+      client_for_resource(kind: resource.kind, namespace: namespace, api_resource: api_resource)
     end
 
     def client_for_subresource(resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String? = nil)
@@ -118,11 +121,16 @@ module Kube
     # If namespace is given, non-namespaced resources will be skipped
     def resources(namespace : String? = nil)
       api_resources.map do |ar|
-        if ar.namespaced
-          client_for_resource(ar, namespace: namespace)
-        elsif namespace.nil?
-          client_for_resource(ar)
-        else
+        begin
+          if ar.namespaced
+            client_for_resource(ar, namespace: namespace)
+          elsif namespace.nil?
+            client_for_resource(ar)
+          else
+            nil
+          end
+        rescue ex
+          logger.error { ex.message }
           nil
         end
       end.reject(Nil)

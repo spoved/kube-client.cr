@@ -19,10 +19,13 @@ jobs:
           - "v1.20"
           - "v1.21"
           - "v1.22"
-        include:
-          - os: ubuntu-latest
-          - os: ubuntu-latest
-            crystal: 1.4.0
+          - "v1.23"
+          - "v1.24"
+        os:
+          - ubuntu-latest
+        crystal:
+          - latest
+          - 1.4
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +34,8 @@ jobs:
           skipClusterCreation: true
       - name: Setup k3s cluster
         run: k3d cluster create -c ./spec/files/k3d/${{ matrix.k8s }}.yml
-      - uses: crystal-lang/install-crystal@v1
+      - name: "Install Crystal: ${{ matrix.crystal }}"
+        uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards

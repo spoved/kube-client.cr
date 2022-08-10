@@ -1,5 +1,5 @@
 BUILD_COMMIT := $(shell git rev-parse --short HEAD 2> /dev/null)
-K8S_VERSION="v1.22"
+K8S_VERSION="v1.24"
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z \-_0-9]+:.*?## / {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort

@@ -70,7 +70,7 @@ client = Kube::Client.config(
 
 Not all kubeconfig options are supported, only the following kubeconfig options work:
 
-- `current-context`
+- `current_context`
 - `context.cluster`
 - `context.user`
 - `cluster.server`

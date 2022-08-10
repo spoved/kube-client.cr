@@ -74,7 +74,7 @@ Spectator.describe Kube::ResourceClient do
           list = subject.list
 
           expect(list).to be_a Indexable(K8S::Api::Core::V1::Node)
-          expect(list).to be_a K8S::Kubernetes::Resource::ListWrapper(K8S::Api::Core::V1::Node)
+          expect(list).to be_a Array(K8S::Api::Core::V1::Node)
           list.each do |node|
             expect(node).to be_a K8S::Api::Core::V1::Node
           end
