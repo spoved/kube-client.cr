@@ -40,29 +40,7 @@ module Kube
     #
     # Will raise when no means of configuration is available
     def self.autoconfig(namespace : String? = nil, **options) : Kube::Client
-      config = if ENV.has_key?("KUBE_TOKEN") && ENV.has_key?("KUBE_CA") && ENV.has_key?("KUBE_SERVER")
-                 kube_ca = Base64.decode_string(ENV["KUBE_CA"])
-                 unless kube_ca =~ /CERTIFICATE/
-                   raise "KUBE_CA does not seem to be base64 encoded"
-                 end
-                 kube_token = Base64.decode_string(ENV["KUBE_TOKEN"])
-                 kube_server = ENV["KUBE_SERVER"]
-                 Kube::Config.build(kube_server, kube_ca, kube_token)
-               elsif ENV.has_key?("KUBECONFIG")
-                 Kube::Config.from_kubeconfig_env
-               else
-                 found_config = [
-                   File.join(Path.home, ".kube", "config"),
-                   "/etc/kubernetes/admin.conf",
-                   "/etc/kubernetes/kubelet.conf",
-                 ].find { |path| File.exists?(path) && File.readable?(path) }
-                 if found_config
-                   Kube::Config.load_file(found_config)
-                 else
-                   nil
-                 end
-               end
-
+      config = Kube::Config.autoconfig
       if config.nil?
         self.in_cluster_config
       else

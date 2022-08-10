@@ -150,6 +150,10 @@ module Kube
 
       # ameba:disable Metrics/CyclomaticComplexity
       def config(conf : Kube::Config, server : String? = nil, **overrides) : Kube::Transport
+        if overrides[:current_context]?
+          conf.current_context = overrides[:current_context]?
+        end
+
         server ||= conf.cluster.server
         raise Kube::Error::MissingConfig.new("server") if server.nil?
 
