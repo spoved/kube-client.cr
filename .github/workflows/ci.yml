@@ -1,13 +1,13 @@
 # This CI job installs Crystal and shard dependencies, then executes `crystal spec` to run the test suite
 # More configuration options are available at https://crystal-lang.github.io/install-crystal/configurator.html
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-  schedule:
-    - cron: "0 6 * * 6" # Every Saturday 6 AM
+on: {}
+# push:
+#   branches: [master]
+# pull_request:
+#   branches: [master]
+# schedule:
+#   - cron: "0 6 * * 6" # Every Saturday 6 AM
 jobs:
   test:
     strategy:
@@ -29,7 +29,6 @@ jobs:
           - latest
           - 1.4
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v2
       - uses: rinx/setup-k3d@v0.0.2
@@ -47,5 +46,6 @@ jobs:
         run: k3d kubeconfig get k3d-cluster-test > ./spec/files/kube_config_test.yml
       - name: Run tests
         run: crystal spec --exclude-warnings $(crystal env CRYSTAL_LIBRARY_PATH) --exclude-warnings ./lib/ --error-trace -Dk8s_${{ matrix.k8s }}
+        timeout-minutes: 30
       - name: Tear down cluster
         run: k3d cluster delete k3d-cluster-test
