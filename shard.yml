@@ -11,7 +11,7 @@ crystal: ">= 1.4.0, < 2.0.0"
 dependencies:
   k8s:
     github: spoved/k8s.cr
-    version: "~> 0.1.9"
+    version: "~> 0.1.10"
   spoved:
     github: spoved/spoved.cr
   db:
