@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.3">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -423,7 +423,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28access_token%3AString%3F%2Caccess_token_file%3AString%3F%2Ccmd_args%3AArray%28String%29%2Ccmd_path%3AString%2Cexpiry%3AString%3F%2Cexpiry_key%3AString%3F%2Ctoken_key%3AString%3F%29-class-method" class="signature"><strong>.new</strong>(access_token : String?, access_token_file : String?, cmd_args : Array(String), cmd_path : String, expiry : String?, expiry_key : String?, token_key : String?)</a>
+        <a href="#new%28access_token%3ANil%7CString%2Caccess_token_file%3ANil%7CString%2Ccmd_args%3AArray%28String%29%2Ccmd_path%3AString%2Cexpiry%3ANil%7CString%2Cexpiry_key%3ANil%7CString%2Ctoken_key%3ANil%7CString%29-class-method" class="signature"><strong>.new</strong>(access_token : Nil | String, access_token_file : Nil | String, cmd_args : Array(String), cmd_path : String, expiry : Nil | String, expiry_key : Nil | String, token_key : Nil | String)</a>
         
       </li>
     
@@ -471,22 +471,22 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#access_token%3AString%3F-instance-method" class="signature"><strong>#access_token</strong> : String?</a>
+        <a href="#access_token%3AString%7CNil-instance-method" class="signature"><strong>#access_token</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#access_token%3D%28access_token%3AString%3F%29-instance-method" class="signature"><strong>#access_token=</strong>(access_token : String?)</a>
+        <a href="#access_token%3D%28access_token%3AString%7CNil%29-instance-method" class="signature"><strong>#access_token=</strong>(access_token : String | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#access_token_file%3AString%3F-instance-method" class="signature"><strong>#access_token_file</strong> : String?</a>
+        <a href="#access_token_file%3AString%7CNil-instance-method" class="signature"><strong>#access_token_file</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#access_token_file%3D%28access_token_file%3AString%3F%29-instance-method" class="signature"><strong>#access_token_file=</strong>(access_token_file : String?)</a>
+        <a href="#access_token_file%3D%28access_token_file%3AString%7CNil%29-instance-method" class="signature"><strong>#access_token_file=</strong>(access_token_file : String | Nil)</a>
         
       </li>
     
@@ -511,32 +511,32 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#expiry%3AString%3F-instance-method" class="signature"><strong>#expiry</strong> : String?</a>
+        <a href="#expiry%3AString%7CNil-instance-method" class="signature"><strong>#expiry</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#expiry%3D%28expiry%3AString%3F%29-instance-method" class="signature"><strong>#expiry=</strong>(expiry : String?)</a>
+        <a href="#expiry%3D%28expiry%3AString%7CNil%29-instance-method" class="signature"><strong>#expiry=</strong>(expiry : String | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#expiry_key%3AString%3F-instance-method" class="signature"><strong>#expiry_key</strong> : String?</a>
+        <a href="#expiry_key%3AString%7CNil-instance-method" class="signature"><strong>#expiry_key</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#expiry_key%3D%28expiry_key%3AString%3F%29-instance-method" class="signature"><strong>#expiry_key=</strong>(expiry_key : String?)</a>
+        <a href="#expiry_key%3D%28expiry_key%3AString%7CNil%29-instance-method" class="signature"><strong>#expiry_key=</strong>(expiry_key : String | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#token_key%3AString%3F-instance-method" class="signature"><strong>#token_key</strong> : String?</a>
+        <a href="#token_key%3AString%7CNil-instance-method" class="signature"><strong>#token_key</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#token_key%3D%28token_key%3AString%3F%29-instance-method" class="signature"><strong>#token_key=</strong>(token_key : String?)</a>
+        <a href="#token_key%3D%28token_key%3AString%7CNil%29-instance-method" class="signature"><strong>#token_key=</strong>(token_key : String | Nil)</a>
         
       </li>
     
@@ -619,12 +619,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(access_token:String?,access_token_file:String?,cmd_args:Array(String),cmd_path:String,expiry:String?,expiry_key:String?,token_key:String?)-class-method">
+    <div class="entry-detail" id="new(access_token:Nil|String,access_token_file:Nil|String,cmd_args:Array(String),cmd_path:String,expiry:Nil|String,expiry_key:Nil|String,token_key:Nil|String)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(access_token : String?, access_token_file : String?, cmd_args : Array(String), cmd_path : String, expiry : String?, expiry_key : String?, token_key : String?)
+        def self.<strong>new</strong>(access_token : Nil | String, access_token_file : Nil | String, cmd_args : Array(String), cmd_path : String, expiry : Nil | String, expiry_key : Nil | String, token_key : Nil | String)
 
-        <a class="method-permalink" href="#new%28access_token%3AString%3F%2Caccess_token_file%3AString%3F%2Ccmd_args%3AArray%28String%29%2Ccmd_path%3AString%2Cexpiry%3AString%3F%2Cexpiry_key%3AString%3F%2Ctoken_key%3AString%3F%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28access_token%3ANil%7CString%2Caccess_token_file%3ANil%7CString%2Ccmd_args%3AArray%28String%29%2Ccmd_path%3AString%2Cexpiry%3ANil%7CString%2Cexpiry_key%3ANil%7CString%2Ctoken_key%3ANil%7CString%29-class-method">#</a>
       </div>
       
       <br/>
@@ -703,12 +703,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="access_token:String?-instance-method">
+    <div class="entry-detail" id="access_token:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>access_token</strong> : String?
+        def <strong>access_token</strong> : String | Nil
 
-        <a class="method-permalink" href="#access_token%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#access_token%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -719,12 +719,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="access_token=(access_token:String?)-instance-method">
+    <div class="entry-detail" id="access_token=(access_token:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>access_token=</strong>(access_token : String?)
+        def <strong>access_token=</strong>(access_token : String | Nil)
 
-        <a class="method-permalink" href="#access_token%3D%28access_token%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#access_token%3D%28access_token%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -735,12 +735,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="access_token_file:String?-instance-method">
+    <div class="entry-detail" id="access_token_file:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>access_token_file</strong> : String?
+        def <strong>access_token_file</strong> : String | Nil
 
-        <a class="method-permalink" href="#access_token_file%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#access_token_file%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -751,12 +751,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="access_token_file=(access_token_file:String?)-instance-method">
+    <div class="entry-detail" id="access_token_file=(access_token_file:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>access_token_file=</strong>(access_token_file : String?)
+        def <strong>access_token_file=</strong>(access_token_file : String | Nil)
 
-        <a class="method-permalink" href="#access_token_file%3D%28access_token_file%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#access_token_file%3D%28access_token_file%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -831,12 +831,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="expiry:String?-instance-method">
+    <div class="entry-detail" id="expiry:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>expiry</strong> : String?
+        def <strong>expiry</strong> : String | Nil
 
-        <a class="method-permalink" href="#expiry%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#expiry%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -847,12 +847,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="expiry=(expiry:String?)-instance-method">
+    <div class="entry-detail" id="expiry=(expiry:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>expiry=</strong>(expiry : String?)
+        def <strong>expiry=</strong>(expiry : String | Nil)
 
-        <a class="method-permalink" href="#expiry%3D%28expiry%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#expiry%3D%28expiry%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -863,12 +863,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="expiry_key:String?-instance-method">
+    <div class="entry-detail" id="expiry_key:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>expiry_key</strong> : String?
+        def <strong>expiry_key</strong> : String | Nil
 
-        <a class="method-permalink" href="#expiry_key%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#expiry_key%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -879,12 +879,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="expiry_key=(expiry_key:String?)-instance-method">
+    <div class="entry-detail" id="expiry_key=(expiry_key:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>expiry_key=</strong>(expiry_key : String?)
+        def <strong>expiry_key=</strong>(expiry_key : String | Nil)
 
-        <a class="method-permalink" href="#expiry_key%3D%28expiry_key%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#expiry_key%3D%28expiry_key%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -895,12 +895,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="token_key:String?-instance-method">
+    <div class="entry-detail" id="token_key:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>token_key</strong> : String?
+        def <strong>token_key</strong> : String | Nil
 
-        <a class="method-permalink" href="#token_key%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#token_key%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -911,12 +911,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="token_key=(token_key:String?)-instance-method">
+    <div class="entry-detail" id="token_key=(token_key:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>token_key=</strong>(token_key : String?)
+        def <strong>token_key=</strong>(token_key : String | Nil)
 
-        <a class="method-permalink" href="#token_key%3D%28token_key%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#token_key%3D%28token_key%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.1">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -451,7 +451,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28clusters%3AArray%28Kube%3A%3AConfig%3A%3ACluster%29%2Ccontexts%3AArray%28Kube%3A%3AConfig%3A%3AContext%29%2Ccurrent_context%3AString%3F%2Cpreferences%3AHash%28String%2CString%29%3DHash%28String%2CString%29.new%2Cusers%3AArray%28Kube%3A%3AConfig%3A%3AUser%29%3DArray%28User%29.new%2Capi_version%3AString%3D%22v1%22%2Ckind%3AString%3D%22Config%22%29-class-method" class="signature"><strong>.new</strong>(clusters : Array(Kube::Config::Cluster), contexts : Array(Kube::Config::Context), current_context : String?, preferences : Hash(String, String) = <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>).<span class="k">new</span>, users : Array(Kube::Config::User) = <span class="t">Array</span>(<span class="t">User</span>).<span class="k">new</span>, api_version : String = <span class="s">&quot;v1&quot;</span>, kind : String = <span class="s">&quot;Config&quot;</span>)</a>
+        <a href="#new%28clusters%3AArray%28Kube%3A%3AConfig%3A%3ACluster%29%2Ccontexts%3AArray%28Kube%3A%3AConfig%3A%3AContext%29%2Ccurrent_context%3ANil%7CString%2Cpreferences%3AHash%28String%2CString%29%3DHash%28String%2CString%29.new%2Cusers%3AArray%28Kube%3A%3AConfig%3A%3AUser%29%3DArray%28User%29.new%2Capi_version%3AString%3D%22v1%22%2Ckind%3AString%3D%22Config%22%29-class-method" class="signature"><strong>.new</strong>(clusters : Array(Kube::Config::Cluster), contexts : Array(Kube::Config::Context), current_context : Nil | String, preferences : Hash(String, String) = <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>).new, users : Array(Kube::Config::User) = <span class="t">Array</span>(<span class="t">User</span>).new, api_version : String = <span class="s">&quot;v1&quot;</span>, kind : String = <span class="s">&quot;Config&quot;</span>)</a>
         
       </li>
     
@@ -540,7 +540,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#cluster%28name%3AString%3F%3Dnil%29%3ACluster-instance-method" class="signature"><strong>#cluster</strong>(name : String? = <span class="n">nil</span>) : Cluster</a>
+        <a href="#cluster%28name%3AString%7CNil%3Dnil%29%3ACluster-instance-method" class="signature"><strong>#cluster</strong>(name : String | Nil = <span class="n">nil</span>) : Cluster</a>
         
           <div class="summary"><p>Returns the cluster with the given <code>name</code> or the cluster of the current context</p></div>
         
@@ -557,7 +557,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#context%28name%3AString%3F%3Dnil%29%3AContext-instance-method" class="signature"><strong>#context</strong>(name : String? = <span class="n">nil</span>) : Context</a>
+        <a href="#context%28name%3AString%7CNil%3Dnil%29%3AContext-instance-method" class="signature"><strong>#context</strong>(name : String | Nil = <span class="n">nil</span>) : Context</a>
         
           <div class="summary"><p>Returns the context with the given <code>name</code> or the current context</p></div>
         
@@ -574,12 +574,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#current_context%3AString%3F-instance-method" class="signature"><strong>#current_context</strong> : String?</a>
+        <a href="#current_context%3AString%7CNil-instance-method" class="signature"><strong>#current_context</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#current_context%3D%28current_context%3AString%3F%29-instance-method" class="signature"><strong>#current_context=</strong>(current_context : String?)</a>
+        <a href="#current_context%3D%28current_context%3AString%7CNil%29-instance-method" class="signature"><strong>#current_context=</strong>(current_context : String | Nil)</a>
         
       </li>
     
@@ -616,7 +616,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#user%28name%3AString%3F%3Dnil%29%3AUser-instance-method" class="signature"><strong>#user</strong>(name : String? = <span class="n">nil</span>) : User</a>
+        <a href="#user%28name%3AString%7CNil%3Dnil%29%3AUser-instance-method" class="signature"><strong>#user</strong>(name : String | Nil = <span class="n">nil</span>) : User</a>
         
           <div class="summary"><p>Returns the user with the given <code>name</code> or the user of the current context</p></div>
         
@@ -711,12 +711,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(clusters:Array(Kube::Config::Cluster),contexts:Array(Kube::Config::Context),current_context:String?,preferences:Hash(String,String)=Hash(String,String).new,users:Array(Kube::Config::User)=Array(User).new,api_version:String=&quot;v1&quot;,kind:String=&quot;Config&quot;)-class-method">
+    <div class="entry-detail" id="new(clusters:Array(Kube::Config::Cluster),contexts:Array(Kube::Config::Context),current_context:Nil|String,preferences:Hash(String,String)=Hash(String,String).new,users:Array(Kube::Config::User)=Array(User).new,api_version:String=&quot;v1&quot;,kind:String=&quot;Config&quot;)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(clusters : Array(<a href="../Kube/Config/Cluster.html">Kube::Config::Cluster</a>), contexts : Array(<a href="../Kube/Config/Context.html">Kube::Config::Context</a>), current_context : String?, preferences : Hash(String, String) = <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>).<span class="k">new</span>, users : Array(<a href="../Kube/Config/User.html">Kube::Config::User</a>) = <span class="t">Array</span>(<span class="t">User</span>).<span class="k">new</span>, api_version : String = <span class="s">&quot;v1&quot;</span>, kind : String = <span class="s">&quot;Config&quot;</span>)
+        def self.<strong>new</strong>(clusters : Array(<a href="../Kube/Config/Cluster.html">Kube::Config::Cluster</a>), contexts : Array(<a href="../Kube/Config/Context.html">Kube::Config::Context</a>), current_context : Nil | String, preferences : Hash(String, String) = <span class="t">Hash</span>(<span class="t">String</span>, <span class="t">String</span>).new, users : Array(<a href="../Kube/Config/User.html">Kube::Config::User</a>) = <span class="t">Array</span>(<span class="t">User</span>).new, api_version : String = <span class="s">&quot;v1&quot;</span>, kind : String = <span class="s">&quot;Config&quot;</span>)
 
-        <a class="method-permalink" href="#new%28clusters%3AArray%28Kube%3A%3AConfig%3A%3ACluster%29%2Ccontexts%3AArray%28Kube%3A%3AConfig%3A%3AContext%29%2Ccurrent_context%3AString%3F%2Cpreferences%3AHash%28String%2CString%29%3DHash%28String%2CString%29.new%2Cusers%3AArray%28Kube%3A%3AConfig%3A%3AUser%29%3DArray%28User%29.new%2Capi_version%3AString%3D%22v1%22%2Ckind%3AString%3D%22Config%22%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28clusters%3AArray%28Kube%3A%3AConfig%3A%3ACluster%29%2Ccontexts%3AArray%28Kube%3A%3AConfig%3A%3AContext%29%2Ccurrent_context%3ANil%7CString%2Cpreferences%3AHash%28String%2CString%29%3DHash%28String%2CString%29.new%2Cusers%3AArray%28Kube%3A%3AConfig%3A%3AUser%29%3DArray%28User%29.new%2Capi_version%3AString%3D%22v1%22%2Ckind%3AString%3D%22Config%22%29-class-method">#</a>
       </div>
       
       <br/>
@@ -923,12 +923,12 @@ merge using the configuration merge rules, @see K8s::Config.merge</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="cluster(name:String?=nil):Cluster-instance-method">
+    <div class="entry-detail" id="cluster(name:String|Nil=nil):Cluster-instance-method">
       <div class="signature">
         
-        def <strong>cluster</strong>(name : String? = <span class="n">nil</span>) : <a href="../Kube/Config/Cluster.html">Cluster</a>
+        def <strong>cluster</strong>(name : String | Nil = <span class="n">nil</span>) : <a href="../Kube/Config/Cluster.html">Cluster</a>
 
-        <a class="method-permalink" href="#cluster%28name%3AString%3F%3Dnil%29%3ACluster-instance-method">#</a>
+        <a class="method-permalink" href="#cluster%28name%3AString%7CNil%3Dnil%29%3ACluster-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -976,12 +976,12 @@ merge using the configuration merge rules, @see K8s::Config.merge</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="context(name:String?=nil):Context-instance-method">
+    <div class="entry-detail" id="context(name:String|Nil=nil):Context-instance-method">
       <div class="signature">
         
-        def <strong>context</strong>(name : String? = <span class="n">nil</span>) : <a href="../Kube/Config/Context.html">Context</a>
+        def <strong>context</strong>(name : String | Nil = <span class="n">nil</span>) : <a href="../Kube/Config/Context.html">Context</a>
 
-        <a class="method-permalink" href="#context%28name%3AString%3F%3Dnil%29%3AContext-instance-method">#</a>
+        <a class="method-permalink" href="#context%28name%3AString%7CNil%3Dnil%29%3AContext-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1029,12 +1029,12 @@ merge using the configuration merge rules, @see K8s::Config.merge</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="current_context:String?-instance-method">
+    <div class="entry-detail" id="current_context:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>current_context</strong> : String?
+        def <strong>current_context</strong> : String | Nil
 
-        <a class="method-permalink" href="#current_context%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#current_context%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1045,12 +1045,12 @@ merge using the configuration merge rules, @see K8s::Config.merge</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="current_context=(current_context:String?)-instance-method">
+    <div class="entry-detail" id="current_context=(current_context:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>current_context=</strong>(current_context : String?)
+        def <strong>current_context=</strong>(current_context : String | Nil)
 
-        <a class="method-permalink" href="#current_context%3D%28current_context%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#current_context%3D%28current_context%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -1163,12 +1163,12 @@ https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeco
       </div>
     </div>
   
-    <div class="entry-detail" id="user(name:String?=nil):User-instance-method">
+    <div class="entry-detail" id="user(name:String|Nil=nil):User-instance-method">
       <div class="signature">
         
-        def <strong>user</strong>(name : String? = <span class="n">nil</span>) : <a href="../Kube/Config/User.html">User</a>
+        def <strong>user</strong>(name : String | Nil = <span class="n">nil</span>) : <a href="../Kube/Config/User.html">User</a>
 
-        <a class="method-permalink" href="#user%28name%3AString%3F%3Dnil%29%3AUser-instance-method">#</a>
+        <a class="method-permalink" href="#user%28name%3AString%7CNil%3Dnil%29%3AUser-instance-method">#</a>
       </div>
       
         <div class="doc">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.4">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -466,7 +466,7 @@ client <span class="o">=</span> <span class="t">Kube</span><span class="t">::</s
     <use href="#octicon-link"/>
   </svg>
 </a>Listing resources</h3>
-<pre><code class="language-crystal">client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).list(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>}).each <span class="k">do</span> <span class="o">|</span>pod<span class="o">|</span>
+<pre><code class="language-crystal">client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).list(label_selector: {<span class="s">&quot;role&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;test&quot;</span>}).each <span class="k">do</span> <span class="o">|</span>pod<span class="o">|</span>
   pod <span class="o">=</span> pod.<span class="k">as</span>(<span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>)
   puts <span class="s">&quot;namespace=</span><span class="i">#{</span>pod.metadata!.namespace<span class="i">}</span><span class="s"> pod: </span><span class="i">#{</span>pod.metadata!.name<span class="i">}</span><span class="s"> node=</span><span class="i">#{</span>pod.spec.try <span class="o">&amp;</span>.node_name<span class="i">}</span><span class="s">&quot;</span>
 <span class="k">end</span></code></pre>
@@ -484,7 +484,7 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
   </svg>
 </a>Deleting resources</h3>
 <pre><code class="language-crystal">pod <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete(<span class="s">&quot;test-pod&quot;</span>)</code></pre>
-<pre><code class="language-crystal">pods <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete_collection(label_selector: {<span class="s">&quot;role&quot;</span> =&gt; <span class="s">&quot;test&quot;</span>})</code></pre>
+<pre><code class="language-crystal">pods <span class="o">=</span> client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot;pods&quot;</span>, namespace: <span class="s">&quot;default&quot;</span>).delete_collection(label_selector: {<span class="s">&quot;role&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;test&quot;</span>})</code></pre>
 <h3><a id="creating-resources" class="anchor" href="#creating-resources">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -495,12 +495,12 @@ client.api(<span class="s">&quot;v1&quot;</span>).resource(<span class="s">&quot
     <use href="#octicon-link"/>
   </svg>
 </a>Programmatically defined resources</h4>
-<pre><code class="language-crystal">pod <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>.<span class="k">new</span>(
+<pre><code class="language-crystal">pod <span class="o">=</span> <span class="t">K8S</span><span class="t">::</span><span class="t">Api</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">V1</span><span class="t">::</span><span class="t">Pod</span>.new(
   metadata: {
     name: <span class="s">&quot;pod-name&quot;</span>,
     namespace: <span class="s">&quot;default&quot;</span>,
     labels: {
-      <span class="s">&quot;app&quot;</span> =&gt; <span class="s">&quot;kube-client-test&quot;</span>,
+      <span class="s">&quot;app&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;kube-client-test&quot;</span>,
     },
   },
   spec: {

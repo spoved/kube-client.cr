@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.3">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -433,7 +433,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28server%3AString%2Ccertificate_authority%3AString%3F%3Dnil%2Ccertificate_authority_data%3AString%3F%3Dnil%2Cinsecure_skip_tls_verify%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(server : String, certificate_authority : String? = <span class="n">nil</span>, certificate_authority_data : String? = <span class="n">nil</span>, insecure_skip_tls_verify : Bool = <span class="n">false</span>)</a>
+        <a href="#new%28server%3AString%2Ccertificate_authority%3ANil%7CString%3Dnil%2Ccertificate_authority_data%3ANil%7CString%3Dnil%2Cinsecure_skip_tls_verify%3ABool%3Dfalse%29-class-method" class="signature"><strong>.new</strong>(server : String, certificate_authority : Nil | String = <span class="n">nil</span>, certificate_authority_data : Nil | String = <span class="n">nil</span>, insecure_skip_tls_verify : Bool = <span class="n">false</span>)</a>
         
       </li>
     
@@ -471,22 +471,22 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#certificate_authority%3AString%3F-instance-method" class="signature"><strong>#certificate_authority</strong> : String?</a>
+        <a href="#certificate_authority%3AString%7CNil-instance-method" class="signature"><strong>#certificate_authority</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#certificate_authority%3D%28certificate_authority%3AString%3F%29-instance-method" class="signature"><strong>#certificate_authority=</strong>(certificate_authority : String?)</a>
+        <a href="#certificate_authority%3D%28certificate_authority%3AString%7CNil%29-instance-method" class="signature"><strong>#certificate_authority=</strong>(certificate_authority : String | Nil)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#certificate_authority_data%3AString%3F-instance-method" class="signature"><strong>#certificate_authority_data</strong> : String?</a>
+        <a href="#certificate_authority_data%3AString%7CNil-instance-method" class="signature"><strong>#certificate_authority_data</strong> : String | Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#certificate_authority_data%3D%28certificate_authority_data%3AString%3F%29-instance-method" class="signature"><strong>#certificate_authority_data=</strong>(certificate_authority_data : String?)</a>
+        <a href="#certificate_authority_data%3D%28certificate_authority_data%3AString%7CNil%29-instance-method" class="signature"><strong>#certificate_authority_data=</strong>(certificate_authority_data : String | Nil)</a>
         
       </li>
     
@@ -617,12 +617,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="new(server:String,certificate_authority:String?=nil,certificate_authority_data:String?=nil,insecure_skip_tls_verify:Bool=false)-class-method">
+    <div class="entry-detail" id="new(server:String,certificate_authority:Nil|String=nil,certificate_authority_data:Nil|String=nil,insecure_skip_tls_verify:Bool=false)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(server : String, certificate_authority : String? = <span class="n">nil</span>, certificate_authority_data : String? = <span class="n">nil</span>, insecure_skip_tls_verify : Bool = <span class="n">false</span>)
+        def self.<strong>new</strong>(server : String, certificate_authority : Nil | String = <span class="n">nil</span>, certificate_authority_data : Nil | String = <span class="n">nil</span>, insecure_skip_tls_verify : Bool = <span class="n">false</span>)
 
-        <a class="method-permalink" href="#new%28server%3AString%2Ccertificate_authority%3AString%3F%3Dnil%2Ccertificate_authority_data%3AString%3F%3Dnil%2Cinsecure_skip_tls_verify%3ABool%3Dfalse%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28server%3AString%2Ccertificate_authority%3ANil%7CString%3Dnil%2Ccertificate_authority_data%3ANil%7CString%3Dnil%2Cinsecure_skip_tls_verify%3ABool%3Dfalse%29-class-method">#</a>
       </div>
       
       <br/>
@@ -673,12 +673,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="certificate_authority:String?-instance-method">
+    <div class="entry-detail" id="certificate_authority:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>certificate_authority</strong> : String?
+        def <strong>certificate_authority</strong> : String | Nil
 
-        <a class="method-permalink" href="#certificate_authority%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#certificate_authority%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -689,12 +689,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="certificate_authority=(certificate_authority:String?)-instance-method">
+    <div class="entry-detail" id="certificate_authority=(certificate_authority:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>certificate_authority=</strong>(certificate_authority : String?)
+        def <strong>certificate_authority=</strong>(certificate_authority : String | Nil)
 
-        <a class="method-permalink" href="#certificate_authority%3D%28certificate_authority%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#certificate_authority%3D%28certificate_authority%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>
@@ -705,12 +705,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="certificate_authority_data:String?-instance-method">
+    <div class="entry-detail" id="certificate_authority_data:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>certificate_authority_data</strong> : String?
+        def <strong>certificate_authority_data</strong> : String | Nil
 
-        <a class="method-permalink" href="#certificate_authority_data%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#certificate_authority_data%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -721,12 +721,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="certificate_authority_data=(certificate_authority_data:String?)-instance-method">
+    <div class="entry-detail" id="certificate_authority_data=(certificate_authority_data:String|Nil)-instance-method">
       <div class="signature">
         
-        def <strong>certificate_authority_data=</strong>(certificate_authority_data : String?)
+        def <strong>certificate_authority_data=</strong>(certificate_authority_data : String | Nil)
 
-        <a class="method-permalink" href="#certificate_authority_data%3D%28certificate_authority_data%3AString%3F%29-instance-method">#</a>
+        <a class="method-permalink" href="#certificate_authority_data%3D%28certificate_authority_data%3AString%7CNil%29-instance-method">#</a>
       </div>
       
       <br/>

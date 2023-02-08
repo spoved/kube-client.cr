@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.0">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -460,7 +460,7 @@
       
     
       <dt class="entry-const" id="REQUEST_HEADERS">
-        <strong>REQUEST_HEADERS</strong> = <code>{<span class="s">&quot;Accept&quot;</span> =&gt; <span class="s">&quot;application/json&quot;</span>}</code>
+        <strong>REQUEST_HEADERS</strong> = <code>{<span class="s">&quot;Accept&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;application/json&quot;</span>}</code>
       </dt>
       
       <dd class="entry-const-doc">
@@ -483,7 +483,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28server%3AString%2Cauth_token%3AString%3F%3Dnil%2Cauth_username%3AString%3F%3Dnil%2Cauth_password%3AString%3F%3Dnil%2Cpool_options%3APoolOptions%3DPoolOptions.new%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(server : String, auth_token : String? = <span class="n">nil</span>, auth_username : String? = <span class="n">nil</span>, auth_password : String? = <span class="n">nil</span>, pool_options : PoolOptions = <span class="t">PoolOptions</span>.<span class="k">new</span>, **options)</a>
+        <a href="#new%28server%3AString%2Cauth_token%3AString%7CNil%3Dnil%2Cauth_username%3AString%7CNil%3Dnil%2Cauth_password%3AString%7CNil%3Dnil%2Cpool_options%3APoolOptions%3DPoolOptions.new%2C%2A%2Aoptions%29-class-method" class="signature"><strong>.new</strong>(server : String, auth_token : String | Nil = <span class="n">nil</span>, auth_username : String | Nil = <span class="n">nil</span>, auth_password : String | Nil = <span class="n">nil</span>, pool_options : PoolOptions = <span class="t">PoolOptions</span>.new, **options)</a>
         
       </li>
     
@@ -578,7 +578,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#parse_response%28response%3AHTTP%3A%3AClient%3A%3AResponse%2Cmethod%3AString%2Cpath%3AString%2Cresponse_class%3AT.class%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#parse_response</strong>(response : HTTP::Client::Response, method : String, path : String, response_class : <span class="t">T</span>.<span class="k">class</span>? = <span class="n">nil</span>, **options) forall T</a>
+        <a href="#parse_response%28response%3AHTTP%3A%3AClient%3A%3AResponse%2Cmethod%3AString%2Cpath%3AString%2Cresponse_class%3AT.class%7CNil%3Dnil%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#parse_response</strong>(response : HTTP::Client::Response, method : String, path : String, response_class : <span class="t">T</span>.<span class="k">class</span> | Nil = <span class="n">nil</span>, **options) forall T</a>
         
       </li>
     
@@ -593,7 +593,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc? = <span class="n">nil</span>, **options) forall T</a>
+        <a href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%7CNil%3Dnil%2C%2A%2Aoptions%29forallT-instance-method" class="signature"><strong>#request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc | Nil = <span class="n">nil</span>, **options) forall T</a>
         
       </li>
     
@@ -687,12 +687,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(server:String,auth_token:String?=nil,auth_username:String?=nil,auth_password:String?=nil,pool_options:PoolOptions=PoolOptions.new,**options)-class-method">
+    <div class="entry-detail" id="new(server:String,auth_token:String|Nil=nil,auth_username:String|Nil=nil,auth_password:String|Nil=nil,pool_options:PoolOptions=PoolOptions.new,**options)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(server : String, auth_token : String? = <span class="n">nil</span>, auth_username : String? = <span class="n">nil</span>, auth_password : String? = <span class="n">nil</span>, pool_options : <a href="../Kube/Transport/PoolOptions.html">PoolOptions</a> = <span class="t">PoolOptions</span>.<span class="k">new</span>, **options)
+        def self.<strong>new</strong>(server : String, auth_token : String | Nil = <span class="n">nil</span>, auth_username : String | Nil = <span class="n">nil</span>, auth_password : String | Nil = <span class="n">nil</span>, pool_options : <a href="../Kube/Transport/PoolOptions.html">PoolOptions</a> = <span class="t">PoolOptions</span>.new, **options)
 
-        <a class="method-permalink" href="#new%28server%3AString%2Cauth_token%3AString%3F%3Dnil%2Cauth_username%3AString%3F%3Dnil%2Cauth_password%3AString%3F%3Dnil%2Cpool_options%3APoolOptions%3DPoolOptions.new%2C%2A%2Aoptions%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28server%3AString%2Cauth_token%3AString%7CNil%3Dnil%2Cauth_username%3AString%7CNil%3Dnil%2Cauth_password%3AString%7CNil%3Dnil%2Cpool_options%3APoolOptions%3DPoolOptions.new%2C%2A%2Aoptions%29-class-method">#</a>
       </div>
       
       <br/>
@@ -924,12 +924,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="parse_response(response:HTTP::Client::Response,method:String,path:String,response_class:T.class?=nil,**options)forallT-instance-method">
+    <div class="entry-detail" id="parse_response(response:HTTP::Client::Response,method:String,path:String,response_class:T.class|Nil=nil,**options)forallT-instance-method">
       <div class="signature">
         
-        def <strong>parse_response</strong>(response : HTTP::Client::Response, method : String, path : String, response_class : <span class="t">T</span>.<span class="k">class</span>? = <span class="n">nil</span>, **options) forall T
+        def <strong>parse_response</strong>(response : HTTP::Client::Response, method : String, path : String, response_class : <span class="t">T</span>.<span class="k">class</span> | Nil = <span class="n">nil</span>, **options) forall T
 
-        <a class="method-permalink" href="#parse_response%28response%3AHTTP%3A%3AClient%3A%3AResponse%2Cmethod%3AString%2Cpath%3AString%2Cresponse_class%3AT.class%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method">#</a>
+        <a class="method-permalink" href="#parse_response%28response%3AHTTP%3A%3AClient%3A%3AResponse%2Cmethod%3AString%2Cpath%3AString%2Cresponse_class%3AT.class%7CNil%3Dnil%2C%2A%2Aoptions%29forallT-instance-method">#</a>
       </div>
       
       <br/>
@@ -972,12 +972,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="request(response_class:T.class,response_block:Proc?=nil,**options)forallT-instance-method">
+    <div class="entry-detail" id="request(response_class:T.class,response_block:Proc|Nil=nil,**options)forallT-instance-method">
       <div class="signature">
         
-        def <strong>request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc? = <span class="n">nil</span>, **options) forall T
+        def <strong>request</strong>(response_class : <span class="t">T</span>.<span class="k">class</span>, response_block : Proc | Nil = <span class="n">nil</span>, **options) forall T
 
-        <a class="method-permalink" href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%3F%3Dnil%2C%2A%2Aoptions%29forallT-instance-method">#</a>
+        <a class="method-permalink" href="#request%28response_class%3AT.class%2Cresponse_block%3AProc%7CNil%3Dnil%2C%2A%2Aoptions%29forallT-instance-method">#</a>
       </div>
       
       <br/>

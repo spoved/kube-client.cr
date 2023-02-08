@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.4.1">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="0.4.0">
 <meta name="crystal_docs.project_name" content="kube-client.cr">
 
@@ -440,7 +440,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28transport%3AKube%3A%3ATransport%2Capi_client%3AKube%3A%3AApiClient%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%2Cresource_class%3A%3A%3AK8S%3A%3AKubernetes%3A%3AResource.class%29-class-method" class="signature"><strong>.new</strong>(transport : Kube::Transport, api_client : Kube::ApiClient, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String?, resource_class : <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.<span class="k">class</span>)</a>
+        <a href="#new%28transport%3AKube%3A%3ATransport%2Capi_client%3AKube%3A%3AApiClient%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3ANil%7CString%2Cresource_class%3A%3A%3AK8S%3A%3AKubernetes%3A%3AResource.class%29-class-method" class="signature"><strong>.new</strong>(transport : Kube::Transport, api_client : Kube::ApiClient, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : Nil | String, resource_class : <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.<span class="k">class</span>)</a>
         
       </li>
     
@@ -464,7 +464,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#list%28resources%3AArray%28ResourceClient%29%2Ctransport%3ATransport%2Cnamespace%3AString%3F%3Dnil%2Clabel_selector%3Dnil%2Cfield_selector%3Dnil%2Cskip_forbidden%3Dfalse%29%3AIndexable-class-method" class="signature"><strong>.list</strong>(resources : Array(ResourceClient), transport : Transport, namespace : String? = <span class="n">nil</span>, label_selector = <span class="n">nil</span>, field_selector = <span class="n">nil</span>, skip_forbidden = <span class="n">false</span>) : Indexable</a>
+        <a href="#list%28resources%3AArray%28ResourceClient%29%2Ctransport%3ATransport%2Cnamespace%3AString%7CNil%3Dnil%2Clabel_selector%3Dnil%2Cfield_selector%3Dnil%2Cskip_forbidden%3Dfalse%29%3AIndexable-class-method" class="signature"><strong>.list</strong>(resources : Array(ResourceClient), transport : Transport, namespace : String | Nil = <span class="n">nil</span>, label_selector = <span class="n">nil</span>, field_selector = <span class="n">nil</span>, skip_forbidden = <span class="n">false</span>) : Indexable</a>
         
           <div class="summary"><p>Pipeline list requests for multiple resource types.</p></div>
         
@@ -524,7 +524,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#delete_collection%28namespace%3D%40namespace%2Clabel_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cpropagation_policy%3AString%3F%3Dnil%29%3AIndexable%28T%29-instance-method" class="signature"><strong>#delete_collection</strong>(namespace = @namespace, label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, propagation_policy : String? = <span class="n">nil</span>) : Indexable(T)</a>
+        <a href="#delete_collection%28namespace%3D%40namespace%2Clabel_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cpropagation_policy%3AString%7CNil%3Dnil%29%3AIndexable%28T%29-instance-method" class="signature"><strong>#delete_collection</strong>(namespace = @namespace, label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, propagation_policy : String | Nil = <span class="n">nil</span>) : Indexable(T)</a>
         
           <div class="summary"><p>returns array of instances of resource_class</p></div>
         
@@ -612,7 +612,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#namespace%3AString%3F-instance-method" class="signature"><strong>#namespace</strong> : String?</a>
+        <a href="#namespace%3AString%7CNil-instance-method" class="signature"><strong>#namespace</strong> : String | Nil</a>
         
       </li>
     
@@ -642,7 +642,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#subresource%3AString%3F-instance-method" class="signature"><strong>#subresource</strong> : String?</a>
+        <a href="#subresource%3AString%7CNil-instance-method" class="signature"><strong>#subresource</strong> : String | Nil</a>
         
       </li>
     
@@ -664,7 +664,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#watch%28label_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cresource_version%3AString%3F%3Dnil%2Ctimeout%3AInt32%3F%3Dnil%2Cnamespace%3D%40namespace%29-instance-method" class="signature"><strong>#watch</strong>(label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, resource_version : String? = <span class="n">nil</span>, timeout : Int32? = <span class="n">nil</span>, namespace = @namespace)</a>
+        <a href="#watch%28label_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cresource_version%3AString%7CNil%3Dnil%2Ctimeout%3AInt32%7CNil%3Dnil%2Cnamespace%3D%40namespace%29-instance-method" class="signature"><strong>#watch</strong>(label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, resource_version : String | Nil = <span class="n">nil</span>, timeout : Int32 | Nil = <span class="n">nil</span>, namespace = @namespace)</a>
         
       </li>
     
@@ -681,13 +681,13 @@
   <h3>Instance methods inherited from module <code><a href="../Kube/ResourceClient/Utils.html">Kube::ResourceClient::Utils</a></code></h3>
   
   
-    <a href="../Kube/ResourceClient/Utils.html#make_query%28options%29%3AHash%28String%2CString%7CArray%28String%29%29%3F-instance-method" class="tooltip">
-      <span>make_query(options) : Hash(String, String | Array(String))?</span>
+    <a href="../Kube/ResourceClient/Utils.html#make_query%28options%29%3AHash%28String%2CString%7CArray%28String%29%29%7CNil-instance-method" class="tooltip">
+      <span>make_query(options) : Hash(String, String | Array(String)) | Nil</span>
     make_query</a>, 
     
   
-    <a href="../Kube/ResourceClient/Utils.html#selector_query%28selector%3AString%7CSymbol%7CHash%28String%2CString%29%7CNil%29%3AString%3F-instance-method" class="tooltip">
-      <span>selector_query(selector : String | Symbol | Hash(String, String) | Nil) : String?</span>
+    <a href="../Kube/ResourceClient/Utils.html#selector_query%28selector%3AString%7CSymbol%7CHash%28String%2CString%29%7CNil%29%3AString%7CNil-instance-method" class="tooltip">
+      <span>selector_query(selector : String | Symbol | Hash(String, String) | Nil) : String | Nil</span>
     selector_query</a>
     
   
@@ -732,12 +732,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(transport:Kube::Transport,api_client:Kube::ApiClient,api_resource:K8S::Apimachinery::Apis::Meta::V1::APIResource,namespace:String?,resource_class:::K8S::Kubernetes::Resource.class)-class-method">
+    <div class="entry-detail" id="new(transport:Kube::Transport,api_client:Kube::ApiClient,api_resource:K8S::Apimachinery::Apis::Meta::V1::APIResource,namespace:Nil|String,resource_class:::K8S::Kubernetes::Resource.class)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(transport : <a href="../Kube/Transport.html">Kube::Transport</a>, api_client : <a href="../Kube/ApiClient.html">Kube::ApiClient</a>, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : String?, resource_class : <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.<span class="k">class</span>)
+        def self.<strong>new</strong>(transport : <a href="../Kube/Transport.html">Kube::Transport</a>, api_client : <a href="../Kube/ApiClient.html">Kube::ApiClient</a>, api_resource : K8S::Apimachinery::Apis::Meta::V1::APIResource, namespace : Nil | String, resource_class : <span class="t">::</span><span class="t">K8S</span><span class="t">::</span><span class="t">Kubernetes</span><span class="t">::</span><span class="t">Resource</span>.<span class="k">class</span>)
 
-        <a class="method-permalink" href="#new%28transport%3AKube%3A%3ATransport%2Capi_client%3AKube%3A%3AApiClient%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3AString%3F%2Cresource_class%3A%3A%3AK8S%3A%3AKubernetes%3A%3AResource.class%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28transport%3AKube%3A%3ATransport%2Capi_client%3AKube%3A%3AApiClient%2Capi_resource%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AAPIResource%2Cnamespace%3ANil%7CString%2Cresource_class%3A%3A%3AK8S%3A%3AKubernetes%3A%3AResource.class%29-class-method">#</a>
       </div>
       
       <br/>
@@ -774,12 +774,12 @@
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="list(resources:Array(ResourceClient),transport:Transport,namespace:String?=nil,label_selector=nil,field_selector=nil,skip_forbidden=false):Indexable-class-method">
+    <div class="entry-detail" id="list(resources:Array(ResourceClient),transport:Transport,namespace:String|Nil=nil,label_selector=nil,field_selector=nil,skip_forbidden=false):Indexable-class-method">
       <div class="signature">
         
-        def self.<strong>list</strong>(resources : Array(<a href="../Kube/ResourceClient.html">ResourceClient</a>), transport : <a href="../Kube/Transport.html">Transport</a>, namespace : String? = <span class="n">nil</span>, label_selector = <span class="n">nil</span>, field_selector = <span class="n">nil</span>, skip_forbidden = <span class="n">false</span>) : Indexable
+        def self.<strong>list</strong>(resources : Array(<a href="../Kube/ResourceClient.html">ResourceClient</a>), transport : <a href="../Kube/Transport.html">Transport</a>, namespace : String | Nil = <span class="n">nil</span>, label_selector = <span class="n">nil</span>, field_selector = <span class="n">nil</span>, skip_forbidden = <span class="n">false</span>) : Indexable
 
-        <a class="method-permalink" href="#list%28resources%3AArray%28ResourceClient%29%2Ctransport%3ATransport%2Cnamespace%3AString%3F%3Dnil%2Clabel_selector%3Dnil%2Cfield_selector%3Dnil%2Cskip_forbidden%3Dfalse%29%3AIndexable-class-method">#</a>
+        <a class="method-permalink" href="#list%28resources%3AArray%28ResourceClient%29%2Ctransport%3ATransport%2Cnamespace%3AString%7CNil%3Dnil%2Clabel_selector%3Dnil%2Cfield_selector%3Dnil%2Cskip_forbidden%3Dfalse%29%3AIndexable-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -933,12 +933,12 @@ propagationPolicy [String, nil] The propagationPolicy to use for the API call. P
       </div>
     </div>
   
-    <div class="entry-detail" id="delete_collection(namespace=@namespace,label_selector:String|Hash(String,String)|Nil=nil,field_selector:String|Hash(String,String)|Nil=nil,propagation_policy:String?=nil):Indexable(T)-instance-method">
+    <div class="entry-detail" id="delete_collection(namespace=@namespace,label_selector:String|Hash(String,String)|Nil=nil,field_selector:String|Hash(String,String)|Nil=nil,propagation_policy:String|Nil=nil):Indexable(T)-instance-method">
       <div class="signature">
         
-        def <strong>delete_collection</strong>(namespace = @namespace, label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, propagation_policy : String? = <span class="n">nil</span>) : Indexable(T)
+        def <strong>delete_collection</strong>(namespace = @namespace, label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, propagation_policy : String | Nil = <span class="n">nil</span>) : Indexable(T)
 
-        <a class="method-permalink" href="#delete_collection%28namespace%3D%40namespace%2Clabel_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cpropagation_policy%3AString%3F%3Dnil%29%3AIndexable%28T%29-instance-method">#</a>
+        <a class="method-permalink" href="#delete_collection%28namespace%3D%40namespace%2Clabel_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cpropagation_policy%3AString%7CNil%3Dnil%29%3AIndexable%28T%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1209,12 +1209,12 @@ strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Mer
       </div>
     </div>
   
-    <div class="entry-detail" id="namespace:String?-instance-method">
+    <div class="entry-detail" id="namespace:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>namespace</strong> : String?
+        def <strong>namespace</strong> : String | Nil
 
-        <a class="method-permalink" href="#namespace%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#namespace%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1305,12 +1305,12 @@ strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Mer
       </div>
     </div>
   
-    <div class="entry-detail" id="subresource:String?-instance-method">
+    <div class="entry-detail" id="subresource:String|Nil-instance-method">
       <div class="signature">
         
-        def <strong>subresource</strong> : String?
+        def <strong>subresource</strong> : String | Nil
 
-        <a class="method-permalink" href="#subresource%3AString%3F-instance-method">#</a>
+        <a class="method-permalink" href="#subresource%3AString%7CNil-instance-method">#</a>
       </div>
       
       <br/>
@@ -1374,12 +1374,12 @@ strategic_merge [Boolean] use kube Strategic Merge Patch instead of standard Mer
       </div>
     </div>
   
-    <div class="entry-detail" id="watch(label_selector:String|Hash(String,String)|Nil=nil,field_selector:String|Hash(String,String)|Nil=nil,resource_version:String?=nil,timeout:Int32?=nil,namespace=@namespace)-instance-method">
+    <div class="entry-detail" id="watch(label_selector:String|Hash(String,String)|Nil=nil,field_selector:String|Hash(String,String)|Nil=nil,resource_version:String|Nil=nil,timeout:Int32|Nil=nil,namespace=@namespace)-instance-method">
       <div class="signature">
         
-        def <strong>watch</strong>(label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, resource_version : String? = <span class="n">nil</span>, timeout : Int32? = <span class="n">nil</span>, namespace = @namespace)
+        def <strong>watch</strong>(label_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, field_selector : String | Hash(String, String) | Nil = <span class="n">nil</span>, resource_version : String | Nil = <span class="n">nil</span>, timeout : Int32 | Nil = <span class="n">nil</span>, namespace = @namespace)
 
-        <a class="method-permalink" href="#watch%28label_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cresource_version%3AString%3F%3Dnil%2Ctimeout%3AInt32%3F%3Dnil%2Cnamespace%3D%40namespace%29-instance-method">#</a>
+        <a class="method-permalink" href="#watch%28label_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cfield_selector%3AString%7CHash%28String%2CString%29%7CNil%3Dnil%2Cresource_version%3AString%7CNil%3Dnil%2Ctimeout%3AInt32%7CNil%3Dnil%2Cnamespace%3D%40namespace%29-instance-method">#</a>
       </div>
       
       <br/>
