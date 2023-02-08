@@ -45,6 +45,6 @@ jobs:
       - name: Write kubeconfig
         run: k3d kubeconfig get k3d-cluster-test > ./spec/files/kube_config_test.yml
       - name: Run tests
-        run: crystal spec --exclude-warnings $(shell crystal env CRYSTAL_LIBRARY_PATH) --exclude-warnings ./lib/ --error-trace -Dk8s_${{ matrix.k8s }}
+        run: crystal spec --exclude-warnings $(crystal env CRYSTAL_LIBRARY_PATH) --exclude-warnings ./lib/ --error-trace -Dk8s_${{ matrix.k8s }}
       - name: Tear down cluster
         run: k3d cluster delete k3d-cluster-test
