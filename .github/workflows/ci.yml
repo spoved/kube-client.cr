@@ -1,13 +1,13 @@
 # This CI job installs Crystal and shard dependencies, then executes `crystal spec` to run the test suite
 # More configuration options are available at https://crystal-lang.github.io/install-crystal/configurator.html
 
-on: {}
-# push:
-#   branches: [master]
-# pull_request:
-#   branches: [master]
-# schedule:
-#   - cron: "0 6 * * 6" # Every Saturday 6 AM
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "0 6 * * 6" # Every Saturday 6 AM
 jobs:
   test:
     strategy:
