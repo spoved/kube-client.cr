@@ -137,14 +137,14 @@ module Kube
         raise Kube::Error::MissingEnv.new("KUBERNETES_SERVICE_HOST") if host.empty?
         port = ENV.fetch("KUBERNETES_SERVICE_PORT_HTTPS", "")
         raise Kube::Error::MissingEnv.new("KUBERNETES_SERVICE_PORT_HTTPS") if port.empty?
-
+        merged = {
+          verify_ssl:  OpenSSL::SSL::VerifyMode::PEER,
+          ssl_ca_file: File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/ca.crt"),
+          auth_token:  File.read(File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/token")),
+        }.merge(options)
         new(
           "https://#{host}:#{port}",
-          **options.merge({
-            verify_ssl:  OpenSSL::SSL::VerifyMode::PEER,
-            ssl_ca_file: File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/ca.crt"),
-            auth_token:  File.read(File.join(ENV.fetch("TELEPRESENCE_ROOT", "/"), "var/run/secrets/kubernetes.io/serviceaccount/token")),
-          }),
+          **merged,
         )
       end
 
