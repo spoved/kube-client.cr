@@ -3,17 +3,17 @@
 
 on:
   push:
-    # branches: [master]
+    branches: [master]
   pull_request:
     branches: [master]
 jobs:
   test:
     strategy:
+      max-parallel: 1
       matrix:
         k8s:
           - "v1.26"
           - "v1.27"
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

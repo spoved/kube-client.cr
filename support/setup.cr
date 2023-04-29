@@ -7,9 +7,10 @@ Log.setup(:debug)
 CLUSTER_NAME  = ENV["CLUSTER_NAME"]
 APP_NAMESPACE = ENV["APP_NAMESPACE"]
 APP_NAME      = ENV["APP_NAME"]
+K8S_VERSION   = ENV["K8S_VERSION"]
 
 def create_cluster
-  system("k3d cluster create #{CLUSTER_NAME} -c spec/files/k3d-cluster-test.yaml --kubeconfig-update-default")
+  system("k3d cluster create #{CLUSTER_NAME} -c spec/files/k3d/#{K8S_VERSION}.yml --kubeconfig-update-default")
 end
 
 def delete_cluster
