@@ -140,10 +140,12 @@ module Kube
                   response_channel.send(event)
                 rescue ex : Channel::ClosedError
                   io.close unless io.closed?
-                  break
+                  # Return to avoid raising the exception
+                  return
                 end
               end
             end
+            raise Kube::Error::API.new("GET", path, response.status, "Connection closed")
           else
             raise Kube::Error::API.new("GET", path, response.status, response.body)
           end

@@ -213,7 +213,7 @@ module Kube
           "labelSelector" => selector_query(label_selector),
           "fieldSelector" => selector_query(field_selector),
         })
-      )
+      ).as(K8S::Kubernetes::Resource::List(T))
     end
 
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
@@ -224,7 +224,7 @@ module Kube
         "labelSelector"   => selector_query(label_selector),
         "fieldSelector"   => selector_query(field_selector),
         "resourceVersion" => resource_version,
-        "timeoutSeconds"  => timeout,
+        "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
         "watch"           => "true",
       })
       logger.warn { "Watching #{query}" }
@@ -239,6 +239,18 @@ module Kube
       )
 
       wc
+    end
+
+    def watch(**nargs, &block)
+      channel = watch(**nargs)
+      while !channel.closed?
+        event = channel.receive
+        if event.is_a?(Kube::Error::API)
+          raise "Watch error: #{event.message}"
+        else
+          yield event
+        end
+      end
     end
 
     def update? : Bool
