@@ -205,7 +205,7 @@ module Kube
       process_list(list)
     end
 
-    def meta_list(label_selector : String | Hash(String, String) | Nil = nil, field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace)
+    def meta_list(label_selector : String | Hash(String, String) | Nil = nil, field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace) : K8S::Kubernetes::Resource::List(T)
       @transport.request(
         method: "GET",
         path: path(namespace: namespace),
@@ -218,8 +218,30 @@ module Kube
 
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
               field_selector : String | Hash(String, String) | Nil = nil,
-              resource_version : String? = nil, timeout : Int32? = nil,
-              namespace = @namespace) : Kube::WatchChannel(T)
+              timeout : Int32? = nil, namespace = @namespace) : Kube::WatchChannel(T)
+      _list = meta_list(label_selector: label_selector, field_selector: field_selector, namespace: namespace)
+      resource_version = _list.metadata!["resourceVersion"]?.try &.as(String)
+      _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
+
+      # If we have a list, send the items to the channel before we start watching
+      if _list.is_a?(K8S::Kubernetes::Resource::List(T))
+        spawn do
+          _list.items.each do |item|
+            watch_event = {% if ::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR < 16 %}
+                            ::K8S::Kubernetes::WatchEvent(T).from_json(
+                              {type: "ADDED", object_raw: item.to_json}.to_json
+                            )
+                          {% else %}
+                            ::K8S::Kubernetes::WatchEvent(T).new(::K8S::Apimachinery::Apis::Meta::V1::WatchEvent.new(
+                              type: "ADDED",
+                              object: item,
+                            ))
+                          {% end %}
+            _watch_channel.channel.send(watch_event)
+          end
+        end
+      end
+
       query = make_query({
         "labelSelector"   => selector_query(label_selector),
         "fieldSelector"   => selector_query(field_selector),
@@ -228,29 +250,45 @@ module Kube
         "watch"           => "true",
       })
       logger.warn { "Watching #{query}" }
-
-      wc = Kube::WatchChannel(T).new(@transport)
-
-      @transport.watch_request(
-        path: path(namespace: namespace),
-        query: query,
-        response_class: K8S::Kubernetes::WatchEvent(T),
-        response_channel: wc.channel,
-      )
-
-      wc
+      _start_watch(_watch_channel, query, namespace)
     end
 
-    def watch(**nargs, &block)
+    # Will resume a watch from a given resource version
+    def watch(resource_version : String, label_selector : String | Hash(String, String) | Nil = nil,
+              field_selector : String | Hash(String, String) | Nil = nil,
+              timeout : Int32? = nil, namespace = @namespace) : Kube::WatchChannel(T)
+      query = make_query({
+        "labelSelector"   => selector_query(label_selector),
+        "fieldSelector"   => selector_query(field_selector),
+        "resourceVersion" => resource_version,
+        "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
+        "watch"           => "true",
+      })
+      logger.warn { "Watching #{query}" }
+      _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
+      _start_watch(_watch_channel, query, namespace)
+    end
+
+    def watch(auto_resume = false, **nargs, &block)
       channel = watch(**nargs)
       while !channel.closed?
         event = channel.receive
         if event.is_a?(Kube::Error::API)
-          raise "Watch error: #{event.message}"
+          raise event
         else
           yield event
         end
       end
+    end
+
+    private def _start_watch(_watch_channel, query, namespace)
+      @transport.watch_request(
+        path: path(namespace: namespace),
+        query: query,
+        response_class: K8S::Kubernetes::WatchEvent(T),
+        response_channel: _watch_channel,
+      )
+      _watch_channel
     end
 
     def update? : Bool

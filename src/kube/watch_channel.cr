@@ -1,10 +1,11 @@
 struct Kube::WatchChannel(T)
   @transport : Kube::Transport
   getter channel : Channel(::K8S::Kubernetes::WatchEvent(T) | Kube::Error::API)
+  getter resource_version : String?
 
-  def initialize(@transport)
+  def initialize(@transport, @resource_version = nil)
     @channel = Channel(::K8S::Kubernetes::WatchEvent(T) | Kube::Error::API).new
   end
 
-  delegate :close, :closed?, :receive, :receive?, to: :channel
+  delegate :close, :closed?, :receive, :receive?, :send, to: :channel
 end
