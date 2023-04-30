@@ -1,6 +1,6 @@
 {% begin %}
   {% flag_provided = false %}
-  {% for ver in (11..26) %}
+  {% for ver in (11..27) %}
     {% flag = :k8s_v1 + "." + "#{ver}" %}
     {% if flag?(flag) %}
       {% flag_provided = true %}
