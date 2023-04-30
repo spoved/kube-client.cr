@@ -131,6 +131,17 @@ module Kube
               if raw_event
                 event = response_class.from_json(raw_event)
 
+                # Intercept bookmark events to update the resource version
+                if event.type == "BOOKMARK"
+                  meta = event.object["metadata"]?
+                  if meta.is_a?(Hash)
+                    rv = meta.try &.["resourceVersion"]?
+                    logger.trace { "Received BOOKMARK event with resourceVersion #{rv}" }
+                    response_channel.resource_version = rv if rv.is_a?(String)
+                    next
+                  end
+                end
+
                 if response_channel.closed?
                   io.close
                   break

@@ -1,7 +1,7 @@
 struct Kube::WatchChannel(T)
   @transport : Kube::Transport
   getter channel : Channel(::K8S::Kubernetes::WatchEvent(T) | Kube::Error::API)
-  getter resource_version : String?
+  property resource_version : String?
 
   def initialize(@transport, @resource_version = nil)
     @channel = Channel(::K8S::Kubernetes::WatchEvent(T) | Kube::Error::API).new

@@ -218,50 +218,15 @@ module Kube
 
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
               field_selector : String | Hash(String, String) | Nil = nil,
-              timeout : Int32? = nil, namespace = @namespace) : Kube::WatchChannel(T)
-      _list = meta_list(label_selector: label_selector, field_selector: field_selector, namespace: namespace)
-      resource_version = _list.metadata!["resourceVersion"]?.try &.as(String)
-      _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
-
-      # If we have a list, send the items to the channel before we start watching
-      if _list.is_a?(K8S::Kubernetes::Resource::List(T))
-        spawn do
-          _list.items.each do |item|
-            watch_event = {% if ::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR < 16 %}
-                            ::K8S::Kubernetes::WatchEvent(T).from_json(
-                              {type: "ADDED", object_raw: item.to_json}.to_json
-                            )
-                          {% else %}
-                            ::K8S::Kubernetes::WatchEvent(T).new(::K8S::Apimachinery::Apis::Meta::V1::WatchEvent.new(
-                              type: "ADDED",
-                              object: item,
-                            ))
-                          {% end %}
-            _watch_channel.channel.send(watch_event)
-          end
-        end
-      end
-
-      query = make_query({
-        "labelSelector"   => selector_query(label_selector),
-        "fieldSelector"   => selector_query(field_selector),
-        "resourceVersion" => resource_version,
-        "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
-        "watch"           => "true",
-      })
-      _start_watch(_watch_channel, query, namespace)
-    end
-
-    # Will resume a watch from a given resource version
-    def watch(resource_version : String, label_selector : String | Hash(String, String) | Nil = nil,
-              field_selector : String | Hash(String, String) | Nil = nil,
+              resource_version : String? = nil,
               timeout : Int32? = nil, namespace = @namespace) : Kube::WatchChannel(T)
       query = make_query({
-        "labelSelector"   => selector_query(label_selector),
-        "fieldSelector"   => selector_query(field_selector),
-        "resourceVersion" => resource_version,
-        "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
-        "watch"           => "true",
+        "labelSelector"       => selector_query(label_selector),
+        "fieldSelector"       => selector_query(field_selector),
+        "resourceVersion"     => resource_version,
+        "timeoutSeconds"      => timeout.nil? ? nil : timeout.to_s,
+        "allowWatchBookmarks" => "true",
+        "watch"               => "true",
       })
       _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
       _start_watch(_watch_channel, query, namespace)
