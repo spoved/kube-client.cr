@@ -240,7 +240,7 @@ module Kube
           rv = event.resource_version
           raise event if rv.nil?
           logger.debug &.emit "Watch channel closed, resuming", resource_version: rv, response_code: event.code
-          channel = watch(**nargs, resource_version: rv)
+          channel = watch(**nargs.merge({resource_version: rv}))
         elsif event.is_a?(Kube::Error::API)
           raise event
         else
