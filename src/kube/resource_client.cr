@@ -249,7 +249,6 @@ module Kube
         "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
         "watch"           => "true",
       })
-      logger.warn { "Watching #{query}" }
       _start_watch(_watch_channel, query, namespace)
     end
 
@@ -264,7 +263,6 @@ module Kube
         "timeoutSeconds"  => timeout.nil? ? nil : timeout.to_s,
         "watch"           => "true",
       })
-      logger.warn { "Watching #{query}" }
       _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
       _start_watch(_watch_channel, query, namespace)
     end
@@ -273,7 +271,12 @@ module Kube
       channel = watch(**nargs)
       while !channel.closed?
         event = channel.receive
-        if event.is_a?(Kube::Error::API)
+        if event.is_a?(Kube::Error::WatchClosed) && auto_resume
+          rv = event.resource_version
+          raise event if rv.nil?
+          logger.debug &.emit "Watch channel closed, resuming", resource_version: rv, response_code: event.code
+          channel = watch(**nargs, resource_version: rv)
+        elsif event.is_a?(Kube::Error::API)
           raise event
         else
           yield event
@@ -282,6 +285,8 @@ module Kube
     end
 
     private def _start_watch(_watch_channel, query, namespace)
+      logger.debug &.emit "Start watch", path: path(namespace: namespace), query: query, resource_version: _watch_channel.resource_version
+
       @transport.watch_request(
         path: path(namespace: namespace),
         query: query,
