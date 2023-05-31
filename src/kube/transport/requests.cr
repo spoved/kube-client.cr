@@ -115,13 +115,13 @@ module Kube
       request(**options, response_class: K8S::Kubernetes::Resource)
     end
 
-    def watch_request(response_class : T, response_channel, **options) forall T
+    def watch_request(response_class : T, response_channel : Kube::WatchChannel, **options) forall T
       req_options = request_options(**options)
       path = _request_path(options, req_options[:query]?)
       spawn _watch_request(response_class, response_channel, path, req_options)
     end
 
-    def _watch_request(response_class : T, response_channel, path, req_options) forall T
+    def _watch_request(response_class : T, response_channel : Kube::WatchChannel, path, req_options) forall T
       using_connection do |client|
         client.exec(method: "GET", path: path, headers: req_options[:headers]?) do |response|
           if response.success?
@@ -130,6 +130,17 @@ module Kube
               raw_event = io.gets
               if raw_event
                 event = response_class.from_json(raw_event)
+
+                # Intercept bookmark events to update the resource version
+                if event.type == "BOOKMARK"
+                  meta = event.object["metadata"]?
+                  if meta.is_a?(Hash)
+                    rv = meta.try &.["resourceVersion"]?
+                    logger.trace { "Received BOOKMARK event with resourceVersion #{rv}" }
+                    response_channel.resource_version = rv if rv.is_a?(String)
+                    next
+                  end
+                end
 
                 if response_channel.closed?
                   io.close
@@ -140,10 +151,12 @@ module Kube
                   response_channel.send(event)
                 rescue ex : Channel::ClosedError
                   io.close unless io.closed?
-                  break
+                  # Return to avoid raising the exception
+                  return
                 end
               end
             end
+            raise Kube::Error::WatchClosed.new("GET", path, response.status, "Connection closed", resource_version: response_channel.resource_version)
           else
             raise Kube::Error::API.new("GET", path, response.status, response.body)
           end

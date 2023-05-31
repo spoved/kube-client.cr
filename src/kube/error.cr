@@ -69,6 +69,14 @@ module Kube
       end
     end
 
+    class WatchClosed < API
+      getter resource_version : String?
+
+      def initialize(method, path, code : HTTP::Status, reason : String?, status = nil, @resource_version : String? = nil)
+        super(method, path, code, reason, status)
+      end
+    end
+
     macro define_api_errors
       {% for code, name in HTTP_STATUS_ERRORS %}
       class {{name}} < API

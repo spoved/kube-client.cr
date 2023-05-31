@@ -184,7 +184,7 @@ client.api("apps/v1").resource("deployments", namespace: "default").merge_patch(
 
 ### Watching resources
 
-Watching resources spawns a background fiber that will push `K8S::Kubernetes::WatchEvent`s for the resouce onto the returned `Channel`.
+Watching resources spawns a background fiber that will push `K8S::Kubernetes::WatchEvent`s for the resource onto the returned `Channel`. A `Kube::Error::WatchClosed` error will be returned if the watch stream has been closed. A `Kube::Error::API` error will be returned if an api error is encountered.
 
 ```crystal
 resource_client = client.api("v1").resource("pods")
@@ -192,11 +192,39 @@ channel = resource_client.watch(resource_version: "4651")
 
 while !channel.closed?
   event = channel.receive
-  if event.is_a?(Kube::Error::API)
+  if event.is_a?(Kube::Error::WatchClosed)
+    # Handle if the watch stream has been closed
+  elsif event.is_a?(Kube::Error::API)
     # Handle error
   else
     pp event # => K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Pod)
   end
+end
+```
+
+The returned `Kube::Error::WatchClosed` error will contain the `resource_version` of the last event received before the watch stream was closed. This can be used to resume watching from the last known resource version:
+
+```crystal
+resource_client = client.api("v1").resource("pods")
+channel = resource_client.watch
+
+while !channel.closed?
+  event = channel.receive
+  if event.is_a?(Kube::Error::WatchClosed)
+    # Restart the watch from the last known resource version
+    channel = resource_client.watch(resource_version: event.resource_version)
+  else
+    pp event # => K8S::Kubernetes::WatchEvent(K8S::Api::Core::V1::Pod)
+  end
+end
+```
+
+You can also invoke the `watch` method with a block, which can automatically restart the watch from the last known resource version:
+
+```crystal
+resource_client.watch(auto_resume: true) do |event|
+  obj = event.object.as(K8S::Api::Core::V1::Pod)
+  Log.info { "#{event.type} #{obj.metadata.try &.name}" }
 end
 ```
 

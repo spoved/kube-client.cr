@@ -205,7 +205,7 @@ module Kube
       process_list(list)
     end
 
-    def meta_list(label_selector : String | Hash(String, String) | Nil = nil, field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace)
+    def meta_list(label_selector : String | Hash(String, String) | Nil = nil, field_selector : String | Hash(String, String) | Nil = nil, namespace = @namespace) : K8S::Kubernetes::Resource::List(T)
       @transport.request(
         method: "GET",
         path: path(namespace: namespace),
@@ -213,32 +213,52 @@ module Kube
           "labelSelector" => selector_query(label_selector),
           "fieldSelector" => selector_query(field_selector),
         })
-      )
+      ).as(K8S::Kubernetes::Resource::List(T))
     end
 
     def watch(label_selector : String | Hash(String, String) | Nil = nil,
               field_selector : String | Hash(String, String) | Nil = nil,
-              resource_version : String? = nil, timeout : Int32? = nil,
-              namespace = @namespace) : Kube::WatchChannel(T)
+              resource_version : String? = nil,
+              timeout : Int32? = nil, namespace = @namespace) : Kube::WatchChannel(T)
       query = make_query({
-        "labelSelector"   => selector_query(label_selector),
-        "fieldSelector"   => selector_query(field_selector),
-        "resourceVersion" => resource_version,
-        "timeoutSeconds"  => timeout,
-        "watch"           => "true",
+        "labelSelector"       => selector_query(label_selector),
+        "fieldSelector"       => selector_query(field_selector),
+        "resourceVersion"     => resource_version,
+        "timeoutSeconds"      => timeout.nil? ? nil : timeout.to_s,
+        "allowWatchBookmarks" => "true",
+        "watch"               => "true",
       })
-      logger.warn { "Watching #{query}" }
+      _watch_channel = Kube::WatchChannel(T).new(@transport, resource_version)
+      _start_watch(_watch_channel, query, namespace)
+    end
 
-      wc = Kube::WatchChannel(T).new(@transport)
+    def watch(auto_resume = false, **nargs, &block)
+      channel = watch(**nargs)
+      while !channel.closed?
+        event = channel.receive
+        if event.is_a?(Kube::Error::WatchClosed) && auto_resume
+          rv = event.resource_version
+          raise event if rv.nil?
+          logger.debug &.emit "Watch channel closed, resuming", resource_version: rv, response_code: event.code
+          channel = watch(**nargs.merge({resource_version: rv}))
+        elsif event.is_a?(Kube::Error::API)
+          raise event
+        else
+          yield event
+        end
+      end
+    end
+
+    private def _start_watch(_watch_channel, query, namespace)
+      logger.debug &.emit "Start watch", path: path(namespace: namespace), query: query, resource_version: _watch_channel.resource_version
 
       @transport.watch_request(
         path: path(namespace: namespace),
         query: query,
         response_class: K8S::Kubernetes::WatchEvent(T),
-        response_channel: wc.channel,
+        response_channel: _watch_channel,
       )
-
-      wc
+      _watch_channel
     end
 
     def update? : Bool
