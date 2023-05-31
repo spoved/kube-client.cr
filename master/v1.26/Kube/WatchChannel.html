@@ -261,6 +261,11 @@
       
     </li>
   
+  <li class=" " data-id="kube-client.cr/Kube/Error/WatchClosed" data-name="kube::error::watchclosed">
+      <a href="../Kube/Error/WatchClosed.html">WatchClosed</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -383,7 +388,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L1" target="_blank">
+      <a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L1" target="_blank">
         kube/watch_channel.cr
       </a>
     
@@ -405,7 +410,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28transport%3AKube%3A%3ATransport%29-class-method" class="signature"><strong>.new</strong>(transport : Kube::Transport)</a>
+        <a href="#new%28transport%3AKube%3A%3ATransport%2Cresource_version%3ANil%7CString%3Dnil%29-class-method" class="signature"><strong>.new</strong>(transport : Kube::Transport, resource_version : Nil | String = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -470,6 +475,26 @@
         
       </li>
     
+      <li class="entry-summary">
+        <a href="#resource_version%3AString%7CNil-instance-method" class="signature"><strong>#resource_version</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#resource_version%3D%28resource_version%3AString%7CNil%29-instance-method" class="signature"><strong>#resource_version=</strong>(resource_version : String | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#send%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#send</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#send%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#send</strong>(*args, **options, &)</a>
+        
+      </li>
+    
   </ul>
 
 
@@ -520,18 +545,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(transport:Kube::Transport)-class-method">
+    <div class="entry-detail" id="new(transport:Kube::Transport,resource_version:Nil|String=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(transport : <a href="../Kube/Transport.html">Kube::Transport</a>)
+        def self.<strong>new</strong>(transport : <a href="../Kube/Transport.html">Kube::Transport</a>, resource_version : Nil | String = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28transport%3AKube%3A%3ATransport%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28transport%3AKube%3A%3ATransport%2Cresource_version%3ANil%7CString%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -561,7 +586,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -577,7 +602,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -593,7 +618,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -609,7 +634,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -625,7 +650,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -641,7 +666,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -657,7 +682,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -673,7 +698,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -689,7 +714,71 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/kube-client.cr/blob/8c103906065487f2b185c286736b9c1502fed08b/src/kube/watch_channel.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resource_version:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>resource_version</strong> : String | Nil
+
+        <a class="method-permalink" href="#resource_version%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="resource_version=(resource_version:String|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>resource_version=</strong>(resource_version : String | Nil)
+
+        <a class="method-permalink" href="#resource_version%3D%28resource_version%3AString%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="send(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>send</strong>(*args, **options)
+
+        <a class="method-permalink" href="#send%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="send(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>send</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#send%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/kube-client.cr/blob/c9dacf185042dd6aaa81f265de13351bddb654bd/src/kube/watch_channel.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
