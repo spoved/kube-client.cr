@@ -17,6 +17,6 @@ clean:
 	@k3d cluster delete k3d-cluster-test
 
 docs: ## Generate docs
-	@crystal ./bin/gen_docs.cr
+	@crystal ./support/gen_docs.cr
 
 .PHONY: help spec gen docs clean
