@@ -75,8 +75,8 @@ module Kube
       @ssl_contxt.private_key = @options[:client_key].not_nil! unless @options[:client_key].nil?
       @ssl_contxt.certificate_chain = @options[:client_cert].not_nil! unless @options[:client_cert].nil?
       @ssl_contxt.ca_certificates = @options[:ssl_ca_file].not_nil! unless @options[:ssl_ca_file].nil?
-
-      @pool = DB::Pool(HTTP::Client).new(max_pool_size: pool_options.pool_capacity, initial_pool_size: pool_options.initial_pool_size, checkout_timeout: pool_options.pool_timeout) do
+      pool_ops = DB::Pool::Options.new(max_pool_size: pool_options.pool_capacity, initial_pool_size: pool_options.initial_pool_size, checkout_timeout: pool_options.pool_timeout)
+      @pool = DB::Pool(HTTP::Client).new(pool_ops) do
         if @server.scheme == "https"
           HTTP::Client.new(uri: @server, tls: @ssl_contxt)
         else
